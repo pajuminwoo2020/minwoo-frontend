@@ -234,7 +234,7 @@
   },
   "lint-staged": {
     "*.ts?(x)": [
-      "eslint --rule \"no-console: 2\" --rule \"no-debugger: 2\" --fix"
+      "eslint --rule \"no-console: 1\" --rule \"no-debugger: 1\" --fix"
     ]
   }
 }
