@@ -15,7 +15,6 @@ import configureStore, {customHistory} from 'stores/configureStore';
 import Configs from 'config';
 import {EProjectType} from 'enums/configs.enum';
 
-
 Configs.SENTRY && Sentry.init({
   dsn: Configs.SENTRY,
   environment: Configs.PROJECT,

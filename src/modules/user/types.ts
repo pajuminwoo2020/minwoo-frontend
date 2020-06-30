@@ -33,7 +33,7 @@ export type TUpdateUser = {
 export type TUserLogin = {
   userid: string;
   password: string;
-  remember?: boolean;
+  is_remember?: boolean;
 };
 
 export type TCreateUser = {
