@@ -14,7 +14,7 @@ $ curl -o- -L https://yarnpkg.com/install.sh | bash
 $ sudo apt-get install yarn
 ```
 
-2. javascript 패키지 설치
+2. javascript 패키지 설치(처음과 패키지 주가됐을때만 수행하면됨)
 ```bash
 $ yarn install
 ```
