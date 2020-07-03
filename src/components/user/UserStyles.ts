@@ -5,17 +5,8 @@ import styled from 'styled-components';
 import {device} from 'GlobalStyles';
 
 const {Text} = Typography;
-export const PrimaryColor = '#2eb88d';
-export const BackgroundColor = '#2f404f';
 export const BoxWidth = '420px';
 export const BoxPadding = '46px';
-export const NegativeBoxPadding = '-46px';
-const {Header, Content, Footer} = Layout;
-
-export const FormBox = styled.div`
-  display: inline-block;
-  margin: auto;
-`;
 
 export const FormWrapper = styled.div`
   background-color: #f8f8f8;
@@ -34,11 +25,11 @@ export const FormWrapper = styled.div`
   box-shadow: 0 7px 12px 0 rgba(38, 52, 64, 0.9);
   overflow: hidden;
 
-  .login-form {
+  .form {
     max-width: 500px;
     margin: 0 auto;
   }
-  .login-form-button {
+  .form-button {
     margin-top: 10px;
     margin-bottom: 10px;
     & button {
@@ -50,30 +41,6 @@ export const FormWrapper = styled.div`
   }
   .form-item {
     margin-bottom: 14px;
-  }
-  .login-form-bottom {
-    margin-bottom: 0;
-    display: inline-block;
-  }
-  .ant-form-item-extra {
-    font-size: 12px;
-    color: #6666;
-    margin-top: 0px;
-    padding: 0px;
-  }
-  .ant-input-affix-wrapper-focused {
-    border-color: ${PrimaryColor};
-    box-shadow: 0 0 1px ${PrimaryColor};
-  }
-  .ant-input-affix-wrapper:hover {
-    border-color: ${PrimaryColor};
-  }
-  .ant-input:hover {
-    border-color: ${PrimaryColor};
-  }
-  .ant-input:focus {
-    border-color: ${PrimaryColor};
-    box-shadow: 0 0 1px ${PrimaryColor};
   }
 `;
 
@@ -92,17 +59,5 @@ export const Title = styled(Text)`
     font-size: 13px;
     color: #979797;
     display: block;
-  }
-`;
-
-export const RegisterBox = styled.div`
-  margin-top: 26px;
-  display: block;
-  text-align: center;
-  color: #ffffff;
-  opacity: 0.8;
-
-  a {
-    color: #ffffff;
   }
 `;
