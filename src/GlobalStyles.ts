@@ -3,9 +3,36 @@ import {get} from 'lodash';
 import styled, {createGlobalStyle, CSSProp} from 'styled-components';
 
 
+export const PrimaryColor = '#2eb88d';
 const GlobalStyles = createGlobalStyle`
   body {
     font-family: "Apple SD Gothic Neo";
+  }
+
+  #root {
+	height: 100vh;
+  }
+
+  .ant-layout {
+	height: 100vh;
+  }
+
+  .ant-layout-header {
+    box-shadow: 0 2px 15px 0 rgba(0,0,0,0.15);
+    background-color: #fff !important;
+    z-index: 2;
+  }
+
+  .ant-menu {
+    background-color: transparent !important;
+  }
+
+  .ant-menu-horizontal {
+    border-bottom: 0px !important;
+  }
+
+  .ant-menu-horizontal > .ant-menu-item a {
+    color: #000 !important;
   }
 
   .ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title {
@@ -21,43 +48,43 @@ const GlobalStyles = createGlobalStyle`
     padding: 24px 32px 28px 32px !important;
     background-color: #f8f8f8 !important;
   }
-  
+
   .ant-descriptions-bordered {
     background-color: #ffffff !important;
   }
-  
+
   .ant-modal-footer {
     padding: 0px 40px 40px 40px !important;
     background-color: #f8f8f8 !important;
     border-top: 0px !important;
   }
-  
+
   .form-item-upload-dragger .ant-form-item-control {
     display: block;
   }
-  
+
   .ant-divider-horizontal {
     background: #dedfe1 !important;
     margin: 16px 0 !important;
   }
-  
+
   .ant-table.ant-table-bordered .ant-table-container {
     border: 1px solid #dedfe1 !important;
   }
-  
+
   .ant-table tbody > tr > td {
     border-bottom: 1px solid #dedfe1 !important;
   }
-  
+
   .ant-table.ant-table-bordered thead > tr > th, .ant-table.ant-table-bordered tbody > tr > td, .ant-table.ant-table-bordered tfoot > tr > th, .ant-table.ant-table-bordered tfoot > tr > td {
     border-right: 0 !important;
   }
-  
-  .qt-table {
+
+  .bs-table {
     .ant-table-row-level-1 > td {
       background-color: #f8f8f8;
     }
-    
+
     th, td {
       white-space: nowrap;
     }
@@ -70,13 +97,9 @@ const GlobalStyles = createGlobalStyle`
     }
   }
 
-  .ant-menu-submenu > .ant-menu {
-    background-color: #344357 !important;
-  }
-
   .ant-tag {
     &.mc, &.cc, &.shared, &.ic, &.j {
-      background-color: #3486d9;    
+      background-color: #3486d9;
       color: white;
     }
     &.requested, &.i, &.started_active_offline {
@@ -121,7 +144,7 @@ const GlobalStyles = createGlobalStyle`
     .guide-popover-content {
       width: 250px;
       word-break: keep-all;
-      display: inline-block;  
+      display: inline-block;
     }
 
     .ant-popover-inner-content {
@@ -130,21 +153,21 @@ const GlobalStyles = createGlobalStyle`
         button {
           color: #ffffff !important;
         }
-      } 
+      }
     }
   }
-  
+
   .table-control-popover {
     .ant-popover-inner-content {
       padding: 15px 16px;
     }
-    
+
     .table-control-title {
       color: #979797;
       font-weight: bold;
       font-size: 11px;
     }
-    
+
     .table-control-popover-content {
       width: 240px;
     }

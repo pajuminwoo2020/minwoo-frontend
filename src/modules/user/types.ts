@@ -8,7 +8,7 @@ import * as actions from 'modules/user/actions';
 export type UserAction = ActionType<typeof actions>;
 
 export type TUserState = {
-  language: string | undefined;
+  current_user: TUser | undefined;
 };
 
 export type TUser = {

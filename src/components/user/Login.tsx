@@ -8,13 +8,12 @@ import {Link, useLocation} from 'react-router-dom';
 import {handleFieldError} from 'libs/api/errorHandle';
 import {userLogin} from 'libs/api/user';
 import {TUserLogin} from 'modules/user';
-import {showNotification} from 'components/base/Common';
-import {Title, FormWrapper} from 'components/user/UserStyles';
+import {Title, FormWrapper} from 'components/user/styles';
 
-const  Login = () => {
+const Login = () => {
   const {formatMessage: f} = useIntl();
   const [form] = Form.useForm();
-  const next = get(useLocation().state, 'from');
+  const next = queryString.parse(useLocation().search)?.next?.toString();
   const onClickLogin = () => {
     form.validateFields().then(value => {
       handleLogin(value as TUserLogin);
@@ -28,8 +27,7 @@ const  Login = () => {
         is_remember: value.is_remember
       });
 
-      showNotification('success', 'Successfully logged in');
-      //window.location.href = next ? next : '/';
+      window.location.href = next ? next : '/';
     } catch (e) {
       handleFieldError(e, form);
       throw e;

@@ -1,5 +1,6 @@
 import {createAction} from 'typesafe-actions';
+import {TUser} from 'modules/user';
 
-export const SET_USER_LANGUAGE = 'users/SET_USER_LANGUAGE' as const;
+export const SET_USER_INFO = 'users/SET_USER_INFO' as const;
 
-export const setUserLanguage = createAction(SET_USER_LANGUAGE)<string>();
+export const setUserInfo = createAction(SET_USER_INFO)<TUser>();

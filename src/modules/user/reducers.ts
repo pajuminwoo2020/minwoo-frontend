@@ -3,17 +3,18 @@ import {map} from 'lodash';
 import {createReducer} from 'typesafe-actions';
 import storage from 'libs/storage';
 import {
-  SET_USER_LANGUAGE,
+  SET_USER_INFO,
 } from 'modules/user/actions';
-import {TUserState, UserAction} from 'modules/user/types';
+import {UserAction, TUserState} from 'modules/user/types';
 
 const initialState: TUserState = {
-  language: undefined
+  current_user: undefined,
 };
 const users = createReducer<TUserState, UserAction>(initialState, {
-  [SET_USER_LANGUAGE]: (state, action) => {
+  [SET_USER_INFO]: (state, action) => {
     return produce(state, (draft: TUserState) => {
-      draft.language = action.payload;
+      storage.setItem('CURRENT_USER', action.payload);
+      draft.current_user = action.payload;
     });
   },
 });
