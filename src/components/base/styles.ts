@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import {device} from 'GlobalStyles';
 
 export const HeaderWrapper = styled.div`
   .ant-layout-header {
@@ -22,10 +23,21 @@ export const HeaderWrapper = styled.div`
     height: 100%;
   }
 
-  .ant-btn-lg {
-    height: 50px;
-    line-height: 50px;
-    font-size: 15px;
-    width: 150px;
+  .header-large {
+    padding: 0 50px;
+    display: inline-block;
+
+    @media screen and ${device.tablet} {
+      display: none;
+    }
+  }
+
+  .header-small {
+    display: none;
+    text-align: right;
+
+    @media screen and ${device.tablet} {
+      display: inline-block;
+    }
   }
 `;

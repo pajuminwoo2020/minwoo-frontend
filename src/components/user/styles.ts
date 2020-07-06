@@ -9,25 +9,24 @@ export const BoxWidth = '420px';
 export const BoxPadding = '46px';
 
 export const FormWrapper = styled.div`
-  margin-left: 100px;
+  margin: auto;
 
   padding: 40px ${BoxPadding};
 
   @media ${device.mobile} {
     min-width: 350px;
     padding: 40px 26px;
-    margin-left: 0px;
   }
 
   @media ${device.tablet} {
     width: ${BoxWidth};
-    margin-left: 100px;
+    margin: auto;
   }
 
   overflow: hidden;
 
   .form {
-    max-width: 500px;
+    max-width: 450px;
     margin: 0 auto;
   }
   .form-button {
@@ -49,6 +48,8 @@ export const Title = styled(Text)`
   display: block;
   font-size: 23px;
   min-height: 70px;
+  max-width: 450px;
   padding: 20px 0px;
+  margin: auto;
   white-space: pre-line;
 `;
