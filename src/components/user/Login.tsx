@@ -3,7 +3,6 @@ import {Button, Checkbox, Form, Input} from 'antd';
 import {get} from 'lodash';
 import queryString from 'query-string';
 import React, {useState} from 'react';
-import {useIntl} from 'react-intl';
 import {Link, useLocation} from 'react-router-dom';
 import {handleFieldError} from 'libs/api/errorHandle';
 import {userLogin} from 'libs/api/user';
@@ -11,7 +10,6 @@ import {TUserLogin} from 'modules/user';
 import {Title, FormWrapper} from 'components/user/styles';
 
 const Login = () => {
-  const {formatMessage: f} = useIntl();
   const [form] = Form.useForm();
   const next = queryString.parse(useLocation().search)?.next?.toString();
   const onClickLogin = () => {
@@ -36,7 +34,7 @@ const Login = () => {
 
   return (
 	<FormWrapper>
-	  <Title>{f({id: 'login.title'})}</Title>
+	  <Title>로그인</Title>
 	  <Form
 		form={form}
 		name="login"
@@ -51,39 +49,39 @@ const Login = () => {
 		  rules={[
 			{
 			  type: 'email',
-			  message: f({id: 'login.message.invalid_email'}),
+			  message: '이메일 형식이 올바르지 않습니다',
 			},
-			{required: true, message: f({id: 'login.message.input_email'})},
+			{required: true, message: '이메일을 입력해주세요'},
 		  ]}
 		>
 		  <Input
 			size="large"
 			prefix={<UserOutlined style={{color: 'rgba(0,0,0,.25)'}} />}
-			placeholder={f({id: 'login.form.email'})}
+			placeholder='이메일주소'
 		  />
 		</Form.Item>
 		<Form.Item
 		  name={'password'}
 		  className="form-item"
-		  rules={[{required: true, message: f({id: 'login.message.input_password'})}]}
+		  rules={[{required: true, message: '패스워드를 입력해주세요'}]}
 		>
 		  <Input.Password
 			size="large"
 			prefix={<LockOutlined style={{color: 'rgba(0,0,0,.25)'}} />}
 			type="password"
-			placeholder={f({id: 'login.form.password'})}
+			placeholder='패스워드'
 		  />
 		</Form.Item>
 		<Form.Item shouldUpdate={true} className="form-button">
 		  {() => (
 			<Button type="primary" htmlType="submit" size="large" onClick={onClickLogin}>
-			  {f({id: 'login.text.login'})}
+			  로그인
 			</Button>
 		  )}
 		</Form.Item>
 		<div>
 		  <Form.Item name={'is_remember'} valuePropName={'checked'}>
-			<Checkbox>{f({id: 'login.text.stay_signed_in'})}</Checkbox>
+			<Checkbox>로그인 상태 유지</Checkbox>
 		  </Form.Item>
 		</div>
 	  </Form>

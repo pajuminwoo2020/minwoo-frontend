@@ -3,15 +3,22 @@ import styled from 'styled-components';
 import {device} from 'GlobalStyles';
 
 export const HeaderWrapper = styled.div`
+  height: 70px;
+
   .ant-layout-header {
     background-color: transparent;
-    height: 80px;
-    line-height: 80px;
+    height: 70px;
+    line-height: 70px;
     padding: 0px 20px;
-    font-size: 20px;
+	width: 100%;
+	position: fixed;
+	z-index: 1;
   }
 
-  .ant-menu-item {
+  .ant-menu-submenu { font-size: 17px;
+  }
+
+  .ant-menu-submenu .ant-menu-item {
     font-size: 17px;
   }
 
@@ -21,6 +28,10 @@ export const HeaderWrapper = styled.div`
 
   .ant-btn > span {
     height: 100%;
+  }
+
+  .ant-btn-primary .ant-typography {
+    color: #fff;
   }
 
   .header-large {
@@ -40,4 +51,16 @@ export const HeaderWrapper = styled.div`
       display: inline-block;
     }
   }
+
+  @media screen and ${device.mobile} {
+    .hide-on-mobile {
+      display: none;
+    }
+  }
+`;
+
+export const ContentTitle = styled.div`
+  margin: 40px 30px 0px 30px;
+  font-size: 25px;
+  text-align: center;
 `;

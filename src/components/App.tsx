@@ -1,20 +1,33 @@
 import {get, isPlainObject} from 'lodash';
 import React from 'react';
-import {IntlProvider} from 'react-intl';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import {RouteProps} from 'react-router';
 import {Redirect, Route, Switch} from 'react-router-dom';
-import {EUserLanguage} from 'enums/base.enum';
 import {CoreProvider} from 'libs/contexts/CoreContext';
 import {getNavigatorLanguage} from 'libs/utils';
 import {RootState} from 'modules';
 import Login from 'components/user/Login';
 import Signup from 'components/user/Signup';
-import About from 'components/landing/About';
-import ItemInfo from 'components/landing/ItemInfo';
-import messages from 'translations/messages';
+import Edit from 'components/user/Edit';
+import IntroAbout from 'components/intro/About' ;
+import People from 'components/intro/People';
+import History from 'components/intro/History';
+import Settlement from 'components/intro/Settlement';
+import Location from 'components/intro/Location';
+import Notice from 'components/activity/Notice';
+import Action from 'components/activity/Action';
+import Press from 'components/activity/Press';
+import AffiliateAbout from 'components/affiliate/About';
+import AffiliateActivity from 'components/affiliate/Activity';
+import MemberAbout from 'components/member/SocietyAbout';
+import MemberActivity from 'components/member/SocietyActivity';
+import MemberLocal from 'components/member/Local';
+import MemberDonation from 'components/member/Donation';
+import MemberBand from 'components/member/Band';
+import BoardNewsLetter from 'components/board/NewsLetter';
+import BoardGallery from 'components/board/Gallery';
 import Core from 'components/base/Core';
-import {HeaderBeforeLogin} from 'components/base/Header';
+import {HeaderTemplate} from 'components/base/HeaderTemplate';
 import ErrorBoundary from 'components/base/error/ErrorBoundary';
 import NoMatch from 'components/base/error/NoMatch';
 import {TUser, setUserInfo} from 'modules/user';
@@ -24,7 +37,6 @@ const data = main();
 
 const App = () => {
   const dispatch = useDispatch();
-  const language = getNavigatorLanguage(EUserLanguage.Korean);
   const currentUser = useSelector((state: RootState) => state.user.current_user, shallowEqual);
   if (currentUser === undefined) {
     const response: TUser = data.read();
@@ -34,64 +46,78 @@ const App = () => {
     }
   }
 
-  const redirectMainPage = (Component: React.ComponentElement<any, any>) => {
-    return currentUser ? <Redirect to="/main"/> : Component;
-  };
-
   return (
-    <IntlProvider
-      locale={get(messages, `${language}.lang`, EUserLanguage.Korean)}
-      messages={get(messages, `${language}`, get(messages, EUserLanguage.Korean))}
-    >
-      <CoreProvider>
-        <ErrorBoundary>
-          <Switch>
-            <Route exact path={['/', '/en']}>
-              <HeaderBeforeLogin><About/></HeaderBeforeLogin>
-            </Route>
-            <Route exact path="/login">
-              {redirectMainPage(<HeaderBeforeLogin><Login/></HeaderBeforeLogin>)}
-            </Route>
-            <Route exact path="/signup">
-              {redirectMainPage(<HeaderBeforeLogin><Signup/></HeaderBeforeLogin>)}
-            </Route>
-            <Route exact path="/about">
-              <HeaderBeforeLogin><About/></HeaderBeforeLogin>
-            </Route>
-            <Route exact path="/item">
-              <HeaderBeforeLogin><ItemInfo/></HeaderBeforeLogin>
-            </Route>
-            <PrivateRoute exact path="/main">
-              <span>After login</span>
-            </PrivateRoute>
-            <Route path="*" component={NoMatch}/>
-          </Switch>
-        </ErrorBoundary>
-        <Core/>
-      </CoreProvider>
-    </IntlProvider>
-  );
-};
-
-type TPrivateRoute = RouteProps & {
-  children?: React.ReactNode;
-  checkAuth?: boolean;
-};
-
-const PrivateRoute = ({children, checkAuth, ...rest}: TPrivateRoute) => {
-  const user = useSelector((state: RootState) => state.user.current_user);
-
-  return (
-    <Route
-      {...rest}
-      render={({location}) =>
-        user ? (
-          children
-        ) : (
-          <Redirect to={`/login?next=${location.pathname}`}/>
-        )
-      }
-    />
+	<CoreProvider>
+	  <ErrorBoundary>
+		<Switch>
+		  <Route exact path={['/', '/en']}>
+			<HeaderTemplate><IntroAbout/></HeaderTemplate>
+		  </Route>
+		  <Route exact path="/user/login">
+			<HeaderTemplate><Login/></HeaderTemplate>
+		  </Route>
+		  <Route exact path="/user/signup">
+			<HeaderTemplate><Signup/></HeaderTemplate>
+		  </Route>
+		  <Route exact path="/user/edit">
+			<HeaderTemplate><Edit/></HeaderTemplate>
+		  </Route>
+          <Route exact path="/intro/about">
+			<HeaderTemplate><IntroAbout/></HeaderTemplate>
+          </Route>
+          <Route exact path="/intro/people">
+			<HeaderTemplate><People/></HeaderTemplate>
+          </Route>
+          <Route exact path="/intro/history">
+			<HeaderTemplate><History/></HeaderTemplate>
+          </Route>
+          <Route exact path="/intro/settlement">
+			<HeaderTemplate><Settlement/></HeaderTemplate>
+          </Route>
+          <Route exact path="/intro/location">
+			<HeaderTemplate><Location/></HeaderTemplate>
+          </Route>
+          <Route exact path="/activity/notice">
+			<HeaderTemplate><Notice/></HeaderTemplate>
+          </Route>
+          <Route exact path="/activity/action">
+			<HeaderTemplate><Action/></HeaderTemplate>
+          </Route>
+          <Route exact path="/activity/press">
+			<HeaderTemplate><Press/></HeaderTemplate>
+          </Route>
+          <Route exact path="/affiliate/about">
+			<HeaderTemplate><AffiliateAbout/></HeaderTemplate>
+          </Route>
+          <Route exact path="/affiliate/activity">
+			<HeaderTemplate><AffiliateActivity/></HeaderTemplate>
+          </Route>
+          <Route exact path="/member/society_about">
+			<HeaderTemplate><MemberAbout/></HeaderTemplate>
+          </Route>
+          <Route exact path="/member/society_activity">
+			<HeaderTemplate><MemberActivity/></HeaderTemplate>
+          </Route>
+          <Route exact path="/member/local">
+			<HeaderTemplate><MemberLocal/></HeaderTemplate>
+          </Route>
+          <Route exact path="/member/donation">
+			<HeaderTemplate><MemberDonation/></HeaderTemplate>
+          </Route>
+          <Route exact path="/member/band">
+			<HeaderTemplate><MemberBand/></HeaderTemplate>
+          </Route>
+          <Route exact path="/board/newsletter">
+			<HeaderTemplate><BoardNewsLetter/></HeaderTemplate>
+          </Route>
+          <Route exact path="/board/gallery">
+			<HeaderTemplate><BoardGallery/></HeaderTemplate>
+          </Route>
+		  <Route path="*" component={NoMatch}/>
+		</Switch>
+	  </ErrorBoundary>
+	  <Core/>
+	</CoreProvider>
   );
 };
 

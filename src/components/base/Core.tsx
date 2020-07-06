@@ -2,7 +2,6 @@ import {get, isEmpty} from 'lodash';
 import * as React from 'react';
 import {useEffect} from 'react';
 import {Helmet} from 'react-helmet-async';
-import {useIntl} from 'react-intl';
 import {shallowEqual, useSelector} from 'react-redux';
 import GlobalStyles from 'GlobalStyles';
 import {useDidMount} from 'libs/hooks';
@@ -11,7 +10,6 @@ import {RootState} from 'modules';
 import NotificationMessage from 'components/modal/NotificationMessage';
 
 const Core: React.FC = () => {
-  const {formatMessage: f} = useIntl();
   const [modal, setModal] = useModal();
 
   const didMount = useDidMount();
@@ -25,10 +23,10 @@ const Core: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>{f({id: 'head.title.main'})}</title>
-        <meta name="description" content={f({id: 'head.title.description'})}/>
-        <meta property="og:title" content={f({id: 'head.title.main'})}/>
-        <meta property="og:description" content={f({id: 'head.title.description'})}/>
+        <title>파주여성민우회</title>
+        <meta name="description" content="민우회"/>
+        <meta property="og:title" content="민우회"/>
+        <meta property="og:description" content="민우회"/>
       </Helmet>
       <GlobalStyles/>
       <NotificationMessage/>

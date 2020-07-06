@@ -3,14 +3,18 @@ import {get} from 'lodash';
 import styled, {createGlobalStyle, CSSProp} from 'styled-components';
 
 
-export const PrimaryColor = '#2eb88d';
+export const PrimaryColor = '#f86e6b';
 const GlobalStyles = createGlobalStyle`
   body {
     font-family: "Apple SD Gothic Neo";
   }
 
   #root {
-	height: 100vh;
+    height: 100vh;
+  }
+
+  .ant-btn-primary {
+    border-color: transparent !important;
   }
 
   .ant-layout {
@@ -21,10 +25,11 @@ const GlobalStyles = createGlobalStyle`
     box-shadow: 0 2px 15px 0 rgba(0,0,0,0.15);
     background-color: #fff !important;
     z-index: 2;
+    min-width: 430px;
   }
 
   .ant-menu {
-    background-color: transparent !important;
+    background-color: #fff !important;
   }
 
   .ant-menu-horizontal {
@@ -64,8 +69,7 @@ const GlobalStyles = createGlobalStyle`
   }
 
   .ant-divider-horizontal {
-    background: #dedfe1 !important;
-    margin: 16px 0 !important;
+	margin: 16px 0 !important;
   }
 
   .ant-table.ant-table-bordered .ant-table-container {
@@ -198,15 +202,11 @@ const GlobalStyles = createGlobalStyle`
       content: '*';
     }
   }
-
- .ant-divider {
-    border-top: 1px solid #dedfe1 !important;
-  }
 `;
 
 export const size = {
   mobile: '375px',
-  tablet: '768px',
+  tablet: '963px',
   desktop: '2560px',
 };
 

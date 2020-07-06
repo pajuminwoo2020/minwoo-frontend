@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 
-const Signup = () => {
+const People = () => {
   return (
 	<>
-	  SignupSignup
+	  PeoplePeople
 	</>
   );
 }
 
-export default Signup;
+export default People;

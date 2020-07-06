@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 
-const Signup = () => {
+const Local = () => {
   return (
 	<>
-	  SignupSignup
+	  LocalLocal
 	</>
   );
 }
 
-export default Signup;
+export default Local;

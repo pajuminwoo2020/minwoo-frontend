@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 
-const Signup = () => {
+const Notice = () => {
   return (
 	<>
-	  SignupSignup
+	  NoticeNotice
 	</>
   );
 }
 
-export default Signup;
+export default Notice;

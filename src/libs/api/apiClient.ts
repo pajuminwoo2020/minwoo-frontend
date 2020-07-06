@@ -10,7 +10,7 @@ const apiClient = axios.create({
   headers: {
     accept: 'application/json',
     'Content-Type': 'application/json',
-    'X-CSRFToken': cookies.get('bs_csrftoken'),
+    'X-CSRFToken': cookies.get('womenlink_csrftoken'),
   },
   responseType: 'json',
   withCredentials: true,

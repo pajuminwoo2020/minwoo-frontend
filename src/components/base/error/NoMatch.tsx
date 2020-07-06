@@ -18,7 +18,7 @@ function NoMatch() {
         subTitle="Sorry, the page you visited does not exist."
         extra={
           <Button type="primary" key="console" onClick={() => history.push('/')}>
-            Go to (https://bigstep.com)
+            Go to (https://paju.womenlink.or.kr)
           </Button>
         }
       />
