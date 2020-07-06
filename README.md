@@ -1,4 +1,4 @@
-# bigstep-frontend
+# minwoo-frontend
 * React로 구현
 * yarn으로 패키지 관리
 * Typescript 적용
