@@ -20,7 +20,7 @@ export const LogoImage = () => {
   return (
     <a href="/">
       <img src={LogoSource} style={{width: 'auto', height: '40px'}}/>
-      <span style={{marginLeft: '10px', fontSize: '18px'}}><Text strong={true}>파주여성민우회</Text></span>
+      <span style={{marginLeft: '10px', fontSize: '18px', fontWeight: 'bold', color: '#000'}}>파주여성민우회</span>
     </a>
   );
 };

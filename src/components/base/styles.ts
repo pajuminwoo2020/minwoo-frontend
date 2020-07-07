@@ -15,7 +15,9 @@ export const HeaderWrapper = styled.div`
 	z-index: 1;
   }
 
-  .ant-menu-submenu { font-size: 17px;
+  .ant-menu-submenu {
+    font-size: 17px;
+    font-weight: bold;
   }
 
   .ant-menu-submenu .ant-menu-item {
