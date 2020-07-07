@@ -42,6 +42,12 @@ export const FormWrapper = styled.div`
   .form-item {
     margin-bottom: 14px;
   }
+
+  .form-bottom {
+    .ant-form-item {
+      display: inline-block;
+    }
+  }
 `;
 
 export const Title = styled(Text)`

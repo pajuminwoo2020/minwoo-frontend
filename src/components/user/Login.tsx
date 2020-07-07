@@ -1,4 +1,4 @@
-import {LockOutlined, UserOutlined} from '@ant-design/icons';
+import {LockOutlined, UserOutlined, PhoneOutlined} from '@ant-design/icons';
 import {Button, Checkbox, Form, Input} from 'antd';
 import {get} from 'lodash';
 import queryString from 'query-string';
@@ -79,11 +79,19 @@ const Login = () => {
 			</Button>
 		  )}
 		</Form.Item>
-		<div>
+		<div className="form-bottom">
 		  <Form.Item name={'is_remember'} valuePropName={'checked'}>
 			<Checkbox>로그인 상태 유지</Checkbox>
 		  </Form.Item>
+		  <Form.Item style={{float: 'right'}}>
+            <Link to="/user/password/reset">비밀번호찾기</Link>
+		  </Form.Item>
 		</div>
+	  </Form>
+      <Form className="form">
+        가입 시 등록한 이메일 주소를 잊으신 경우, 회원팀으로 연락주시기 바랍니다.
+        <br/>
+        (<PhoneOutlined/>) 회원팀 02-737-5763
 	  </Form>
 	</FormWrapper>
   );

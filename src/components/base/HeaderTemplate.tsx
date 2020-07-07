@@ -11,6 +11,7 @@ import {HeaderWrapper, ContentTitle} from 'components/base/styles';
 import {HeaderLeft, getMenuTitle} from 'components/base/HeaderLeft';
 import {HeaderRight} from 'components/base/HeaderRight';
 import Footer from 'components/base/Footer';
+import {PrimaryColor} from 'GlobalStyles';
 
 const {Header, Content} = Layout;
 const {Text} = Typography;
@@ -76,7 +77,7 @@ export const HeaderTemplate = ({children}: {children: React.ReactNode;}) => {
       {getMenuTitle(location.pathname).pop() && (
         <ContentTitle>
           <Text strong={true}>{getMenuTitle(location.pathname).pop()}</Text>
-          <Divider style={{borderTop: '1px solid red'}}/>
+          <Divider style={{borderTop: `1px solid ${PrimaryColor}`}}/>
         </ContentTitle>
       )}
       <Content>

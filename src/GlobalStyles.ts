@@ -206,7 +206,7 @@ const GlobalStyles = createGlobalStyle`
 
 export const size = {
   mobile: '375px',
-  tablet: '963px',
+  tablet: '980px',
   desktop: '2560px',
 };
 

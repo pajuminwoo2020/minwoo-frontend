@@ -6,9 +6,11 @@ import {Redirect, Route, Switch} from 'react-router-dom';
 import {CoreProvider} from 'libs/contexts/CoreContext';
 import {getNavigatorLanguage} from 'libs/utils';
 import {RootState} from 'modules';
+import Main from 'components/base/Main';
 import Login from 'components/user/Login';
 import Signup from 'components/user/Signup';
 import Edit from 'components/user/Edit';
+import PasswordReset from 'components/user/PasswordReset';
 import IntroAbout from 'components/intro/About' ;
 import People from 'components/intro/People';
 import History from 'components/intro/History';
@@ -51,7 +53,7 @@ const App = () => {
 	  <ErrorBoundary>
 		<Switch>
 		  <Route exact path={['/', '/en']}>
-			<HeaderTemplate><IntroAbout/></HeaderTemplate>
+			<HeaderTemplate><Main/></HeaderTemplate>
 		  </Route>
 		  <Route exact path="/user/login">
 			<HeaderTemplate><Login/></HeaderTemplate>
@@ -61,6 +63,9 @@ const App = () => {
 		  </Route>
 		  <Route exact path="/user/edit">
 			<HeaderTemplate><Edit/></HeaderTemplate>
+		  </Route>
+          <Route exact path="/user/password/reset">
+			<HeaderTemplate><PasswordReset/></HeaderTemplate>
 		  </Route>
           <Route exact path="/intro/about">
 			<HeaderTemplate><IntroAbout/></HeaderTemplate>
