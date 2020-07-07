@@ -91,7 +91,7 @@ const Login = () => {
       <Form className="form">
         가입 시 등록한 이메일 주소를 잊으신 경우, 회원팀으로 연락주시기 바랍니다.
         <br/>
-        (<PhoneOutlined/>) 회원팀 02-737-5763
+        (회원팀 <PhoneOutlined/>) 02-737-5763
 	  </Form>
 	</FormWrapper>
   );

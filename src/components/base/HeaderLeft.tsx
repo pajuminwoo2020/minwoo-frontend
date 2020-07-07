@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useLocation, Link} from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 import {Layout, Menu, Col, Row, Typography, Button, Drawer, Breadcrumb} from 'antd';
 import styled from 'styled-components';
 import {filter, get, map} from 'lodash';
@@ -110,65 +110,65 @@ export const HeaderLeft = ({mode, onClick}: TMenuProps) => {
     <Menu selectedKeys={[location.pathname]} mode={mode} onClick={onClick}>
       <SubMenu title={getMenuTitle('/intro')[0]}>
         <Menu.Item key="/intro/about">
-          <Link to="/intro/about">{getMenuTitle('/intro/about')[1]}</Link>
+          <a href="/intro/about">{getMenuTitle('/intro/about')[1]}</a>
         </Menu.Item>
         <Menu.Item key="/intro/people">
-          <Link to="/intro/people">{getMenuTitle('/intro/people')[1]}</Link>
+          <a href="/intro/people">{getMenuTitle('/intro/people')[1]}</a>
         </Menu.Item>
         <Menu.Item key="/intro/history">
-          <Link to="/intro/history">{getMenuTitle('/intro/history')[1]}</Link>
+          <a href="/intro/history">{getMenuTitle('/intro/history')[1]}</a>
         </Menu.Item>
         <Menu.Item key="/intro/settlement">
-          <Link to="/intro/settlement">{getMenuTitle('/intro/settlement')[1]}</Link>
+          <a href="/intro/settlement">{getMenuTitle('/intro/settlement')[1]}</a>
         </Menu.Item>
         <Menu.Item key="/intro/location">
-          <Link to="/intro/location">{getMenuTitle('/intro/location')[1]}</Link>
+          <a href="/intro/location">{getMenuTitle('/intro/location')[1]}</a>
         </Menu.Item>
       </SubMenu>
       <SubMenu title={getMenuTitle('/activity')[0]}>
         <Menu.Item key="/activity/notice">
-          <Link to="/activity/notice">{getMenuTitle('/activity/notice')[1]}</Link>
+          <a href="/activity/notice">{getMenuTitle('/activity/notice')[1]}</a>
         </Menu.Item>
         <Menu.Item key="/activity/action">
-          <Link to="/activity/action">{getMenuTitle('/activity/action')[1]}</Link>
+          <a href="/activity/action">{getMenuTitle('/activity/action')[1]}</a>
         </Menu.Item>
         <Menu.Item key="/activity/press">
-          <Link to="/activity/press">{getMenuTitle('/activity/press')[1]}</Link>
+          <a href="/activity/press">{getMenuTitle('/activity/press')[1]}</a>
         </Menu.Item>
       </SubMenu>
       <SubMenu title={getMenuTitle('/affiliate')[0]}>
         <Menu.ItemGroup title="성폭력상담소">
           <Menu.Item key="/affiliate/about">
-            <Link to="/affiliate/about">{getMenuTitle('/affiliate/about')[2]}</Link>
+            <a href="/affiliate/about">{getMenuTitle('/affiliate/about')[2]}</a>
           </Menu.Item>
           <Menu.Item key="/affiliate/activity">
-            <Link to="/affiliate/activity">{getMenuTitle('/affiliate/activity')[2]}</Link>
+            <a href="/affiliate/activity">{getMenuTitle('/affiliate/activity')[2]}</a>
           </Menu.Item>
         </Menu.ItemGroup>
       </SubMenu>
       <SubMenu title={getMenuTitle('/member')[0]}>
         <Menu.Item key="/member/society_about">
-          <Link to="/member/society_about">{getMenuTitle('/member/society_about')[1]}</Link>
+          <a href="/member/society_about">{getMenuTitle('/member/society_about')[1]}</a>
         </Menu.Item>
         <Menu.Item key="/member/society_activity">
-          <Link to="/member/society_activity">{getMenuTitle('/member/society_activity')[1]}</Link>
+          <a href="/member/society_activity">{getMenuTitle('/member/society_activity')[1]}</a>
         </Menu.Item>
         <Menu.Item key="/member/local">
-          <Link to="/member/local">{getMenuTitle('/member/local')[1]}</Link>
+          <a href="/member/local">{getMenuTitle('/member/local')[1]}</a>
         </Menu.Item>
         <Menu.Item key="/member/donation">
-          <Link to="/member/donation">{getMenuTitle('/member/donation')[1]}</Link>
+          <a href="/member/donation">{getMenuTitle('/member/donation')[1]}</a>
         </Menu.Item>
         <Menu.Item key="/member/band">
-          <Link to="/member/band">{getMenuTitle('/member/band')[1]}</Link>
+          <a href="/member/band">{getMenuTitle('/member/band')[1]}</a>
         </Menu.Item>
       </SubMenu>
       <SubMenu title={getMenuTitle('/board')[0]}>
         <Menu.Item key="/board/newsletter">
-          <Link to="/board/newsletter">{getMenuTitle('/board/newsletter')[1]}</Link>
+          <a href="/board/newsletter">{getMenuTitle('/board/newsletter')[1]}</a>
         </Menu.Item>
         <Menu.Item key="/board/gallery">
-          <Link to="/board/gallery">{getMenuTitle('/board/gallery')[1]}</Link>
+          <a href="/board/gallery">{getMenuTitle('/board/gallery')[1]}</a>
         </Menu.Item>
       </SubMenu>
     </Menu>
