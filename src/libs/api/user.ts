@@ -7,6 +7,7 @@ import {
   TCreateUser,
   TUser,
   TUserLogin,
+  TUserCreate,
 } from 'modules/user';
 import apiClient from 'libs/api/apiClient';
 
@@ -68,6 +69,12 @@ function wrapPromise(promise: any) {
 
 export const userLogin = (params: TUserLogin, cancel?: CancelTokenSource) => {
   return apiClient.post('/user/login', params, {
+    cancelToken: cancel?.token,
+  });
+};
+
+export const userCreate = (params: TUserCreate, cancel?: CancelTokenSource) => {
+  return apiClient.post('/user/create', params, {
     cancelToken: cancel?.token,
   });
 };

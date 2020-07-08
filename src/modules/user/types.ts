@@ -36,6 +36,12 @@ export type TUserLogin = {
   is_remember?: boolean;
 };
 
+export type TUserCreate = {
+  userid: string;
+  password: string;
+  fullname_local: string;
+};
+
 export type TCreateUser = {
   userid: string;
   fullname_local: string;
