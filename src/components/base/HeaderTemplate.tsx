@@ -63,7 +63,7 @@ export const HeaderTemplate = ({children}: {children: React.ReactNode;}) => {
             </Col>
           </Row>
         </Header>
-        <Breadcrumb style={{margin: '80px 30px'}} className="hide-on-mobile">
+        <Breadcrumb style={{margin: '80px auto', width: '1200px', padding: '0px 10px'}} className="hide-on-mobile">
           {getMenuTitle(location.pathname)[0] && (
             <>
               <Breadcrumb.Item><HomeOutlined/></Breadcrumb.Item>
@@ -77,11 +77,10 @@ export const HeaderTemplate = ({children}: {children: React.ReactNode;}) => {
       {getMenuTitle(location.pathname).pop() && (
         <ContentTitle>
           <Text strong={true}>{getMenuTitle(location.pathname).pop()}</Text>
-          <Divider style={{borderTop: `1px solid ${PrimaryColor}`}}/>
         </ContentTitle>
       )}
       <Content>
-        <div style={{margin: '0px 30px', minHeight: '90vh'}}>
+        <div style={{margin: '0px auto', minHeight: '90vh', maxWidth: '1200px', padding: '0px 10px'}}>
           {children}
         </div>
         <Footer/>

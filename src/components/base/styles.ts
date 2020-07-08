@@ -62,7 +62,9 @@ export const HeaderWrapper = styled.div`
 `;
 
 export const ContentTitle = styled.div`
-  margin: 40px 30px 0px 30px;
+  margin: 60px auto 20px auto;
   font-size: 25px;
-  text-align: center;
+  text-align: left;
+  width: 1200px;
+  padding: 0px 10px;
 `;

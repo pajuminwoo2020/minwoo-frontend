@@ -3,6 +3,7 @@ import React from 'react';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import {RouteProps} from 'react-router';
 import {Redirect, Route, Switch} from 'react-router-dom';
+import {IntlProvider} from 'react-intl';
 import {CoreProvider} from 'libs/contexts/CoreContext';
 import {getNavigatorLanguage} from 'libs/utils';
 import {RootState} from 'modules';
@@ -49,80 +50,82 @@ const App = () => {
   }
 
   return (
-	<CoreProvider>
-	  <ErrorBoundary>
-		<Switch>
-		  <Route exact path={['/', '/en']}>
-			<HeaderTemplate><Main/></HeaderTemplate>
-		  </Route>
-		  <Route exact path="/user/login">
-			<HeaderTemplate><Login/></HeaderTemplate>
-		  </Route>
-		  <Route exact path="/user/signup">
-			<HeaderTemplate><Signup/></HeaderTemplate>
-		  </Route>
-		  <Route exact path="/user/edit">
-			<HeaderTemplate><Edit/></HeaderTemplate>
-		  </Route>
-          <Route exact path="/user/password/reset">
-			<HeaderTemplate><PasswordReset/></HeaderTemplate>
-		  </Route>
-          <Route exact path="/intro/about">
-			<HeaderTemplate><IntroAbout/></HeaderTemplate>
-          </Route>
-          <Route exact path="/intro/people">
-			<HeaderTemplate><People/></HeaderTemplate>
-          </Route>
-          <Route exact path="/intro/history">
-			<HeaderTemplate><History/></HeaderTemplate>
-          </Route>
-          <Route exact path="/intro/settlement">
-			<HeaderTemplate><Settlement/></HeaderTemplate>
-          </Route>
-          <Route exact path="/intro/location">
-			<HeaderTemplate><Location/></HeaderTemplate>
-          </Route>
-          <Route exact path="/activity/notice">
-			<HeaderTemplate><Notice/></HeaderTemplate>
-          </Route>
-          <Route exact path="/activity/action">
-			<HeaderTemplate><Action/></HeaderTemplate>
-          </Route>
-          <Route exact path="/activity/press">
-			<HeaderTemplate><Press/></HeaderTemplate>
-          </Route>
-          <Route exact path="/affiliate/about">
-			<HeaderTemplate><AffiliateAbout/></HeaderTemplate>
-          </Route>
-          <Route exact path="/affiliate/activity">
-			<HeaderTemplate><AffiliateActivity/></HeaderTemplate>
-          </Route>
-          <Route exact path="/member/society_about">
-			<HeaderTemplate><MemberAbout/></HeaderTemplate>
-          </Route>
-          <Route exact path="/member/society_activity">
-			<HeaderTemplate><MemberActivity/></HeaderTemplate>
-          </Route>
-          <Route exact path="/member/local">
-			<HeaderTemplate><MemberLocal/></HeaderTemplate>
-          </Route>
-          <Route exact path="/member/donation">
-			<HeaderTemplate><MemberDonation/></HeaderTemplate>
-          </Route>
-          <Route exact path="/member/band">
-			<HeaderTemplate><MemberBand/></HeaderTemplate>
-          </Route>
-          <Route exact path="/board/newsletter">
-			<HeaderTemplate><BoardNewsLetter/></HeaderTemplate>
-          </Route>
-          <Route exact path="/board/gallery">
-			<HeaderTemplate><BoardGallery/></HeaderTemplate>
-          </Route>
-		  <Route path="*" component={NoMatch}/>
-		</Switch>
-	  </ErrorBoundary>
-	  <Core/>
-	</CoreProvider>
+	<IntlProvider locale={'ko'}>
+      <CoreProvider>
+        <ErrorBoundary>
+          <Switch>
+            <Route exact path={['/', '/en']}>
+              <HeaderTemplate><Main/></HeaderTemplate>
+            </Route>
+            <Route exact path="/user/login">
+              <HeaderTemplate><Login/></HeaderTemplate>
+            </Route>
+            <Route exact path="/user/signup">
+              <HeaderTemplate><Signup/></HeaderTemplate>
+            </Route>
+            <Route exact path="/user/edit">
+              <HeaderTemplate><Edit/></HeaderTemplate>
+            </Route>
+            <Route exact path="/user/password/reset">
+              <HeaderTemplate><PasswordReset/></HeaderTemplate>
+            </Route>
+            <Route exact path="/intro/about">
+              <HeaderTemplate><IntroAbout/></HeaderTemplate>
+            </Route>
+            <Route exact path="/intro/people">
+              <HeaderTemplate><People/></HeaderTemplate>
+            </Route>
+            <Route exact path="/intro/history">
+              <HeaderTemplate><History/></HeaderTemplate>
+            </Route>
+            <Route exact path="/intro/settlement">
+              <HeaderTemplate><Settlement/></HeaderTemplate>
+            </Route>
+            <Route exact path="/intro/location">
+              <HeaderTemplate><Location/></HeaderTemplate>
+            </Route>
+            <Route exact path="/activity/notice">
+              <HeaderTemplate><Notice/></HeaderTemplate>
+            </Route>
+            <Route exact path="/activity/action">
+              <HeaderTemplate><Action/></HeaderTemplate>
+            </Route>
+            <Route exact path="/activity/press">
+              <HeaderTemplate><Press/></HeaderTemplate>
+            </Route>
+            <Route exact path="/affiliate/about">
+              <HeaderTemplate><AffiliateAbout/></HeaderTemplate>
+            </Route>
+            <Route exact path="/affiliate/activity">
+              <HeaderTemplate><AffiliateActivity/></HeaderTemplate>
+            </Route>
+            <Route exact path="/member/society_about">
+              <HeaderTemplate><MemberAbout/></HeaderTemplate>
+            </Route>
+            <Route exact path="/member/society_activity">
+              <HeaderTemplate><MemberActivity/></HeaderTemplate>
+            </Route>
+            <Route exact path="/member/local">
+              <HeaderTemplate><MemberLocal/></HeaderTemplate>
+            </Route>
+            <Route exact path="/member/donation">
+              <HeaderTemplate><MemberDonation/></HeaderTemplate>
+            </Route>
+            <Route exact path="/member/band">
+              <HeaderTemplate><MemberBand/></HeaderTemplate>
+            </Route>
+            <Route exact path="/board/newsletter">
+              <HeaderTemplate><BoardNewsLetter/></HeaderTemplate>
+            </Route>
+            <Route exact path="/board/gallery">
+              <HeaderTemplate><BoardGallery/></HeaderTemplate>
+            </Route>
+            <Route path="*" component={NoMatch}/>
+          </Switch>
+        </ErrorBoundary>
+        <Core/>
+      </CoreProvider>
+    </IntlProvider>
   );
 };
 

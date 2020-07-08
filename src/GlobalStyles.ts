@@ -205,7 +205,7 @@ const GlobalStyles = createGlobalStyle`
 `;
 
 export const size = {
-  mobile: '375px',
+  mobile: '450px',
   tablet: '980px',
   desktop: '2560px',
 };
@@ -215,5 +215,82 @@ export const device = {
   tablet: `(max-width: ${size.tablet})`,
   desktop: `(max-width: ${size.desktop})`,
 };
+
+export const TableWrapper = styled.div`
+  .ant-table-small .ant-table-thead > tr > th {
+    border-color: ${PrimaryColor};
+  }
+  .ant-table-thead > tr > th {
+    text-align: center;
+    font-weight: bold;
+    color: ${PrimaryColor};
+  }
+  .ant-table-cell {
+    a {
+      display: block;
+    }
+  }
+
+  .column-title {
+    padding: 0px 20px !important;
+
+    @media screen and ${device.tablet} {
+      width: 300px;
+    }
+  }
+  .column-created-at {
+    width: 150px;
+
+    @media screen and ${device.mobile} {
+      display: none;
+    }
+  }
+  .column-hit-count {
+    width: 80px;
+
+    @media screen and ${device.mobile} {
+      display: none;
+    }
+  }
+  .column-created-by {
+    width: 200px;
+
+    @media screen and ${device.mobile} {
+      display: none;
+    }
+  }
+
+  td.ant-table-cell.column-created-at {
+    text-align: center;
+    color: #a9a9a9;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
+  td.ant-table-cell.column-hit-count {
+    text-align: center;
+    color: #a9a9a9;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
+  td.ant-table-cell.column-created-by {
+    text-align: center;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
+`;
+
+export const TableHeaderWrapper = styled.div`
+  width: 100%;
+  display: inline-block;
+
+  .search-input {
+    float: left;
+    max-width: 400px;
+  }
+  .add-button {
+    display: inline-block;
+    float: right;
+  }
+`;
 
 export default GlobalStyles;
