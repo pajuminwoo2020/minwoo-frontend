@@ -6,7 +6,13 @@ import {get} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {TableWrapper, TableHeaderWrapper} from 'GlobalStyles';
 import {FormattedDate} from 'react-intl';
-import {getBoardSettlements, getBoardSettlement, createBoardSettlement} from 'libs/api/board';
+import {
+  getBoardSettlements,
+  getBoardSettlement,
+  createBoardSettlement,
+  deleteBoardSettlement,
+  updateBoardSettlement,
+} from 'libs/api/board';
 import {useDataApi, usePagination} from 'libs/hooks';
 import {TBoardDetail} from 'modules/board';
 import {EBoardOperation} from 'enums/board.enum';
@@ -41,6 +47,11 @@ const Settlement = () => {
   }, [pagination]);
 
   const columns: ColumnsType<TBoardDetail> = [
+    {
+      title: '번호',
+      dataIndex: 'id',
+      className: 'column-id',
+    },
     {
       title: '제목',
       dataIndex: 'title',
@@ -113,7 +124,7 @@ const Settlement = () => {
 };
 
 export const SettlementDetail = () => {
-  const match = useRouteMatch('/intro/settlement/:operation/:record_id?');
+  const match = useRouteMatch(`${ERoute.IntroSettlement}/:operation/:record_id?`);
   let {operation=EBoardOperation.View, record_id} = (match?.params as RouteMatch) || {};
   const [{data, loading}] = useDataApi<TBoardDetail>(getBoardSettlement.bind(null, record_id), {}, operation != EBoardOperation.Create);
 
@@ -122,6 +133,8 @@ export const SettlementDetail = () => {
 	  operation={operation}
 	  pathName={ERoute.IntroSettlement}
 	  promiseCreate={createBoardSettlement}
+	  promiseDelete={deleteBoardSettlement}
+	  promiseUpdate={updateBoardSettlement}
 	  record={data}
 	/>
   );

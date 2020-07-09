@@ -245,6 +245,9 @@ export const TableWrapper = styled.div`
       display: none;
     }
   }
+  .column-id {
+    width: 80px;
+  }
   .column-hit-count {
     width: 80px;
 
@@ -273,6 +276,11 @@ export const TableWrapper = styled.div`
     padding-right: 0px !important;
   }
   td.ant-table-cell.column-created-by {
+    text-align: center;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
+  td.ant-table-cell.column-id {
     text-align: center;
     padding-left: 0px !important;
     padding-right: 0px !important;

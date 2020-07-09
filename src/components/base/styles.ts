@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {device} from 'GlobalStyles';
+import {CDefaultEditorHeight} from 'constants/base.const';
 
 export const HeaderWrapper = styled.div`
   height: 70px;
@@ -70,8 +71,6 @@ export const ContentTitle = styled.div`
 `;
 
 export const BoardDetailWrapper = styled.div`
-  .box {
-  }
   .box-title {
     background-color: #f5f5f5;
     padding: 15px 20px;
@@ -102,6 +101,7 @@ export const BoardDetailWrapper = styled.div`
   }
 
   .body-edit {
+    min-height: ${CDefaultEditorHeight}px;
     background-color: #f5f5f5;
     padding: 20px;
     .tox-tinymce {
@@ -111,10 +111,14 @@ export const BoardDetailWrapper = styled.div`
   }
 
   .body-view {
+    min-height: ${CDefaultEditorHeight}px;
     padding: 0px 0px 20px 0px;
     .tox-tinymce {
       border: none;
       z-index: 0;
+    }
+    .tox-editor-header {
+      display: none;
     }
   }
 
