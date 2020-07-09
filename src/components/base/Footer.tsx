@@ -2,6 +2,7 @@ import {Col, Row, Divider} from 'antd';
 import React from 'react';
 import styled from 'styled-components';
 import LogoWhiteSource from 'assets/logo-white.png';
+import {ERoute} from 'enums/route.enum';
 
 const FooterWrapper = styled.div`
   background-color: #424242;
@@ -42,8 +43,8 @@ export const FooterArea = () => {
         <Col md={{span: 24}} lg={{span: 4}}>
           <p className="block-title" style={{color: 'transparent'}}>Empty</p>
           <Divider/>
-          <p><a href="/member/donation">후원하기</a></p>
-          <p><a href="/intro/location">찾아오시는 길</a></p>
+          <p><a href={ERoute.MemberDonation}>후원하기</a></p>
+          <p><a href={ERoute.IntroLocation}>찾아오시는 길</a></p>
         </Col>
         <Col span="4"></Col>
       </Row>

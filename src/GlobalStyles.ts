@@ -290,6 +290,15 @@ export const TableHeaderWrapper = styled.div`
   .add-button {
     display: inline-block;
     float: right;
+
+    @media screen and ${device.tablet} {
+      display: block;
+      float: left;
+    }
+
+    @media screen and ${device.mobile} {
+      display: none;
+    }
   }
 `;
 

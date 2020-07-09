@@ -25,7 +25,7 @@ export const LogoImage = () => {
   );
 };
 
-export const HeaderTemplate = ({children}: {children: React.ReactNode;}) => {
+export const BaseTemplate = ({children}: {children: React.ReactNode;}) => {
   const location = useLocation();
   const [visible, setVisible] = useState(false);
 

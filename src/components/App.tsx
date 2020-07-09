@@ -7,6 +7,7 @@ import {IntlProvider} from 'react-intl';
 import {CoreProvider} from 'libs/contexts/CoreContext';
 import {getNavigatorLanguage} from 'libs/utils';
 import {RootState} from 'modules';
+import {ERoute} from 'enums/route.enum';
 import Main from 'components/base/Main';
 import Login from 'components/user/Login';
 import Signup from 'components/user/Signup';
@@ -15,7 +16,7 @@ import PasswordReset from 'components/user/PasswordReset';
 import IntroAbout from 'components/intro/About' ;
 import People from 'components/intro/People';
 import History from 'components/intro/History';
-import Settlement from 'components/intro/Settlement';
+import Settlement, {SettlementDetail} from 'components/intro/Settlement';
 import Location from 'components/intro/Location';
 import Notice from 'components/activity/Notice';
 import Action from 'components/activity/Action';
@@ -27,10 +28,10 @@ import MemberActivity from 'components/member/SocietyActivity';
 import MemberLocal from 'components/member/Local';
 import MemberDonation from 'components/member/Donation';
 import MemberBand from 'components/member/Band';
-import BoardNewsLetter from 'components/board/NewsLetter';
-import BoardGallery from 'components/board/Gallery';
+import BulletinNewsLetter from 'components/bulletin/NewsLetter';
+import BulletinGallery from 'components/bulletin/Gallery';
 import Core from 'components/base/Core';
-import {HeaderTemplate} from 'components/base/HeaderTemplate';
+import {BaseTemplate} from 'components/base/BaseTemplate';
 import ErrorBoundary from 'components/base/error/ErrorBoundary';
 import NoMatch from 'components/base/error/NoMatch';
 import {TUser, setUserInfo} from 'modules/user';
@@ -55,70 +56,73 @@ const App = () => {
         <ErrorBoundary>
           <Switch>
             <Route exact path={['/', '/en']}>
-              <HeaderTemplate><Main/></HeaderTemplate>
+              <BaseTemplate><Main/></BaseTemplate>
             </Route>
-            <Route exact path="/user/login">
-              <HeaderTemplate><Login/></HeaderTemplate>
+            <Route exact path={ERoute.UserLogin}>
+              <BaseTemplate><Login/></BaseTemplate>
             </Route>
-            <Route exact path="/user/signup">
-              <HeaderTemplate><Signup/></HeaderTemplate>
+            <Route exact path={ERoute.UserSignup}>
+              <BaseTemplate><Signup/></BaseTemplate>
             </Route>
-            <Route exact path="/user/edit">
-              <HeaderTemplate><Edit/></HeaderTemplate>
+            <Route exact path={ERoute.UserEdit}>
+              <BaseTemplate><Edit/></BaseTemplate>
             </Route>
-            <Route exact path="/user/password/reset">
-              <HeaderTemplate><PasswordReset/></HeaderTemplate>
+            <Route exact path={ERoute.UserPasswordReset}>
+              <BaseTemplate><PasswordReset/></BaseTemplate>
             </Route>
-            <Route exact path="/intro/about">
-              <HeaderTemplate><IntroAbout/></HeaderTemplate>
+            <Route exact path={ERoute.IntroAbout}>
+              <BaseTemplate><IntroAbout/></BaseTemplate>
             </Route>
-            <Route exact path="/intro/people">
-              <HeaderTemplate><People/></HeaderTemplate>
+            <Route exact path={ERoute.IntroPeople}>
+              <BaseTemplate><People/></BaseTemplate>
             </Route>
-            <Route exact path="/intro/history">
-              <HeaderTemplate><History/></HeaderTemplate>
+            <Route exact path={ERoute.IntroHistory}>
+              <BaseTemplate><History/></BaseTemplate>
             </Route>
-            <Route exact path="/intro/settlement">
-              <HeaderTemplate><Settlement/></HeaderTemplate>
+            <Route exact path={ERoute.IntroSettlement}>
+              <BaseTemplate><Settlement/></BaseTemplate>
             </Route>
-            <Route exact path="/intro/location">
-              <HeaderTemplate><Location/></HeaderTemplate>
+            <Route path={`${ERoute.IntroSettlement}/:operation`}>
+              <BaseTemplate><SettlementDetail/></BaseTemplate>
             </Route>
-            <Route exact path="/activity/notice">
-              <HeaderTemplate><Notice/></HeaderTemplate>
+            <Route exact path={ERoute.IntroLocation}>
+              <BaseTemplate><Location/></BaseTemplate>
             </Route>
-            <Route exact path="/activity/action">
-              <HeaderTemplate><Action/></HeaderTemplate>
+            <Route exact path={ERoute.ActivityNotice}>
+              <BaseTemplate><Notice/></BaseTemplate>
             </Route>
-            <Route exact path="/activity/press">
-              <HeaderTemplate><Press/></HeaderTemplate>
+            <Route exact path={ERoute.ActivityAction}>
+              <BaseTemplate><Action/></BaseTemplate>
             </Route>
-            <Route exact path="/affiliate/about">
-              <HeaderTemplate><AffiliateAbout/></HeaderTemplate>
+            <Route exact path={ERoute.ActivityPress}>
+              <BaseTemplate><Press/></BaseTemplate>
             </Route>
-            <Route exact path="/affiliate/activity">
-              <HeaderTemplate><AffiliateActivity/></HeaderTemplate>
+            <Route exact path={ERoute.AffiliateAbout}>
+              <BaseTemplate><AffiliateAbout/></BaseTemplate>
             </Route>
-            <Route exact path="/member/society_about">
-              <HeaderTemplate><MemberAbout/></HeaderTemplate>
+            <Route exact path={ERoute.AffiliateActivity}>
+              <BaseTemplate><AffiliateActivity/></BaseTemplate>
             </Route>
-            <Route exact path="/member/society_activity">
-              <HeaderTemplate><MemberActivity/></HeaderTemplate>
+            <Route exact path={ERoute.MemberSocietyAbout}>
+              <BaseTemplate><MemberAbout/></BaseTemplate>
             </Route>
-            <Route exact path="/member/local">
-              <HeaderTemplate><MemberLocal/></HeaderTemplate>
+            <Route exact path={ERoute.MemberSocietyActivity}>
+              <BaseTemplate><MemberActivity/></BaseTemplate>
             </Route>
-            <Route exact path="/member/donation">
-              <HeaderTemplate><MemberDonation/></HeaderTemplate>
+            <Route exact path={ERoute.MemberLocal}>
+              <BaseTemplate><MemberLocal/></BaseTemplate>
             </Route>
-            <Route exact path="/member/band">
-              <HeaderTemplate><MemberBand/></HeaderTemplate>
+            <Route exact path={ERoute.MemberDonation}>
+              <BaseTemplate><MemberDonation/></BaseTemplate>
             </Route>
-            <Route exact path="/board/newsletter">
-              <HeaderTemplate><BoardNewsLetter/></HeaderTemplate>
+            <Route exact path={ERoute.MemberBand}>
+              <BaseTemplate><MemberBand/></BaseTemplate>
             </Route>
-            <Route exact path="/board/gallery">
-              <HeaderTemplate><BoardGallery/></HeaderTemplate>
+            <Route exact path={ERoute.BulletinNewsletter}>
+              <BaseTemplate><BulletinNewsLetter/></BaseTemplate>
+            </Route>
+            <Route exact path={ERoute.BulletinGallery}>
+              <BaseTemplate><BulletinGallery/></BaseTemplate>
             </Route>
             <Route path="*" component={NoMatch}/>
           </Switch>

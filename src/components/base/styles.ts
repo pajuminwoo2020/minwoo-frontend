@@ -68,3 +68,57 @@ export const ContentTitle = styled.div`
   width: 1200px;
   padding: 0px 10px;
 `;
+
+export const BoardDetailWrapper = styled.div`
+  .box {
+  }
+  .box-title {
+    background-color: #f5f5f5;
+    padding: 15px 20px;
+  }
+  .box-sub-title {
+    border-bottom: 1px solid #ccc;
+    padding: 5px 20px;
+    .label {
+      font-size: 12px;
+    }
+  }
+
+  .title-item {
+    display: inline-block;
+    margin: 0px 20px;
+  }
+
+  .label {
+    font-weight: bold;
+    margin-right: 20px;
+    display: inline-block;
+    font-size: 15px;
+  }
+  .value {
+    font-weight: normal;
+    display: inline-block;
+    font-size: 15px;
+  }
+
+  .body-edit {
+    background-color: #f5f5f5;
+    padding: 20px;
+    .tox-tinymce {
+      z-index: 0;
+    }
+    margin-bottom: 10px;
+  }
+
+  .body-view {
+    padding: 0px 0px 20px 0px;
+    .tox-tinymce {
+      border: none;
+      z-index: 0;
+    }
+  }
+
+  .btn-bottom {
+    margin-bottom: 20px;
+  }
+`;

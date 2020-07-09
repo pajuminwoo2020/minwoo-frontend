@@ -27,9 +27,8 @@ function handleHTTP400BadRequestError(error: AxiosError, data: TError) {
 function handleHTTP401UnauthorizedError(error: AxiosError, data: any) {
   switch (data?.error_code) {
     case EerrorCode.AUTHENTICATION_FAILED:
-      message.error(data?.error_message);
-      break;
     case EerrorCode.NOT_AUTHENTICATED:
+      message.error(data?.error_message);
       break;
     default:
       message.error('Authentication Error');
@@ -119,6 +118,7 @@ export function handleHTTPError(error: AxiosError) {
 
 /* form의 name과 실제 server와 주고받는 api의 field_name이 다른경우 match에 {api의 field_name: form의 field_name} 형태로 추가해줘야한다. */
 export function handleFieldError(error: Error, form: FormInstance, match?: object) {
+  window.scrollTo(0, 0);
   const fieldErrors = get(error, 'field_errors');
   if (fieldErrors) {
     const listFieldErrors: TFieldError[] = [];

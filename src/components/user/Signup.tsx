@@ -8,6 +8,7 @@ import {handleFieldError} from 'libs/api/errorHandle';
 import {userCreate} from 'libs/api/user';
 import {TUserCreate} from 'modules/user';
 import {Title, FormWrapper} from 'components/user/styles';
+import {ERoute} from 'enums/route.enum';
 
 const Signup = () => {
   const [form] = Form.useForm();
@@ -25,7 +26,7 @@ const Signup = () => {
         fullname_local: value.fullname_local
       });
 
-      window.location.href = next ? next : '/user/login';
+      window.location.href = next ? next : ERoute.UserLogin;
     } catch (e) {
       handleFieldError(e, form);
       throw e;

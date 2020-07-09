@@ -1,10 +1,5 @@
-import {message} from 'antd';
-import {UploadFile} from 'antd/es/upload/interface';
-import {UploadChangeParam} from 'antd/lib/upload/interface';
 import React from 'react';
-import {FormattedMessage} from 'react-intl';
 import {ECurrencyType} from 'enums/base.enum';
-import {cookies, host} from '../libs/api/apiClient';
 
 
 export const CCurrencyList = {
@@ -23,3 +18,12 @@ export const CCurrencyTypeByLanguage = {
   'en-US': 'USD',
   'ko-KR': 'KRW',
 };
+
+export const CDefaultEditorHeight = 700;
+export const CDefaultEditorPlugins = [
+  'preview advlist autolink lists link image charmap hr anchor pagebreak',
+  'searchreplace',
+  'insertdatetime nonbreaking save table contextmenu directionality',
+  'emoticons paste textcolor colorpicker textpattern'
+];
+export const CDefaultEditorToolbars = 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | forecolor backcolor | link image preview';

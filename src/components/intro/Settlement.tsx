@@ -1,16 +1,20 @@
 import {CheckOutlined, PlusOutlined} from '@ant-design/icons/lib';
 import {Button, Table, Typography} from 'antd';
+import {useRouteMatch} from 'react-router-dom';
 import {ColumnsType} from 'antd/es/table';
 import {get} from 'lodash';
 import React, {useEffect, useState} from 'react';
+import {TableWrapper, TableHeaderWrapper} from 'GlobalStyles';
 import {FormattedDate} from 'react-intl';
-import {getBoardSettlements} from 'libs/api/intro';
+import {getBoardSettlements, getBoardSettlement, createBoardSettlement} from 'libs/api/board';
 import {useDataApi, usePagination} from 'libs/hooks';
-import {TBoardSettlement} from 'modules/intro';
-import {TListResponse, TPagination} from 'modules/types';
+import {TBoardDetail} from 'modules/board';
+import {EBoardOperation} from 'enums/board.enum';
+import {ERoute} from 'enums/route.enum';
+import {TListResponse, TPagination, RouteMatch} from 'modules/types';
 import {TUser} from 'modules/user';
 import SearchInput from 'components/base/SearchInput';
-import {TableWrapper, TableHeaderWrapper} from 'GlobalStyles';
+import BoardDetail from 'components/base/BoardDetail';
 
 const Settlement = () => {
   const [pagination, setPagination] = usePagination();
@@ -27,7 +31,7 @@ const Settlement = () => {
       q: pagination.q,
     },
   });
-  const [{data, loading}, setCallback] = useDataApi<TListResponse<TBoardSettlement>>(getPromise, {
+  const [{data, loading}, setCallback] = useDataApi<TListResponse<TBoardDetail>>(getPromise, {
     contents: [],
     last: false,
   });
@@ -36,12 +40,16 @@ const Settlement = () => {
     setCallback(() => getPromise);
   }, [pagination]);
 
-  const columns: ColumnsType<TBoardSettlement> = [
+  const columns: ColumnsType<TBoardDetail> = [
     {
       title: '제목',
       dataIndex: 'title',
       className: 'column-title',
-      render: (title: string) => <a href="#">{title}</a>,
+      render: (_: any, record: TBoardDetail) => (
+        <a href={`${ERoute.IntroSettlement}/${EBoardOperation.View}/${record.id}`}>
+          {record.title}
+        </a>
+      )
     },
     {
       title: '작성자',
@@ -76,28 +84,46 @@ const Settlement = () => {
 
   return (
     <>
-    <TableHeaderWrapper>
-      <SearchInput pagination={pagination} reloadPage={reloadPage}/>
-      <Button className="add-button" type="primary" size="large" icon={<PlusOutlined/>}>글쓰기</Button>
-    </TableHeaderWrapper>
-    <TableWrapper>
-      <Table
-        tableLayout={'fixed'}
-        rowKey="id"
-        loading={loading}
-        columns={columns}
-        pagination={{
-          ...pagination,
-          total: get(data, 'total', 0),
-        }}
-        size="small"
-        dataSource={get(data, 'contents')}
-        onChange={(page, filters, sorter, extra) => {
-          reloadPage(page);
-        }}
-      />
-    </TableWrapper>
+      <TableHeaderWrapper>
+        <SearchInput pagination={pagination} reloadPage={reloadPage}/>
+        <Button
+          className="add-button"
+          type="primary"
+          size="large"
+          href={`${ERoute.IntroSettlement}/${EBoardOperation.Create}`}
+          icon={<PlusOutlined/>}
+        >
+          글쓰기
+        </Button>
+      </TableHeaderWrapper>
+      <TableWrapper>
+        <Table
+          tableLayout={'fixed'}
+          rowKey="id"
+          loading={loading}
+          columns={columns}
+          pagination={{...pagination, total: get(data, 'total', 0)}}
+          size="small"
+          dataSource={get(data, 'contents')}
+          onChange={(page, filters, sorter, extra) => {reloadPage(page);}}
+        />
+      </TableWrapper>
     </>
+  );
+};
+
+export const SettlementDetail = () => {
+  const match = useRouteMatch('/intro/settlement/:operation/:record_id?');
+  let {operation=EBoardOperation.View, record_id} = (match?.params as RouteMatch) || {};
+  const [{data, loading}] = useDataApi<TBoardDetail>(getBoardSettlement.bind(null, record_id), {}, operation != EBoardOperation.Create);
+
+  return (
+	<BoardDetail
+	  operation={operation}
+	  pathName={ERoute.IntroSettlement}
+	  promiseCreate={createBoardSettlement}
+	  record={data}
+	/>
   );
 };
 

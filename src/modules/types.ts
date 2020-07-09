@@ -1,4 +1,5 @@
 import React from 'react';
+import {EBoardOperation} from 'enums/board.enum';
 
 export type TErrorResponse = {
   error_message: string;
@@ -22,4 +23,9 @@ export type TListResponse<T> = {
   contents: Array<T>;
   last: boolean;
   total: number;
+};
+
+export type RouteMatch = {
+  record_id: number;
+  operation: EBoardOperation;
 };

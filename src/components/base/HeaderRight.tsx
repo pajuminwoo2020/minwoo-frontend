@@ -3,6 +3,7 @@ import {useLocation, Link} from 'react-router-dom';
 import {ClickParam} from 'antd/lib/menu';
 import {DownOutlined} from '@ant-design/icons';
 import {shallowEqual, useSelector} from 'react-redux';
+import {ERoute} from 'enums/route.enum';
 import {Menu, Col, Row, Typography, Button, Drawer, Breadcrumb, Dropdown} from 'antd';
 import styled from 'styled-components';
 import {RootState} from 'modules';
@@ -26,7 +27,7 @@ export const HeaderRight = () => {
       await userLogout();
       cookies.remove('sessionid');
       cookies.remove('womenlink_csrftoken');
-      window.location.href = '/user/login';
+      window.location.href = ERoute.UserLogin;
     } catch (e) {
       throw e;
     }
@@ -35,7 +36,7 @@ export const HeaderRight = () => {
   function onClickMenu(e: ClickParam) {
     switch (e.key) {
       case 'user-setting':
-        window.location.href = '/user/edit';
+        window.location.href = ERoute.UserEdit;
         break;
       case 'logout':
         onClickLogout();
@@ -67,8 +68,8 @@ export const HeaderRight = () => {
         </Dropdown>
       ) : (
         <>
-          <Button size="large" type="primary" href="/user/login"><Text>로그인</Text></Button>
-          <Button size="large" href="/user/signup"><Text>회원가입</Text></Button>
+          <Button size="large" type="primary" href={ERoute.UserLogin}><Text>로그인</Text></Button>
+          <Button size="large" href={ERoute.UserSignup}><Text>회원가입</Text></Button>
         </>
       )}
     </Row>

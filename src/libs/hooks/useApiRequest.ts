@@ -24,7 +24,6 @@ export type StateType<T> = {
 export const useDataApi = <T>(
   promise: any,
   initialData?: Partial<T>,
-  deps: any[] = [],
   shouldExecute: boolean = true,
 ): [StateType<T>, any, Dispatch<SetStateAction<boolean>>] => {
   const [executing, setExecuting] = useState<boolean>(shouldExecute);
@@ -61,7 +60,7 @@ export const useDataApi = <T>(
       didCancel = true;
       cancel.cancel('canceled');
     };
-  }, [callback].concat(deps));
+  }, [callback]);
 
   return [state, setCallback, setExecuting];
 };

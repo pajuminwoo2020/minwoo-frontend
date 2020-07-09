@@ -3,6 +3,7 @@ import {useLocation} from 'react-router-dom';
 import {Layout, Menu, Col, Row, Typography, Button, Drawer, Breadcrumb} from 'antd';
 import styled from 'styled-components';
 import {filter, get, map} from 'lodash';
+import {ERoute} from 'enums/route.enum';
 
 type TMenuProps = {
   mode: "horizontal" | "inline";
@@ -76,7 +77,7 @@ const menuNames = [{
   }],
 }, {
   name: '자료실',
-  path: 'board',
+  path: 'bulletin',
   children: [{
     name: '소식지',
     path: 'newsletter',
@@ -109,66 +110,66 @@ export const HeaderLeft = ({mode, onClick}: TMenuProps) => {
   return (
     <Menu selectedKeys={[location.pathname]} mode={mode} onClick={onClick}>
       <SubMenu title={getMenuTitle('/intro')[0]}>
-        <Menu.Item key="/intro/about">
-          <a href="/intro/about">{getMenuTitle('/intro/about')[1]}</a>
+        <Menu.Item key={ERoute.IntroAbout}>
+          <a href={ERoute.IntroAbout}>{getMenuTitle(ERoute.IntroAbout)[1]}</a>
         </Menu.Item>
-        <Menu.Item key="/intro/people">
-          <a href="/intro/people">{getMenuTitle('/intro/people')[1]}</a>
+        <Menu.Item key={ERoute.IntroPeople}>
+          <a href={ERoute.IntroPeople}>{getMenuTitle(ERoute.IntroPeople)[1]}</a>
         </Menu.Item>
-        <Menu.Item key="/intro/history">
-          <a href="/intro/history">{getMenuTitle('/intro/history')[1]}</a>
+        <Menu.Item key={ERoute.IntroHistory}>
+          <a href={ERoute.IntroHistory}>{getMenuTitle(ERoute.IntroHistory)[1]}</a>
         </Menu.Item>
-        <Menu.Item key="/intro/settlement">
-          <a href="/intro/settlement">{getMenuTitle('/intro/settlement')[1]}</a>
+        <Menu.Item key={ERoute.IntroSettlement}>
+          <a href={ERoute.IntroSettlement}>{getMenuTitle(ERoute.IntroSettlement)[1]}</a>
         </Menu.Item>
-        <Menu.Item key="/intro/location">
-          <a href="/intro/location">{getMenuTitle('/intro/location')[1]}</a>
+        <Menu.Item key={ERoute.IntroLocation}>
+          <a href={ERoute.IntroLocation}>{getMenuTitle(ERoute.IntroLocation)[1]}</a>
         </Menu.Item>
       </SubMenu>
       <SubMenu title={getMenuTitle('/activity')[0]}>
-        <Menu.Item key="/activity/notice">
-          <a href="/activity/notice">{getMenuTitle('/activity/notice')[1]}</a>
+        <Menu.Item key={ERoute.ActivityNotice}>
+          <a href={ERoute.ActivityNotice}>{getMenuTitle(ERoute.ActivityNotice)[1]}</a>
         </Menu.Item>
-        <Menu.Item key="/activity/action">
-          <a href="/activity/action">{getMenuTitle('/activity/action')[1]}</a>
+        <Menu.Item key={ERoute.ActivityAction}>
+          <a href={ERoute.ActivityAction}>{getMenuTitle(ERoute.ActivityAction)[1]}</a>
         </Menu.Item>
-        <Menu.Item key="/activity/press">
-          <a href="/activity/press">{getMenuTitle('/activity/press')[1]}</a>
+        <Menu.Item key={ERoute.ActivityPress}>
+          <a href={ERoute.ActivityPress}>{getMenuTitle(ERoute.ActivityPress)[1]}</a>
         </Menu.Item>
       </SubMenu>
       <SubMenu title={getMenuTitle('/affiliate')[0]}>
         <Menu.ItemGroup title="성폭력상담소">
-          <Menu.Item key="/affiliate/about">
-            <a href="/affiliate/about">{getMenuTitle('/affiliate/about')[2]}</a>
+          <Menu.Item key={ERoute.AffiliateAbout}>
+            <a href={ERoute.AffiliateAbout}>{getMenuTitle(ERoute.AffiliateAbout)[2]}</a>
           </Menu.Item>
-          <Menu.Item key="/affiliate/activity">
-            <a href="/affiliate/activity">{getMenuTitle('/affiliate/activity')[2]}</a>
+          <Menu.Item key={ERoute.AffiliateActivity}>
+            <a href={ERoute.AffiliateActivity}>{getMenuTitle(ERoute.AffiliateActivity)[2]}</a>
           </Menu.Item>
         </Menu.ItemGroup>
       </SubMenu>
       <SubMenu title={getMenuTitle('/member')[0]}>
-        <Menu.Item key="/member/society_about">
-          <a href="/member/society_about">{getMenuTitle('/member/society_about')[1]}</a>
+        <Menu.Item key={ERoute.MemberSocietyAbout}>
+          <a href={ERoute.MemberSocietyAbout}>{getMenuTitle(ERoute.MemberSocietyAbout)[1]}</a>
         </Menu.Item>
-        <Menu.Item key="/member/society_activity">
-          <a href="/member/society_activity">{getMenuTitle('/member/society_activity')[1]}</a>
+        <Menu.Item key={ERoute.MemberSocietyActivity}>
+          <a href={ERoute.MemberSocietyActivity}>{getMenuTitle(ERoute.MemberSocietyActivity)[1]}</a>
         </Menu.Item>
-        <Menu.Item key="/member/local">
-          <a href="/member/local">{getMenuTitle('/member/local')[1]}</a>
+        <Menu.Item key={ERoute.MemberLocal}>
+          <a href={ERoute.MemberLocal}>{getMenuTitle(ERoute.MemberLocal)[1]}</a>
         </Menu.Item>
-        <Menu.Item key="/member/donation">
-          <a href="/member/donation">{getMenuTitle('/member/donation')[1]}</a>
+        <Menu.Item key={ERoute.MemberDonation}>
+          <a href={ERoute.MemberDonation}>{getMenuTitle(ERoute.MemberDonation)[1]}</a>
         </Menu.Item>
-        <Menu.Item key="/member/band">
-          <a href="/member/band">{getMenuTitle('/member/band')[1]}</a>
+        <Menu.Item key={ERoute.MemberBand}>
+          <a href={ERoute.MemberBand}>{getMenuTitle(ERoute.MemberBand)[1]}</a>
         </Menu.Item>
       </SubMenu>
-      <SubMenu title={getMenuTitle('/board')[0]}>
-        <Menu.Item key="/board/newsletter">
-          <a href="/board/newsletter">{getMenuTitle('/board/newsletter')[1]}</a>
+      <SubMenu title={getMenuTitle('/bulletin')[0]}>
+        <Menu.Item key={ERoute.BulletinNewsletter}>
+          <a href={ERoute.BulletinNewsletter}>{getMenuTitle(ERoute.BulletinNewsletter)[1]}</a>
         </Menu.Item>
-        <Menu.Item key="/board/gallery">
-          <a href="/board/gallery">{getMenuTitle('/board/gallery')[1]}</a>
+        <Menu.Item key={ERoute.BulletinGallery}>
+          <a href={ERoute.BulletinGallery}>{getMenuTitle(ERoute.BulletinGallery)[1]}</a>
         </Menu.Item>
       </SubMenu>
     </Menu>
