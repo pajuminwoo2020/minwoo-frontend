@@ -290,6 +290,7 @@ export const TableWrapper = styled.div`
 export const TableHeaderWrapper = styled.div`
   width: 100%;
   display: inline-block;
+  margin-bottom: 20px;
 
   .search-input {
     float: left;
@@ -307,6 +308,46 @@ export const TableHeaderWrapper = styled.div`
     @media screen and ${device.mobile} {
       display: none;
     }
+  }
+`;
+
+export const CardWrapper = styled.a`
+  width: 100%;
+  overflow: hidden;
+  display: block;
+  position: relative;
+
+  .ant-card-cover > * {
+    width: auto !important;
+    position: absolute;
+  }
+
+  .ant-card {
+    max-width: 300px;
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+  }
+
+  .ant-card-body {
+    position: absolute;
+    background-color: #fff;
+    width: 100%;
+    bottom: 0;
+  }
+
+  .ant-card-meta-title {
+    font-weight: bold;
+    height: 40px;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-pack: center;
+    -webkit-line-clamp: 2;
+    word-break: break-word;
+    white-space: normal;
+    line-height: 22px;
+    overflow: hidden;
   }
 `;
 

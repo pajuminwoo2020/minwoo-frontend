@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {get, isEmpty} from 'lodash';
 import {AxiosResponse} from 'axios';
@@ -14,6 +14,7 @@ import {TBoardDetail, TCreateBoardDetail} from 'modules/board';
 import EditorComponent from 'components/base/EditorComponent';
 import {showConfirm} from 'components/modal/showConfirm';
 import {handleFieldError} from 'libs/api/errorHandle';
+import {useThumbnail} from 'libs/hooks';
 
 type TBoardDetailProps = {
   operation: EBoardOperation;
@@ -21,6 +22,7 @@ type TBoardDetailProps = {
   promiseCreate: any,
   promiseUpdate: any,
   promiseDelete: any,
+  hasThumbnail?: boolean,
   record?: TBoardDetail;
 };
 
@@ -30,6 +32,7 @@ export const BoardDetail = ({
   promiseCreate,
   promiseDelete,
   promiseUpdate,
+  hasThumbnail=false,
   record
 }: TBoardDetailProps) => {
   const history = useHistory();
@@ -109,7 +112,9 @@ export const BoardDetail = ({
               size="large"
               onClick={() => showConfirm(() => onClickDelete(), '게시글을 삭제하시겠습니까?')}
               style={{marginRight: '20px'}}
-            >삭제</Button>
+            >
+              삭제
+            </Button>
             <Button type="primary" size="large" href={`${pathName}/${EBoardOperation.Edit}/${get(record, 'id')}`}>수정</Button>
           </Col>
         </Row>
@@ -119,6 +124,8 @@ export const BoardDetail = ({
 
   const BoardEdit = () => {
     const [form] = Form.useForm();
+    const [thumbnailSource, setThumbnail] = useThumbnail(hasThumbnail);
+    const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
 
     useEffect(() => {
       if (isEmpty(record) === false) {
@@ -130,9 +137,11 @@ export const BoardDetail = ({
 
     async function onClickUpdate() {
       try {
+        setSubmitButtonDisabled(true);
         await promiseUpdate(get(record, 'id'), {
           title: form.getFieldValue('title'),
           body: form.getFieldValue('body'),
+          thumbnail_source: thumbnailSource,
         });
 
         history.push({
@@ -144,6 +153,8 @@ export const BoardDetail = ({
       } catch (e) {
         handleFieldError(e, form);
         throw e;
+      } finally {
+        setSubmitButtonDisabled(false);
       }
     }
 
@@ -154,7 +165,7 @@ export const BoardDetail = ({
             <Input size="large" placeholder="제목"/>
           </Form.Item>
           <Form.Item name="body">
-            <EditorComponent content={get(record, 'body', '')} disabled={false}/>
+            <EditorComponent content={get(record, 'body', '')} setThumbnail={setThumbnail} disabled={false}/>
           </Form.Item>
         </Form>
         <Row justify="space-between" className="btn-bottom">
@@ -162,7 +173,14 @@ export const BoardDetail = ({
             <Button type="primary" size="large" href={pathName}>목록</Button>
           </Col>
           <Col>
-            <Button type="primary" size="large" onClick={onClickUpdate}>수정</Button>
+            <Button
+              type="primary"
+              size="large"
+              disabled={submitButtonDisabled}
+              onClick={onClickUpdate}
+            >
+              수정
+            </Button>
           </Col>
         </Row>
       </>
@@ -171,12 +189,16 @@ export const BoardDetail = ({
 
   const BoardCreate = () => {
     const [form] = Form.useForm();
+    const [thumbnailSource, setThumbnail] = useThumbnail(hasThumbnail);
+    const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
 
     async function onClickCreate() {
       try {
+        setSubmitButtonDisabled(true);
         await promiseCreate({
           title: form.getFieldValue('title'),
           body: form.getFieldValue('body'),
+          thumbnail_source: thumbnailSource,
         });
 
         history.push({
@@ -188,6 +210,8 @@ export const BoardDetail = ({
       } catch (e) {
         handleFieldError(e, form);
         throw e;
+      } finally {
+        setSubmitButtonDisabled(false);
       }
     }
 
@@ -198,7 +222,7 @@ export const BoardDetail = ({
             <Input size="large" placeholder="제목"/>
           </Form.Item>
           <Form.Item name="body">
-            <EditorComponent disabled={false}/>
+            <EditorComponent disabled={false} setThumbnail={setThumbnail}/>
           </Form.Item>
         </Form>
         <Row justify="space-between" className="btn-bottom">
@@ -206,7 +230,14 @@ export const BoardDetail = ({
             <Button type="primary" size="large" href={pathName}>목록</Button>
           </Col>
           <Col>
-            <Button type="primary" size="large" onClick={onClickCreate}>등록</Button>
+            <Button
+              type="primary"
+              size="large"
+              disabled={submitButtonDisabled}
+              onClick={onClickCreate}
+            >
+              등록
+            </Button>
           </Col>
         </Row>
       </>

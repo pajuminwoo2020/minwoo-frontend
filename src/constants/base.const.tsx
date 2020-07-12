@@ -2,6 +2,8 @@ import React from 'react';
 import {ECurrencyType} from 'enums/base.enum';
 
 
+export const CCSRFToken = 'womenlink_csrftoken';
+
 export const CCurrencyList = {
   [ECurrencyType.KRW]: 'KRW',
   [ECurrencyType.USD]: 'USD',

@@ -41,3 +41,37 @@ export const getBoardSettlements = ({params}: TListRequestParams, cancel?: Cance
   });
 };
 
+/**
+ * 공지사항 게시판
+ */
+
+export const getBoardNotice = (id: number, cancel?: CancelTokenSource) => {
+  return apiClient.get<TBoardDetail>(`/board/notice/${id}`, {
+    cancelToken: cancel?.token,
+  });
+};
+export const createBoardNotice = (params: TCreateBoardDetail, cancel?: CancelTokenSource) => {
+  return apiClient.post('/board/notice', params, {
+    cancelToken: cancel?.token,
+  });
+};
+
+export const updateBoardNotice = (id?: number, params?: TUpdateBoardDetail, cancel?: CancelTokenSource) => {
+  return apiClient.put(`/board/notice/${id}`, params, {
+    cancelToken: cancel?.token,
+  });
+};
+
+export const deleteBoardNotice = (id: number, cancel?: CancelTokenSource) => {
+  return apiClient.delete(`/board/notice/${id}`, {
+    cancelToken: cancel?.token,
+  });
+};
+
+export const getBoardNotices = ({params}: TListRequestParams, cancel?: CancelTokenSource) => {
+  return apiClient.get<TListResponse<TBoardDetail>>(`/board/notices`, {
+    params: params,
+    cancelToken: cancel?.token,
+  });
+};
+

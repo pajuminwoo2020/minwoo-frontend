@@ -18,7 +18,7 @@ import People from 'components/intro/People';
 import History from 'components/intro/History';
 import Settlement, {SettlementDetail} from 'components/intro/Settlement';
 import Location from 'components/intro/Location';
-import Notice from 'components/activity/Notice';
+import Notice, {NoticeDetail} from 'components/activity/Notice';
 import Action from 'components/activity/Action';
 import Press from 'components/activity/Press';
 import AffiliateAbout from 'components/affiliate/About';
@@ -90,6 +90,9 @@ const App = () => {
             </Route>
             <Route exact path={ERoute.ActivityNotice}>
               <BaseTemplate><Notice/></BaseTemplate>
+            </Route>
+            <Route path={`${ERoute.ActivityNotice}/:operation`}>
+              <BaseTemplate><NoticeDetail/></BaseTemplate>
             </Route>
             <Route exact path={ERoute.ActivityAction}>
               <BaseTemplate><Action/></BaseTemplate>
