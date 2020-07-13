@@ -36,6 +36,7 @@ const EditorComponent: React.FC<TEditorComponentProps> = ({
       />
       <Editor
         apiKey={Configs.EDITOR_API_KEY}
+        inline={disabled}
         value={content}
         init={{
           setup: function (ed: any) {

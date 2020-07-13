@@ -222,7 +222,7 @@ export const BoardDetail = ({
             <Input size="large" placeholder="제목"/>
           </Form.Item>
           <Form.Item name="body">
-            <EditorComponent disabled={false} setThumbnail={setThumbnail}/>
+            <EditorComponent setThumbnail={setThumbnail} disabled={false}/>
           </Form.Item>
         </Form>
         <Row justify="space-between" className="btn-bottom">
