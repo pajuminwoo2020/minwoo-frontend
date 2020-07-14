@@ -95,8 +95,7 @@ const Notice = () => {
                   <img
                     alt={"Notice"}
                     src={getImageSource(item)}
-                    height='400px'
-                    width='400px'
+                    height='300px'
                   />
                 }
               >
