@@ -1,11 +1,10 @@
 import debounce from 'lodash.debounce';
 import {Editor} from '@tinymce/tinymce-react';
-import {CCSRFToken} from 'constants/base.const';
 import React, {useCallback, useEffect, useState} from 'react';
 import {Spin} from 'antd';
 import {CDefaultEditorHeight, CDefaultEditorPlugins, CDefaultEditorToolbars} from 'constants/base.const';
 import Configs from 'config';
-import {cookies} from 'libs/api/apiClient';
+import {cookies, CCSRFToken} from 'libs/api/apiClient';
 
 type TEditorComponentProps = {
   content?: string,

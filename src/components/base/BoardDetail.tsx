@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
-import {get, isEmpty} from 'lodash';
+import {get, isEmpty, map} from 'lodash';
 import {AxiosResponse} from 'axios';
-import {ExclamationCircleOutlined} from '@ant-design/icons';
-import {Row, Col, Form, Input, Button, Modal} from 'antd';
+import {ExclamationCircleOutlined, InboxOutlined} from '@ant-design/icons';
+import {UploadChangeParam} from 'antd/lib/upload/interface';
+import {Row, Col, Form, Input, Button, Modal, Upload} from 'antd';
 import {FormattedDate} from 'react-intl';
 import {useHistory} from 'react-router-dom';
 import {BoardDetailWrapper} from 'components/base/styles';
@@ -15,6 +16,9 @@ import EditorComponent from 'components/base/EditorComponent';
 import {showConfirm} from 'components/modal/showConfirm';
 import {handleFieldError} from 'libs/api/errorHandle';
 import {useThumbnail} from 'libs/hooks';
+import {CUploadProps} from 'constants/base.const';
+import {filteredFileNames} from 'libs/utils';
+import Configs from 'config';
 
 type TBoardDetailProps = {
   operation: EBoardOperation;
@@ -99,9 +103,17 @@ export const BoardDetail = ({
     return (
       <>
         <BoardTitle/>
-        <div className= "body-view">
+        <div className="body-view">
           <EditorComponent content={get(record, 'body', '')} disabled={true}/>
         </div>
+        {get(record, 'files', []).length > 0 && (
+          <div className="box-attachments">
+            첨부파일
+            {map(get(record, 'files', []), v => (
+              <a className="file-name" href={`${Configs.API_HOST}${get(v, 'absolute_url')}`}>{get(v, 'file_name')}</a>
+            ))}
+          </div>
+        )}
         <Row justify="space-between" className="btn-bottom">
           <Col>
             <Button type="primary" size="large" href={pathName}>목록</Button>
@@ -131,6 +143,11 @@ export const BoardDetail = ({
       if (isEmpty(record) === false) {
         form.setFieldsValue({
           title: get(record, 'title'),
+          files: map(get(record, 'files'), v => ({
+            uid: v.id,
+            status: 'done',
+            name: v.file_name,
+          })),
         });
       }
     }, [record]);
@@ -141,6 +158,7 @@ export const BoardDetail = ({
         await promiseUpdate(get(record, 'id'), {
           title: form.getFieldValue('title'),
           body: form.getFieldValue('body'),
+          file_ids: filteredFileNames(form.getFieldValue('files')),
           thumbnail_source: thumbnailSource,
         });
 
@@ -166,6 +184,21 @@ export const BoardDetail = ({
           </Form.Item>
           <Form.Item name="body">
             <EditorComponent content={get(record, 'body', '')} setThumbnail={setThumbnail} disabled={false}/>
+          </Form.Item>
+          <Form.Item
+            noStyle
+            name="files"
+            shouldUpdate={(prevValues, currentValues) =>
+              prevValues.files !== currentValues.files
+            }
+            valuePropName="fileList"
+            getValueFromEvent={(e: UploadChangeParam) => (Array.isArray(e) ? e : e && e?.fileList)}
+          >
+            <Upload.Dragger name="file" {...CUploadProps}>
+              <p className="ant-upload-drag-icon"><InboxOutlined/></p>
+              <p className="ant-upload-text">파일 업로드하기</p>
+              <p className="ant-upload-hint">파일을 드래그하거나 여기를 클릭해주세요</p>
+            </Upload.Dragger>
           </Form.Item>
         </Form>
         <Row justify="space-between" className="btn-bottom">
@@ -198,6 +231,7 @@ export const BoardDetail = ({
         await promiseCreate({
           title: form.getFieldValue('title'),
           body: form.getFieldValue('body'),
+          file_ids: filteredFileNames(form.getFieldValue('files')),
           thumbnail_source: thumbnailSource,
         });
 
@@ -223,6 +257,21 @@ export const BoardDetail = ({
           </Form.Item>
           <Form.Item name="body">
             <EditorComponent setThumbnail={setThumbnail} disabled={false}/>
+          </Form.Item>
+          <Form.Item
+            noStyle
+            name="files"
+            shouldUpdate={(prevValues, currentValues) =>
+              prevValues.files !== currentValues.files
+            }
+            valuePropName="fileList"
+            getValueFromEvent={(e: UploadChangeParam) => (Array.isArray(e) ? e : e && e?.fileList)}
+          >
+            <Upload.Dragger name="file" {...CUploadProps}>
+              <p className="ant-upload-drag-icon"><InboxOutlined/></p>
+              <p className="ant-upload-text">파일 업로드하기</p>
+              <p className="ant-upload-hint">파일을 드래그하거나 여기를 클릭해주세요</p>
+            </Upload.Dragger>
           </Form.Item>
         </Form>
         <Row justify="space-between" className="btn-bottom">
