@@ -318,14 +318,18 @@ export const CardWrapper = styled.a`
   position: relative;
 
   .ant-card-cover > * {
-    width: auto !important;
     position: absolute;
+    width: 100%;
+  }
+
+  .ant-card-cover img {
+    height: auto;
   }
 
   .ant-card {
     max-width: 300px;
     width: 100%;
-    height: 400px;
+    height: 300px;
     overflow: hidden;
   }
 

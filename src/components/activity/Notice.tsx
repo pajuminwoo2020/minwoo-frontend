@@ -91,13 +91,7 @@ const Notice = () => {
               <Card
                 hoverable
                 loading={loading}
-                cover={
-                  <img
-                    alt={"Notice"}
-                    src={getImageSource(item)}
-                    height='300px'
-                  />
-                }
+                cover={<img alt={"Notice"} src={getImageSource(item)}/>}
               >
                 <Meta title={get(item, 'title')} description={
                   <>
