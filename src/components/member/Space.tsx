@@ -123,7 +123,7 @@ const Space = () => {
   );
 };
 
-export const SpaceDetail = () => {
+export const MemberSpaceDetail = () => {
   const match = useRouteMatch(`${ERoute.MemberSpace}/:operation/:record_id?`);
   let {operation=EBoardOperation.View, record_id} = (match?.params as RouteMatch) || {};
   const [{data, loading}] = useDataApi<TBoardDetail>(getBoardMemberSpace.bind(null, record_id), {}, operation != EBoardOperation.Create);

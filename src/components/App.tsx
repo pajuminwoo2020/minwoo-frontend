@@ -21,17 +21,17 @@ import Location from 'components/intro/Location';
 import Notice, {NoticeDetail} from 'components/activity/Notice';
 import Action, {ActionDetail} from 'components/activity/Action';
 import Donation from 'components/activity/Donation';
-import ActivityMember from 'components/activity/ActivityMember';
+import ActivityMember, {ActivityMemberDetail} from 'components/activity/ActivityMember';
 import Calendar from 'components/activity/Calendar';
-import Press from 'components/activity/Press';
+import Press, {PressDetail} from 'components/activity/Press';
 import AffiliateAbout from 'components/affiliate/About';
 import AffiliateActivity from 'components/affiliate/Activity';
 import MemberAbout from 'components/member/SocietyAbout';
 import MemberActivity from 'components/member/SocietyActivity';
-import MemberSpace from 'components/member/Space';
-import BulletinNewsLetter from 'components/bulletin/NewsLetter';
-import BulletinGallery from 'components/bulletin/Gallery';
-import BulletinDrive from 'components/bulletin/Drive';
+import MemberSpace, {MemberSpaceDetail} from 'components/member/Space';
+import NewsLetter, {NewsLetterDetail} from 'components/bulletin/NewsLetter';
+import Gallery, {GalleryDetail} from 'components/bulletin/Gallery';
+import Drive, {DriveDetail} from 'components/bulletin/Drive';
 import Core from 'components/base/Core';
 import {BaseTemplate} from 'components/base/BaseTemplate';
 import ErrorBoundary from 'components/base/error/ErrorBoundary';
@@ -105,8 +105,14 @@ const App = () => {
             <Route exact path={ERoute.ActivityMember}>
               <BaseTemplate><ActivityMember/></BaseTemplate>
             </Route>
+            <Route path={`${ERoute.ActivityMember}/:operation`}>
+              <BaseTemplate><ActivityMemberDetail/></BaseTemplate>
+            </Route>
             <Route exact path={ERoute.ActivityPress}>
               <BaseTemplate><Press/></BaseTemplate>
+            </Route>
+            <Route path={`${ERoute.ActivityPress}/:operation`}>
+              <BaseTemplate><PressDetail/></BaseTemplate>
             </Route>
             <Route exact path={ERoute.ActivityDonation}>
               <BaseTemplate><Donation/></BaseTemplate>
@@ -129,14 +135,26 @@ const App = () => {
             <Route exact path={ERoute.MemberSpace}>
               <BaseTemplate><MemberSpace/></BaseTemplate>
             </Route>
+            <Route path={`${ERoute.MemberSpace}/:operation`}>
+              <BaseTemplate><MemberSpaceDetail/></BaseTemplate>
+            </Route>
             <Route exact path={ERoute.BulletinNewsletter}>
-              <BaseTemplate><BulletinNewsLetter/></BaseTemplate>
+              <BaseTemplate><NewsLetter/></BaseTemplate>
+            </Route>
+            <Route path={`${ERoute.BulletinNewsletter}/:operation`}>
+              <BaseTemplate><NewsLetterDetail/></BaseTemplate>
             </Route>
             <Route exact path={ERoute.BulletinGallery}>
-              <BaseTemplate><BulletinGallery/></BaseTemplate>
+              <BaseTemplate><Gallery/></BaseTemplate>
+            </Route>
+            <Route path={`${ERoute.BulletinGallery}/:operation`}>
+              <BaseTemplate><GalleryDetail/></BaseTemplate>
             </Route>
             <Route exact path={ERoute.BulletinDrive}>
-              <BaseTemplate><BulletinDrive/></BaseTemplate>
+              <BaseTemplate><Drive/></BaseTemplate>
+            </Route>
+            <Route path={`${ERoute.BulletinDrive}/:operation`}>
+              <BaseTemplate><DriveDetail/></BaseTemplate>
             </Route>
             <Route path="*" component={NoMatch}/>
           </Switch>
