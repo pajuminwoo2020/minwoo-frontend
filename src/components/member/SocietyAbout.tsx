@@ -12,7 +12,7 @@ const SocietyAbout = () => {
 export default SocietyAbout;
 */
 import {CheckOutlined, PlusOutlined} from '@ant-design/icons/lib';
-import {Button, Table, Typography} from 'antd';
+import {List} from 'antd';
 import {useRouteMatch} from 'react-router-dom';
 import {ColumnsType} from 'antd/es/table';
 import {get} from 'lodash';
@@ -83,21 +83,18 @@ const SocietyAbout = () => {
 
   return (
     <>
-      <TableHeaderWrapper>
-        <SearchInput pagination={pagination} reloadPage={reloadPage}/>
-      </TableHeaderWrapper>
-      <TableWrapper>
-        <Table
-          tableLayout={'fixed'}
-          rowKey="id"
-          loading={loading}
-          columns={columns}
-          pagination={{...pagination, total: get(data, 'total', 0)}}
-          size="small"
-          dataSource={get(data, 'contents')}
-          onChange={(page, filters, sorter, extra) => {reloadPage(page);}}
-        />
-      </TableWrapper>
+      <List
+		  itemLayout='horizontal'
+		  dataSource={get(data, 'contents')}
+		  renderItem={item => (
+		  <List.Item>
+			<List.Item.Meta
+			  title={<a href="https://ant.design">{item.name}</a>}
+			  description={item.activity}
+			/>
+		  </List.Item>
+		  )}
+	  />
     </>
   );
 };

@@ -5,6 +5,7 @@ import {
   TCreateSocietyAboutDetail,
   TUpdateSocietyAboutDetail,
 } from 'modules/society';
+// index modules/society/types
 import apiClient from 'libs/api/apiClient';
 
 export const getSocietyAbout = (id: number, cancel?: CancelTokenSource) => {
