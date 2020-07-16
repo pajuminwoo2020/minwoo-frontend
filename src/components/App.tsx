@@ -26,8 +26,8 @@ import Calendar from 'components/activity/Calendar';
 import Press, {PressDetail} from 'components/activity/Press';
 import AffiliateAbout from 'components/affiliate/About';
 import AffiliateActivity from 'components/affiliate/Activity';
-import MemberAbout from 'components/member/SocietyAbout';
-import MemberActivity from 'components/member/SocietyActivity';
+import SocietyAbout from 'components/member/SocietyAbout';
+import SocietyActivity, {SocietyActivityDetail} from 'components/member/SocietyActivity';
 import MemberSpace, {MemberSpaceDetail} from 'components/member/Space';
 import NewsLetter, {NewsLetterDetail} from 'components/bulletin/NewsLetter';
 import Gallery, {GalleryDetail} from 'components/bulletin/Gallery';
@@ -127,10 +127,13 @@ const App = () => {
               <BaseTemplate><AffiliateActivity/></BaseTemplate>
             </Route>
             <Route exact path={ERoute.MemberSocietyAbout}>
-              <BaseTemplate><MemberAbout/></BaseTemplate>
+              <BaseTemplate><SocietyAbout/></BaseTemplate>
             </Route>
             <Route exact path={ERoute.MemberSocietyActivity}>
-              <BaseTemplate><MemberActivity/></BaseTemplate>
+              <BaseTemplate><SocietyActivity/></BaseTemplate>
+            </Route>
+            <Route path={`${ERoute.MemberSocietyActivity}/:operation`}>
+              <BaseTemplate><SocietyActivityDetail/></BaseTemplate>
             </Route>
             <Route exact path={ERoute.MemberSpace}>
               <BaseTemplate><MemberSpace/></BaseTemplate>

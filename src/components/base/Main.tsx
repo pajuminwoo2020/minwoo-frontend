@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {EyeOutlined, BankOutlined, PhoneOutlined} from '@ant-design/icons/lib';
 import {FormattedDate} from 'react-intl';
 import {get, map, filter} from 'lodash';
-import {Card, Divider, List, Carousel, Row, Col, Button, Typography, Spin} from 'antd';
+import {Card, Divider, List, Carousel, Row, Col, Button, Typography} from 'antd';
 import {MainWrapper} from 'components/base/styles';
 import {getImageSource} from 'components/base/BoardDetail';
 import {TListResponse} from 'modules/types';
@@ -58,15 +58,13 @@ const Main = () => {
       <Row gutter={[16, 16]}>
         <Col flex='720px'>
           <div style={{width: '720px'}}>
-            <Spin spinning={loadingBanner}>
-              <Carousel autoplay>
-                {map(filter(get(dataBanner, 'contents', []), v => v.banner_type === EBannerType.Large), v => (
-                  <a href={get(v, 'href')}>
-                    <img src={`${Configs.API_HOST}${get(v, 'absolute_url')}`}/>
-                  </a>
-                ))}
-              </Carousel>
-            </Spin>
+            <Carousel autoplay>
+              {map(filter(get(dataBanner, 'contents', []), v => v.banner_type === EBannerType.Large), v => (
+                <a href={get(v, 'href')}>
+                  <img src={`${Configs.API_HOST}${get(v, 'absolute_url')}`}/>
+                </a>
+              ))}
+            </Carousel>
           </div>
         </Col>
         <Col flex='auto'>

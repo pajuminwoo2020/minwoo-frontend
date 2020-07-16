@@ -212,6 +212,40 @@ export const getBoardMemberSpaces = ({params}: TListRequestParams, cancel?: Canc
 };
 
 /**
+ * 소모임활동 게시판
+ */
+
+export const getBoardSocietyActivity = (id: number, cancel?: CancelTokenSource) => {
+  return apiClient.get<TBoardDetail>(`/board/society_activity/${id}`, {
+    cancelToken: cancel?.token,
+  });
+};
+export const createBoardSocietyActivity = (params: TCreateBoardDetail, cancel?: CancelTokenSource) => {
+  return apiClient.post('/board/society_activity', params, {
+    cancelToken: cancel?.token,
+  });
+};
+
+export const updateBoardSocietyActivity = (id?: number, params?: TUpdateBoardDetail, cancel?: CancelTokenSource) => {
+  return apiClient.put(`/board/society_activity/${id}`, params, {
+    cancelToken: cancel?.token,
+  });
+};
+
+export const deleteBoardSocietyActivity = (id: number, cancel?: CancelTokenSource) => {
+  return apiClient.delete(`/board/society_activity/${id}`, {
+    cancelToken: cancel?.token,
+  });
+};
+
+export const getBoardSocietyActivitys = ({params}: TListRequestParams, cancel?: CancelTokenSource) => {
+  return apiClient.get<TListResponse<TBoardDetail>>(`/board/society_activities`, {
+    params: params,
+    cancelToken: cancel?.token,
+  });
+};
+
+/**
  * 소식지 게시판
  */
 

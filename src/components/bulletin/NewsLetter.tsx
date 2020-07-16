@@ -4,7 +4,8 @@ import {useRouteMatch} from 'react-router-dom';
 import {ColumnsType} from 'antd/es/table';
 import {get} from 'lodash';
 import React, {useEffect, useState} from 'react';
-import {TableHeaderWrapper, CardWrapper} from 'GlobalStyles';
+import styled from 'styled-components';
+import {TableHeaderWrapper} from 'GlobalStyles';
 import {FormattedDate} from 'react-intl';
 import Configs from 'config';
 import {
@@ -24,6 +25,55 @@ import SearchInput from 'components/base/SearchInput';
 import BoardDetail, {getImageSource} from 'components/base/BoardDetail';
 
 const {Meta} = Card;
+const NewsLetterWrapper = styled.a`
+  width: 100%;
+  overflow: hidden;
+  display: block;
+  position: relative;
+
+  .ant-card-cover > * {
+    position: absolute;
+    width: 100%;
+  }
+
+  .ant-card-cover img {
+    height: 100%;
+  }
+
+  .ant-card {
+    max-width: 300px;
+    width: 100%;
+    height: 350px;
+    overflow: hidden;
+  }
+
+  .ant-card-body {
+    position: absolute;
+    background-color: #fff;
+    width: 100%;
+    bottom: 10%;
+    opacity: 0.6;
+  }
+
+  .ant-card-body:hover {
+    opacity: 1;
+  }
+
+  .ant-card-meta-title {
+    font-weight: bold;
+    height: 40px;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-pack: center;
+    -webkit-line-clamp: 2;
+    word-break: break-word;
+    white-space: normal;
+    line-height: 22px;
+    overflow: hidden;
+  }
+`;
+
 const NewsLetter = () => {
   const [pagination, setPagination] = usePagination();
   const reloadPage = (page?: Partial<TPagination>) => {
@@ -79,28 +129,27 @@ const NewsLetter = () => {
         dataSource={get(data, 'contents')}
         renderItem={item => (
           <List.Item>
-            <CardWrapper href={`${ERoute.BulletinNewsletter}/${EBoardOperation.View}/${get(item, 'id')}`}>
+            <NewsLetterWrapper href={`${ERoute.BulletinNewsletter}/${EBoardOperation.View}/${get(item, 'id')}`}>
               <Card
                 hoverable
                 loading={loading}
                 cover={<img alt={"NewsLetter"} src={getImageSource(item)}/>}
               >
                 <Meta title={get(item, 'title')} description={
-                  <>
-                    <FormattedDate
-                      value={get(item, 'created_at')}
-                      year="numeric"
-                      month="long"
-                      day="2-digit"
-                    />
-                    <Row justify="space-between">
-                      <Col>{get(item, 'created_by.fullname')} </Col>
-                      <Col><EyeOutlined/>&nbsp;{get(item, 'hit_count')}</Col>
-                    </Row>
-                  </>
+                  <Row justify="space-between">
+                    <Col>
+                      <FormattedDate
+                        value={get(item, 'created_at')}
+                        year="numeric"
+                        month="long"
+                        day="2-digit"
+                      />
+                    </Col>
+                    <Col><EyeOutlined/>&nbsp;{get(item, 'hit_count')}</Col>
+                  </Row>
                 }/>
               </Card>
-            </CardWrapper>
+            </NewsLetterWrapper>
           </List.Item>
         )}
       />
