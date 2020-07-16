@@ -37,23 +37,31 @@ const menuNames = [{
     name: '공지사항',
     path: 'notice',
   }, {
-    name: '민우액션',
+    name: '민우뉴스',
     path: 'action',
   }, {
-    name: '언론속의 민우회',
+    name: '회원활동',
+    path: 'member',
+  }, {
+    name: '지역소식',
     path: 'press',
   }, {
+    name: '후원하기',
+    path: 'donation',
+  }, {
+    name: '일정표',
+    path: 'calendar',
   }],
 }, {
   name: '부설기구',
   path: 'affiliate',
   children: [{
     group: '성폭력상담소',
-    name: '소개',
+    name: '상담소소개',
     path: 'about',
   }, {
     group: '성폭력상담소',
-    name: '반성폭력활동',
+    name: '활동자료',
     path: 'activity',
   }],
 }, {
@@ -66,14 +74,8 @@ const menuNames = [{
     name: '소모임활동',
     path: 'society_activity',
   }, {
-    name: '지역소식',
-    path: 'local',
-  }, {
-    name: '후원하기',
-    path: 'donation',
-  }, {
     name: '회원공간',
-    path: 'band',
+    path: 'space',
   }],
 }, {
   name: '자료실',
@@ -84,6 +86,9 @@ const menuNames = [{
   }, {
     name: '갤러리',
     path: 'gallery',
+  }, {
+    name: '자료실',
+    path: 'drive',
   }],
 }];
 
@@ -133,8 +138,17 @@ export const HeaderLeft = ({mode, onClick}: TMenuProps) => {
         <Menu.Item key={ERoute.ActivityAction}>
           <a href={ERoute.ActivityAction}>{getMenuTitle(ERoute.ActivityAction)[1]}</a>
         </Menu.Item>
+        <Menu.Item key={ERoute.ActivityMember}>
+          <a href={ERoute.ActivityMember}>{getMenuTitle(ERoute.ActivityMember)[1]}</a>
+        </Menu.Item>
         <Menu.Item key={ERoute.ActivityPress}>
           <a href={ERoute.ActivityPress}>{getMenuTitle(ERoute.ActivityPress)[1]}</a>
+        </Menu.Item>
+        <Menu.Item key={ERoute.ActivityDonation}>
+          <a href={ERoute.ActivityDonation}>{getMenuTitle(ERoute.ActivityDonation)[1]}</a>
+        </Menu.Item>
+        <Menu.Item key={ERoute.ActivityCalendar}>
+          <a href={ERoute.ActivityCalendar}>{getMenuTitle(ERoute.ActivityCalendar)[1]}</a>
         </Menu.Item>
       </SubMenu>
       <SubMenu title={getMenuTitle('/affiliate')[0]}>
@@ -154,14 +168,8 @@ export const HeaderLeft = ({mode, onClick}: TMenuProps) => {
         <Menu.Item key={ERoute.MemberSocietyActivity}>
           <a href={ERoute.MemberSocietyActivity}>{getMenuTitle(ERoute.MemberSocietyActivity)[1]}</a>
         </Menu.Item>
-        <Menu.Item key={ERoute.MemberLocal}>
-          <a href={ERoute.MemberLocal}>{getMenuTitle(ERoute.MemberLocal)[1]}</a>
-        </Menu.Item>
-        <Menu.Item key={ERoute.MemberDonation}>
-          <a href={ERoute.MemberDonation}>{getMenuTitle(ERoute.MemberDonation)[1]}</a>
-        </Menu.Item>
-        <Menu.Item key={ERoute.MemberBand}>
-          <a href={ERoute.MemberBand}>{getMenuTitle(ERoute.MemberBand)[1]}</a>
+        <Menu.Item key={ERoute.MemberSpace}>
+          <a href={ERoute.MemberSpace}>{getMenuTitle(ERoute.MemberSpace)[1]}</a>
         </Menu.Item>
       </SubMenu>
       <SubMenu title={getMenuTitle('/bulletin')[0]}>
@@ -170,6 +178,9 @@ export const HeaderLeft = ({mode, onClick}: TMenuProps) => {
         </Menu.Item>
         <Menu.Item key={ERoute.BulletinGallery}>
           <a href={ERoute.BulletinGallery}>{getMenuTitle(ERoute.BulletinGallery)[1]}</a>
+        </Menu.Item>
+        <Menu.Item key={ERoute.BulletinDrive}>
+          <a href={ERoute.BulletinDrive}>{getMenuTitle(ERoute.BulletinDrive)[1]}</a>
         </Menu.Item>
       </SubMenu>
     </Menu>

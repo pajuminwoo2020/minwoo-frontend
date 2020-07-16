@@ -7,11 +7,11 @@ import React, {useEffect, useState} from 'react';
 import {TableWrapper, TableHeaderWrapper} from 'GlobalStyles';
 import {FormattedDate} from 'react-intl';
 import {
-  getBoardPresses,
-  getBoardPress,
-  createBoardPress,
-  deleteBoardPress,
-  updateBoardPress,
+  getBoardDrives,
+  getBoardDrive,
+  createBoardDrive,
+  deleteBoardDrive,
+  updateBoardDrive,
 } from 'libs/api/board';
 import {useDataApi, usePagination} from 'libs/hooks';
 import {TBoardDetail} from 'modules/board';
@@ -22,7 +22,7 @@ import {TUser} from 'modules/user';
 import SearchInput from 'components/base/SearchInput';
 import BoardDetail from 'components/base/BoardDetail';
 
-const Press = () => {
+const Drive = () => {
   const [pagination, setPagination] = usePagination();
   const reloadPage = (page?: Partial<TPagination>) => {
     setPagination({
@@ -30,7 +30,7 @@ const Press = () => {
       ...page,
     });
   };
-  const getPromise = getBoardPresses.bind(null, {
+  const getPromise = getBoardDrives.bind(null, {
     params: {
       current: pagination.current,
       pageSize: pagination.pageSize,
@@ -57,7 +57,7 @@ const Press = () => {
       dataIndex: 'title',
       className: 'column-title',
       render: (_: any, record: TBoardDetail) => (
-        <a href={`${ERoute.ActivityPress}/${EBoardOperation.View}/${record.id}`}>
+        <a href={`${ERoute.BulletinDrive}/${EBoardOperation.View}/${record.id}`}>
           {record.title}
         </a>
       )
@@ -101,7 +101,7 @@ const Press = () => {
           className="add-button"
           type="primary"
           size="large"
-          href={`${ERoute.ActivityPress}/${EBoardOperation.Create}`}
+          href={`${ERoute.BulletinDrive}/${EBoardOperation.Create}`}
           icon={<PlusOutlined/>}
         >
           글쓰기
@@ -123,23 +123,23 @@ const Press = () => {
   );
 };
 
-export const PressDetail = () => {
-  const match = useRouteMatch(`${ERoute.ActivityPress}/:operation/:record_id?`);
+export const DriveDetail = () => {
+  const match = useRouteMatch(`${ERoute.BulletinDrive}/:operation/:record_id?`);
   let {operation=EBoardOperation.View, record_id} = (match?.params as RouteMatch) || {};
-  const [{data, loading}] = useDataApi<TBoardDetail>(getBoardPress.bind(null, record_id), {}, operation != EBoardOperation.Create);
+  const [{data, loading}] = useDataApi<TBoardDetail>(getBoardDrive.bind(null, record_id), {}, operation != EBoardOperation.Create);
 
   return (
 	<BoardDetail
 	  operation={operation}
-	  pathName={ERoute.ActivityPress}
-	  promiseCreate={createBoardPress}
-	  promiseDelete={deleteBoardPress}
-	  promiseUpdate={updateBoardPress}
+	  pathName={ERoute.BulletinDrive}
+	  promiseCreate={createBoardDrive}
+	  promiseDelete={deleteBoardDrive}
+	  promiseUpdate={updateBoardDrive}
 	  record={data}
 	/>
   );
 };
 
-Press.defaultProps = {};
+Drive.defaultProps = {};
 
-export default Press;
+export default Drive;

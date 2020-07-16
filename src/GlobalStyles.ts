@@ -64,6 +64,11 @@ const GlobalStyles = createGlobalStyle`
     border-top: 0px !important;
   }
 
+  .ant-pagination {
+    text-align: center;
+    float: none !important;
+  }
+
   .form-item-upload-dragger .ant-form-item-control {
     display: block;
   }

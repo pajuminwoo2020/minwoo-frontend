@@ -7,7 +7,6 @@ import React, {useEffect, useState} from 'react';
 import {TableHeaderWrapper, CardWrapper} from 'GlobalStyles';
 import {FormattedDate} from 'react-intl';
 import Configs from 'config';
-import LogoSource from 'assets/logo.png';
 import {
   getBoardNotices,
   getBoardNotice,
@@ -22,7 +21,7 @@ import {ERoute} from 'enums/route.enum';
 import {TListResponse, TPagination, RouteMatch} from 'modules/types';
 import {TUser} from 'modules/user';
 import SearchInput from 'components/base/SearchInput';
-import BoardDetail from 'components/base/BoardDetail';
+import BoardDetail, {getImageSource} from 'components/base/BoardDetail';
 
 const {Meta} = Card;
 const Notice = () => {
@@ -48,13 +47,6 @@ const Notice = () => {
   useEffect(() => {
     setCallback(() => getPromise);
   }, [pagination]);
-
-  function getImageSource(item: TBoardDetail) {
-    if (get(item, 'thumbnail_source'))
-      return `${Configs.API_HOST}${get(item, 'thumbnail_source')}`;
-
-    return LogoSource;
-  }
 
   return (
     <>

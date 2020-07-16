@@ -9,6 +9,7 @@ import {FormattedDate} from 'react-intl';
 import {useHistory} from 'react-router-dom';
 import {BoardDetailWrapper} from 'components/base/styles';
 import {EBoardOperation} from 'enums/board.enum';
+import LogoSource from 'assets/logo.png';
 import {ENotificationType} from 'enums/base.enum';
 import NoMatch from 'components/base/error/NoMatch';
 import {TBoardDetail, TCreateBoardDetail} from 'modules/board';
@@ -136,7 +137,7 @@ export const BoardDetail = ({
 
   const BoardEdit = () => {
     const [form] = Form.useForm();
-    const [thumbnailSource, setThumbnail] = useThumbnail(hasThumbnail);
+    const [thumbnailSource, setThumbnail, setThumbnailSource] = useThumbnail(hasThumbnail);
     const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
 
     useEffect(() => {
@@ -149,6 +150,7 @@ export const BoardDetail = ({
             name: v.file_name,
           })),
         });
+        setThumbnailSource(get(record, 'thumbnail_source'));
       }
     }, [record]);
 
@@ -306,6 +308,13 @@ export const BoardDetail = ({
       }
     </BoardDetailWrapper>
   );
+}
+
+export function getImageSource(item: TBoardDetail) {
+  if (get(item, 'thumbnail_source'))
+    return `${Configs.API_HOST}${get(item, 'thumbnail_source')}`;
+
+  return LogoSource;
 }
 
 export default BoardDetail;
