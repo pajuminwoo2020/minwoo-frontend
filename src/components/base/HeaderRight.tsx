@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
 import {useLocation, Link} from 'react-router-dom';
-import {ClickParam} from 'antd/lib/menu';
-import {DownOutlined} from '@ant-design/icons';
+import {ClickParam,} from 'antd/lib/menu';
+import {DownOutlined, UserOutlined} from '@ant-design/icons';
 import {shallowEqual, useSelector} from 'react-redux';
 import {ERoute} from 'enums/route.enum';
-import {Menu, Col, Row, Typography, Button, Drawer, Breadcrumb, Dropdown} from 'antd';
+import {Avatar, Menu, Col, Row, Typography, Button, Drawer, Breadcrumb, Dropdown} from 'antd';
 import styled from 'styled-components';
 import {RootState} from 'modules';
 import {userLogout} from 'libs/api/user';
-import {cookies} from 'libs/api/apiClient';
+import {cookies, CCSRFToken} from 'libs/api/apiClient';
 
 const {Text} = Typography;
 
@@ -26,7 +26,7 @@ export const HeaderRight = () => {
     try {
       await userLogout();
       cookies.remove('sessionid');
-      cookies.remove('womenlink_csrftoken');
+      cookies.remove(CCSRFToken);
       window.location.href = ERoute.UserLogin;
     } catch (e) {
       throw e;
@@ -61,6 +61,7 @@ export const HeaderRight = () => {
               cursor: 'pointer',
             }}
           >
+            <Avatar shape="circle" style={{marginRight: '5px'}} size="small" icon={<UserOutlined />}/>
             <Text strong={true}>{currentUser.fullname}</Text>
             <Text>&nbsp;&nbsp;{currentUser.userid}</Text>
             <DownOutlined style={{marginLeft: 10}}/>

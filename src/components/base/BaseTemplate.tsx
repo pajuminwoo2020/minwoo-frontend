@@ -12,6 +12,7 @@ import {HeaderLeft, getMenuTitle} from 'components/base/HeaderLeft';
 import {HeaderRight} from 'components/base/HeaderRight';
 import Footer from 'components/base/Footer';
 import {PrimaryColor} from 'GlobalStyles';
+import {CWindowWidth} from 'constants/base.const';
 
 const {Header, Content} = Layout;
 const {Text} = Typography;
@@ -63,7 +64,7 @@ export const BaseTemplate = ({children}: {children: React.ReactNode;}) => {
             </Col>
           </Row>
         </Header>
-        <Breadcrumb style={{margin: '80px auto', width: '1200px', padding: '0px 10px'}} className="hide-on-mobile">
+        <Breadcrumb style={{margin: '80px auto', width: CWindowWidth, padding: '0px 10px'}} className="hide-on-mobile">
           {getMenuTitle(location.pathname)[0] && (
             <>
               <Breadcrumb.Item><HomeOutlined/></Breadcrumb.Item>
@@ -80,7 +81,7 @@ export const BaseTemplate = ({children}: {children: React.ReactNode;}) => {
         </ContentTitle>
       )}
       <Content>
-        <div style={{margin: '0px auto', minHeight: '90vh', maxWidth: '1200px', padding: '0px 10px'}}>
+        <div style={{margin: '0px auto', minHeight: '90vh', maxWidth: CWindowWidth, padding: '0px 10px'}}>
           {children}
         </div>
         <Footer/>

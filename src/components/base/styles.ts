@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {device} from 'GlobalStyles';
-import {CDefaultEditorHeight} from 'constants/base.const';
+import {CDefaultEditorHeight, CWindowWidth} from 'constants/base.const';
 
 export const HeaderWrapper = styled.div`
   height: 70px;
@@ -66,7 +66,7 @@ export const ContentTitle = styled.div`
   margin: 60px auto 20px auto;
   font-size: 25px;
   text-align: left;
-  width: 1200px;
+  width: ${CWindowWidth};
   padding: 0px 10px;
 `;
 
@@ -112,7 +112,7 @@ export const BoardDetailWrapper = styled.div`
 
   .body-view {
     min-height: ${CDefaultEditorHeight}px;
-    padding: 0px 0px 20px 0px;
+    padding: 10px 0px 20px 0px;
     .tox-tinymce {
       border: none;
       z-index: 0;
@@ -123,6 +123,19 @@ export const BoardDetailWrapper = styled.div`
   }
 
   .btn-bottom {
+    padding-top: 20px;
     margin-bottom: 20px;
+    border-top: 1px solid #ccc;
+  }
+
+  .box-attachments {
+    font-weight: bold;
+    background-color: #f5f5f5;
+    padding: 15px 20px;
+
+    .file-name {
+      font-weight: normal;
+      display: block;
+    }
   }
 `;

@@ -1,7 +1,7 @@
 import {TUser} from 'modules/user/types';
 
 /**
- * 소개 -> 결산보고
+ * 게시판 글쓰기/수정
  */
 
 export type TBoardDetail = {

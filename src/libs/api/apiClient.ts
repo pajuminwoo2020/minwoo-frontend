@@ -3,6 +3,7 @@ import {Cookies} from 'react-cookie';
 import Configs from 'config';
 import {handleHTTPError} from 'libs/api/errorHandle';
 
+export const CCSRFToken = 'womenlink_csrftoken';
 export const cookies = new Cookies();
 export const host = Configs.API_HOST;
 const apiClient = axios.create({
@@ -10,7 +11,7 @@ const apiClient = axios.create({
   headers: {
     accept: 'application/json',
     'Content-Type': 'application/json',
-    'X-CSRFToken': cookies.get('womenlink_csrftoken'),
+    'X-CSRFToken': cookies.get(CCSRFToken),
   },
   responseType: 'json',
   withCredentials: true,

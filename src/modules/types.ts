@@ -29,3 +29,10 @@ export type RouteMatch = {
   record_id: number;
   operation: EBoardOperation;
 };
+
+export type TFiles = {
+  uid: number;
+  status: string;
+  name: string;
+  absolute_url: string;
+};
