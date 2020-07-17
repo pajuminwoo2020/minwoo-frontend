@@ -1,6 +1,6 @@
 import {CheckOutlined, PlusOutlined, EyeOutlined} from '@ant-design/icons/lib';
 import {Button, List, Typography, Card, Row, Col} from 'antd';
-import {useRouteMatch} from 'react-router-dom';
+import {useRouteMatch, Link} from 'react-router-dom';
 import {ColumnsType} from 'antd/es/table';
 import {get} from 'lodash';
 import React, {useEffect, useState} from 'react';
@@ -25,7 +25,7 @@ import SearchInput from 'components/base/SearchInput';
 import BoardDetail, {getImageSource} from 'components/base/BoardDetail';
 
 const {Meta} = Card;
-const NewsLetterWrapper = styled.a`
+const NewsLetterWrapper = styled(Link)`
   width: 100%;
   overflow: hidden;
   display: block;
@@ -102,15 +102,16 @@ const NewsLetter = () => {
     <>
       <TableHeaderWrapper>
         <SearchInput pagination={pagination} reloadPage={reloadPage}/>
-        <Button
-          className="add-button"
-          type="primary"
-          size="large"
-          href={`${ERoute.BulletinNewsletter}/${EBoardOperation.Create}`}
-          icon={<PlusOutlined/>}
-        >
-          글쓰기
-        </Button>
+        <Link to={`${ERoute.BulletinNewsletter}/${EBoardOperation.Create}`}>
+          <Button
+            className="add-button"
+            type="primary"
+            size="large"
+            icon={<PlusOutlined/>}
+          >
+            글쓰기
+          </Button>
+        </Link>
       </TableHeaderWrapper>
       <List
         pagination={{
@@ -129,7 +130,7 @@ const NewsLetter = () => {
         dataSource={get(data, 'contents')}
         renderItem={item => (
           <List.Item>
-            <NewsLetterWrapper href={`${ERoute.BulletinNewsletter}/${EBoardOperation.View}/${get(item, 'id')}`}>
+            <NewsLetterWrapper to={`${ERoute.BulletinNewsletter}/${EBoardOperation.View}/${get(item, 'id')}`}>
               <Card
                 hoverable
                 loading={loading}

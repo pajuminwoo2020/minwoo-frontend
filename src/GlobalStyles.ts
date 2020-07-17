@@ -1,5 +1,6 @@
 import {Button, Checkbox, Input, Menu, Modal, Radio, Typography} from 'antd';
 import {get} from 'lodash';
+import {Link} from 'react-router-dom';
 import styled, {createGlobalStyle, CSSProp} from 'styled-components';
 
 
@@ -316,7 +317,7 @@ export const TableHeaderWrapper = styled.div`
   }
 `;
 
-export const CardWrapper = styled.a`
+export const CardWrapper = styled(Link)`
   width: 100%;
   overflow: hidden;
   display: block;

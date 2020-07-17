@@ -1,6 +1,6 @@
 import {CheckOutlined, PlusOutlined} from '@ant-design/icons/lib';
 import {Button, Table, Typography} from 'antd';
-import {useRouteMatch} from 'react-router-dom';
+import {useRouteMatch, Link} from 'react-router-dom';
 import {ColumnsType} from 'antd/es/table';
 import {get} from 'lodash';
 import React, {useEffect, useState} from 'react';
@@ -57,9 +57,9 @@ const Drive = () => {
       dataIndex: 'title',
       className: 'column-title',
       render: (_: any, record: TBoardDetail) => (
-        <a href={`${ERoute.BulletinDrive}/${EBoardOperation.View}/${record.id}`}>
+        <Link to={`${ERoute.BulletinDrive}/${EBoardOperation.View}/${record.id}`}>
           {record.title}
-        </a>
+        </Link>
       )
     },
     {
@@ -97,15 +97,16 @@ const Drive = () => {
     <>
       <TableHeaderWrapper>
         <SearchInput pagination={pagination} reloadPage={reloadPage}/>
-        <Button
-          className="add-button"
-          type="primary"
-          size="large"
-          href={`${ERoute.BulletinDrive}/${EBoardOperation.Create}`}
-          icon={<PlusOutlined/>}
-        >
-          글쓰기
-        </Button>
+        <Link to={`${ERoute.BulletinDrive}/${EBoardOperation.Create}`}>
+          <Button
+            className="add-button"
+            type="primary"
+            size="large"
+            icon={<PlusOutlined/>}
+          >
+            글쓰기
+          </Button>
+        </Link>
       </TableHeaderWrapper>
       <TableWrapper>
         <Table

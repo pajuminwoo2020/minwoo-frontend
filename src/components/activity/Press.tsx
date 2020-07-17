@@ -1,6 +1,6 @@
 import {CheckOutlined, PlusOutlined} from '@ant-design/icons/lib';
 import {Button, Table, Typography} from 'antd';
-import {useRouteMatch} from 'react-router-dom';
+import {useRouteMatch, Link} from 'react-router-dom';
 import {ColumnsType} from 'antd/es/table';
 import {get} from 'lodash';
 import React, {useEffect, useState} from 'react';
@@ -57,9 +57,9 @@ const Press = () => {
       dataIndex: 'title',
       className: 'column-title',
       render: (_: any, record: TBoardDetail) => (
-        <a href={`${ERoute.ActivityPress}/${EBoardOperation.View}/${record.id}`}>
+        <Link to={`${ERoute.ActivityPress}/${EBoardOperation.View}/${record.id}`}>
           {record.title}
-        </a>
+        </Link>
       )
     },
     {
@@ -97,15 +97,16 @@ const Press = () => {
     <>
       <TableHeaderWrapper>
         <SearchInput pagination={pagination} reloadPage={reloadPage}/>
-        <Button
-          className="add-button"
-          type="primary"
-          size="large"
-          href={`${ERoute.ActivityPress}/${EBoardOperation.Create}`}
-          icon={<PlusOutlined/>}
-        >
-          글쓰기
-        </Button>
+        <Link to={`${ERoute.ActivityPress}/${EBoardOperation.Create}`}>
+          <Button
+            className="add-button"
+            type="primary"
+            size="large"
+            icon={<PlusOutlined/>}
+          >
+            글쓰기
+          </Button>
+        </Link>
       </TableHeaderWrapper>
       <TableWrapper>
         <Table

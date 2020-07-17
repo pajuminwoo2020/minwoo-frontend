@@ -1,8 +1,8 @@
 import {get, isPlainObject} from 'lodash';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import {RouteProps} from 'react-router';
-import {Redirect, Route, Switch} from 'react-router-dom';
+import {Redirect, Route, Switch, useLocation} from 'react-router-dom';
 import {IntlProvider} from 'react-intl';
 import {CoreProvider} from 'libs/contexts/CoreContext';
 import {getNavigatorLanguage} from 'libs/utils';
@@ -42,6 +42,7 @@ import {main} from 'libs/api/user';
 const data = main();
 
 const App = () => {
+  const location = useLocation();
   const dispatch = useDispatch();
   const currentUser = useSelector((state: RootState) => state.user.current_user, shallowEqual);
   if (currentUser === undefined) {
@@ -51,6 +52,10 @@ const App = () => {
       dispatch(setUserInfo(response));
     }
   }
+
+  useEffect(() => {
+	window.scrollTo(0,0);
+  }, [location]);
 
   return (
 	<IntlProvider locale={'ko'}>

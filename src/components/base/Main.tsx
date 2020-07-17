@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {EyeOutlined, BankOutlined, PhoneOutlined} from '@ant-design/icons/lib';
 import {FormattedDate} from 'react-intl';
+import {Link} from 'react-router-dom';
 import {get, map, filter} from 'lodash';
 import {Card, Divider, List, Carousel, Row, Col, Button, Typography} from 'antd';
 import {MainWrapper} from 'components/base/styles';
@@ -60,36 +61,36 @@ const Main = () => {
           <div style={{width: '720px'}}>
             <Carousel autoplay>
               {map(filter(get(dataBanner, 'contents', []), v => v.banner_type === EBannerType.Large), v => (
-                <a href={get(v, 'href')}>
+                <Link to={get(v, 'href')}>
                   <img src={`${Configs.API_HOST}${get(v, 'absolute_url')}`}/>
-                </a>
+                </Link>
               ))}
             </Carousel>
           </div>
         </Col>
         <Col flex='auto'>
           <Row>
-            <a className="area-right-top" href={ERoute.ActivityDonation} style={{marginBottom: '20px', textAlign: 'center'}}>
+            <Link className="area-right-top" to={ERoute.ActivityDonation} style={{marginBottom: '20px', textAlign: 'center'}}>
               <p className="title">후원하기</p>
               <p><BankOutlined/>&nbsp;<Text>{CBankAccount}</Text></p>
               <p><PhoneOutlined/>&nbsp;<Text>{CPhone}</Text></p>
-            </a>
+            </Link>
           </Row>
           <Row>
-            <a className="area-right-top" href={ERoute.AffiliateAbout}>
+            <Link className="area-right-top" to={ERoute.AffiliateAbout}>
               <p className="title">교육신청</p>
               <ul>
                 <li>성교육</li>
                 <li>또래교육</li>
                 <li>성평등교육</li>
               </ul>
-            </a>
+            </Link>
           </Row>
         </Col>
       </Row>
       <Row gutter={[16, 16]}>
         <Col xs={24} sm={24} md={18} lg={18} xl={18}>
-          <a href={ERoute.ActivityAction}><Text className="board-title">민우뉴스</Text></a>
+          <Link to={ERoute.ActivityAction}><Text className="board-title">민우뉴스</Text></Link>
           <Divider/>
           <List
             style={{paddingBottom: '18px'}}
@@ -98,7 +99,7 @@ const Main = () => {
             loading={loadingAction}
             renderItem={item => (
               <List.Item>
-                <CardWrapper href={`${ERoute.ActivityAction}/${EBoardOperation.View}/${get(item, 'id')}`}>
+                <CardWrapper to={`${ERoute.ActivityAction}/${EBoardOperation.View}/${get(item, 'id')}`}>
                   <Card hoverable cover={<img alt={"Action"} src={getImageSource(item)}/>}>
                     <Meta title={get(item, 'title')} description={
                       <FormattedDate
@@ -115,7 +116,7 @@ const Main = () => {
           />
         </Col>
         <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-          <a href={ERoute.ActivityMember}><Text className="board-title">회원활동</Text></a>
+          <Link to={ERoute.ActivityMember}><Text className="board-title">회원활동</Text></Link>
           <Divider/>
           <List
             style={{paddingBottom: '18px'}}
@@ -124,7 +125,7 @@ const Main = () => {
             loading={loadingMember}
             renderItem={item => (
               <List.Item>
-                <CardWrapper href={`${ERoute.ActivityMember}/${EBoardOperation.View}/${get(item, 'id')}`}>
+                <CardWrapper to={`${ERoute.ActivityMember}/${EBoardOperation.View}/${get(item, 'id')}`}>
                   <Card hoverable cover={<img alt={"Action"} src={getImageSource(item)}/>}>
                     <Meta title={get(item, 'title')} description={
                       <FormattedDate
@@ -143,7 +144,7 @@ const Main = () => {
       </Row>
       <Row gutter={[16,16]} justify="center">
         <Col xs={24} sm={24} md={9} lg={9} xl={9}>
-          <a href={ERoute.ActivityNotice}><Text className="board-title">공지사항</Text></a>
+          <Link to={ERoute.ActivityNotice}><Text className="board-title">공지사항</Text></Link>
           <Divider/>
           <List
             size="small"
@@ -153,18 +154,18 @@ const Main = () => {
             loading={loadingNotice}
             renderItem={item => (
               <List.Item>
-                <a href={`${ERoute.ActivityNotice}/${EBoardOperation.View}/${get(item, 'id')}`}>
+                <Link to={`${ERoute.ActivityNotice}/${EBoardOperation.View}/${get(item, 'id')}`}>
                   <span className="title">
                     <span className="mark">&#x26AA;</span>
                     {get(item, 'title')}
                   </span>
-                </a>
+                </Link>
               </List.Item>
             )}
           />
         </Col>
         <Col xs={24} sm={24} md={9} lg={9} xl={9}>
-          <a href={ERoute.ActivityPress}><Text className="board-title">지역소식</Text></a>
+          <Link to={ERoute.ActivityPress}><Text className="board-title">지역소식</Text></Link>
           <Divider/>
           <List
             size="small"
@@ -174,12 +175,12 @@ const Main = () => {
             loading={loadingPress}
             renderItem={item => (
               <List.Item>
-                <a href={`${ERoute.ActivityPress}/${EBoardOperation.View}/${get(item, 'id')}`}>
+                <Link to={`${ERoute.ActivityPress}/${EBoardOperation.View}/${get(item, 'id')}`}>
                   <span className="title">
                     <span className="mark">&#x26AA;</span>
                     {get(item, 'title')}
                   </span>
-                </a>
+                </Link>
               </List.Item>
             )}
           />
@@ -205,9 +206,9 @@ const Main = () => {
         loading={loadingBanner}
         renderItem={item => (
           <List.Item style={{textAlign: 'center'}}>
-            <a href={get(item, 'href')}>
+            <Link to={get(item, 'href')}>
               <img src={`${Configs.API_HOST}${get(item, 'absolute_url')}`} style={{height: '100px', width: '300px', margin: 'auto'}}/>
-            </a>
+            </Link>
           </List.Item>
         )}
       />

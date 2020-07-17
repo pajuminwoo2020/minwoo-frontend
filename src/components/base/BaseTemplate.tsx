@@ -19,10 +19,10 @@ const {Text} = Typography;
 
 export const LogoImage = () => {
   return (
-    <a href="/">
+    <Link to="/">
       <img src={LogoSource} style={{width: 'auto', height: '40px'}}/>
       <span style={{marginLeft: '10px', fontSize: '18px', fontWeight: 'bold', color: '#000'}}>파주여성민우회</span>
-    </a>
+    </Link>
   );
 };
 

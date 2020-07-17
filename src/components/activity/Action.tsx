@@ -1,6 +1,6 @@
 import {CheckOutlined, PlusOutlined, EyeOutlined} from '@ant-design/icons/lib';
 import {Button, List, Typography, Card, Row, Col} from 'antd';
-import {useRouteMatch} from 'react-router-dom';
+import {useRouteMatch, Link} from 'react-router-dom';
 import {ColumnsType} from 'antd/es/table';
 import {get} from 'lodash';
 import React, {useEffect, useState} from 'react';
@@ -52,15 +52,16 @@ const Action = () => {
     <>
       <TableHeaderWrapper>
         <SearchInput pagination={pagination} reloadPage={reloadPage}/>
-        <Button
-          className="add-button"
-          type="primary"
-          size="large"
-          href={`${ERoute.ActivityAction}/${EBoardOperation.Create}`}
-          icon={<PlusOutlined/>}
-        >
-          글쓰기
-        </Button>
+        <Link to={`${ERoute.ActivityAction}/${EBoardOperation.Create}`}>
+          <Button
+            className="add-button"
+            type="primary"
+            size="large"
+            icon={<PlusOutlined/>}
+          >
+            글쓰기
+          </Button>
+        </Link>
       </TableHeaderWrapper>
       <List
         pagination={{
@@ -79,7 +80,7 @@ const Action = () => {
         dataSource={get(data, 'contents')}
         renderItem={item => (
           <List.Item>
-            <CardWrapper href={`${ERoute.ActivityAction}/${EBoardOperation.View}/${get(item, 'id')}`}>
+            <CardWrapper to={`${ERoute.ActivityAction}/${EBoardOperation.View}/${get(item, 'id')}`}>
               <Card
                 hoverable
                 loading={loading}

@@ -1,6 +1,6 @@
 import {CheckOutlined, PlusOutlined, EyeOutlined} from '@ant-design/icons/lib';
 import {Button, List, Typography, Card, Row, Col} from 'antd';
-import {useRouteMatch} from 'react-router-dom';
+import {useRouteMatch, Link} from 'react-router-dom';
 import {ColumnsType} from 'antd/es/table';
 import {get} from 'lodash';
 import React, {useEffect, useState} from 'react';
@@ -25,7 +25,7 @@ import SearchInput from 'components/base/SearchInput';
 import BoardDetail, {getImageSource} from 'components/base/BoardDetail';
 
 const {Meta} = Card;
-const GalleryWrapper = styled.a`
+const GalleryWrapper = styled(Link)`
   width: 100%;
   overflow: hidden;
   display: block;
@@ -101,15 +101,16 @@ const Gallery = () => {
     <>
       <TableHeaderWrapper>
         <SearchInput pagination={pagination} reloadPage={reloadPage}/>
-        <Button
-          className="add-button"
-          type="primary"
-          size="large"
-          href={`${ERoute.BulletinGallery}/${EBoardOperation.Create}`}
-          icon={<PlusOutlined/>}
-        >
-          글쓰기
-        </Button>
+        <Link to={`${ERoute.BulletinGallery}/${EBoardOperation.Create}`}>
+          <Button
+            className="add-button"
+            type="primary"
+            size="large"
+            icon={<PlusOutlined/>}
+          >
+            글쓰기
+          </Button>
+        </Link>
       </TableHeaderWrapper>
       <List
         pagination={{
@@ -128,7 +129,7 @@ const Gallery = () => {
         dataSource={get(data, 'contents')}
         renderItem={item => (
           <List.Item>
-            <GalleryWrapper href={`${ERoute.BulletinGallery}/${EBoardOperation.View}/${get(item, 'id')}`}>
+            <GalleryWrapper to={`${ERoute.BulletinGallery}/${EBoardOperation.View}/${get(item, 'id')}`}>
               <Card
                 hoverable
                 loading={loading}

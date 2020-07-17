@@ -6,7 +6,7 @@ import {ExclamationCircleOutlined, InboxOutlined} from '@ant-design/icons';
 import {UploadChangeParam} from 'antd/lib/upload/interface';
 import {Row, Col, Form, Input, Button, Modal, Upload} from 'antd';
 import {FormattedDate} from 'react-intl';
-import {useHistory} from 'react-router-dom';
+import {useHistory, Link} from 'react-router-dom';
 import {BoardDetailWrapper} from 'components/base/styles';
 import {EBoardOperation} from 'enums/board.enum';
 import LogoSource from 'assets/logo.png';
@@ -117,7 +117,9 @@ export const BoardDetail = ({
         )}
         <Row justify="space-between" className="btn-bottom">
           <Col>
-            <Button type="primary" size="large" href={pathName}>목록</Button>
+            <Link to={pathName}>
+              <Button type="primary" size="large">목록</Button>
+            </Link>
           </Col>
           <Col>
             <Button
@@ -128,7 +130,9 @@ export const BoardDetail = ({
             >
               삭제
             </Button>
-            <Button type="primary" size="large" href={`${pathName}/${EBoardOperation.Edit}/${get(record, 'id')}`}>수정</Button>
+            <Link to={`${pathName}/${EBoardOperation.Edit}/${get(record, 'id')}`}>
+              <Button type="primary" size="large">수정</Button>
+            </Link>
           </Col>
         </Row>
       </>
@@ -205,7 +209,9 @@ export const BoardDetail = ({
         </Form>
         <Row justify="space-between" className="btn-bottom">
           <Col>
-            <Button type="primary" size="large" href={pathName}>목록</Button>
+            <Link to={pathName}>
+              <Button type="primary" size="large">목록</Button>
+            </Link>
           </Col>
           <Col>
             <Button
@@ -278,7 +284,9 @@ export const BoardDetail = ({
         </Form>
         <Row justify="space-between" className="btn-bottom">
           <Col>
-            <Button type="primary" size="large" href={pathName}>목록</Button>
+            <Link to={pathName}>
+              <Button type="primary" size="large">목록</Button>
+            </Link>
           </Col>
           <Col>
             <Button
