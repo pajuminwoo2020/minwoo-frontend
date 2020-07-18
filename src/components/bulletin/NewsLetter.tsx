@@ -125,17 +125,14 @@ const NewsLetter = () => {
             });
           }
         }}
+        loading={loading}
         style={{paddingBottom: '20px'}}
         grid={{gutter: 16, xs: 1, sm: 2, md: 4, lg: 4, xl: 4, xxl: 4}}
         dataSource={get(data, 'contents')}
         renderItem={item => (
           <List.Item>
             <NewsLetterWrapper to={`${ERoute.BulletinNewsletter}/${EBoardOperation.View}/${get(item, 'id')}`}>
-              <Card
-                hoverable
-                loading={loading}
-                cover={<img alt={"NewsLetter"} src={getImageSource(item)}/>}
-              >
+              <Card hoverable cover={<img alt={"NewsLetter"} src={getImageSource(item)}/>}>
                 <Meta title={get(item, 'title')} description={
                   <Row justify="space-between">
                     <Col>

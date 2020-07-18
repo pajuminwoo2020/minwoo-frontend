@@ -340,6 +340,7 @@ export const CardWrapper = styled(Link)`
   }
 
   .ant-card-body {
+    font-size: 12px;
     position: absolute;
     background-color: #fff;
     width: 100%;
@@ -347,6 +348,7 @@ export const CardWrapper = styled(Link)`
   }
 
   .ant-card-meta-title {
+    font-size: 15px;
     font-weight: bold;
     height: 40px;
     text-overflow: ellipsis;
@@ -358,6 +360,10 @@ export const CardWrapper = styled(Link)`
     white-space: normal;
     line-height: 22px;
     overflow: hidden;
+  }
+
+  .ant-card-meta-title:hover {
+    color: ${PrimaryColor};
   }
 `;
 

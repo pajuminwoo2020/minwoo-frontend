@@ -9,7 +9,7 @@ import {FormattedDate} from 'react-intl';
 import {useHistory, Link} from 'react-router-dom';
 import {BoardDetailWrapper} from 'components/base/styles';
 import {EBoardOperation} from 'enums/board.enum';
-import LogoSource from 'assets/logo.png';
+import DefaultSource from 'assets/default.png';
 import {ENotificationType} from 'enums/base.enum';
 import NoMatch from 'components/base/error/NoMatch';
 import {TBoardDetail, TCreateBoardDetail} from 'modules/board';
@@ -322,7 +322,7 @@ export function getImageSource(item: TBoardDetail) {
   if (get(item, 'thumbnail_source'))
     return `${Configs.API_HOST}${get(item, 'thumbnail_source')}`;
 
-  return LogoSource;
+  return DefaultSource;
 }
 
 export default BoardDetail;

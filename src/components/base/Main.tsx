@@ -70,7 +70,11 @@ const Main = () => {
         </Col>
         <Col flex='auto'>
           <Row>
-            <Link className="area-right-top" to={ERoute.ActivityDonation} style={{marginBottom: '20px', textAlign: 'center'}}>
+            <Link
+              className="area-right-top background-heart"
+              to={ERoute.ActivityDonation}
+              style={{marginBottom: '20px', textAlign: 'center'}}
+            >
               <p className="title">후원하기</p>
               <p><BankOutlined/>&nbsp;<Text>{CBankAccount}</Text></p>
               <p><PhoneOutlined/>&nbsp;<Text>{CPhone}</Text></p>
@@ -80,9 +84,9 @@ const Main = () => {
             <Link className="area-right-top" to={ERoute.AffiliateAbout}>
               <p className="title">교육신청</p>
               <ul>
-                <li>성교육</li>
-                <li>또래교육</li>
-                <li>성평등교육</li>
+                <li><Text mark className="blue">성교육</Text></li>
+                <li><Text mark className="red">또래교육</Text></li>
+                <li><Text mark>성평등교육</Text></li>
               </ul>
             </Link>
           </Row>
@@ -100,7 +104,11 @@ const Main = () => {
             renderItem={item => (
               <List.Item>
                 <CardWrapper to={`${ERoute.ActivityAction}/${EBoardOperation.View}/${get(item, 'id')}`}>
-                  <Card hoverable cover={<img alt={"Action"} src={getImageSource(item)}/>}>
+                  <Card
+                    bodyStyle={{padding: '10px 20px'}}
+                    hoverable
+                    cover={<img alt={"Action"} src={getImageSource(item)}/>}
+                  >
                     <Meta title={get(item, 'title')} description={
                       <FormattedDate
                         value={get(item, 'created_at')}
@@ -126,7 +134,11 @@ const Main = () => {
             renderItem={item => (
               <List.Item>
                 <CardWrapper to={`${ERoute.ActivityMember}/${EBoardOperation.View}/${get(item, 'id')}`}>
-                  <Card hoverable cover={<img alt={"Action"} src={getImageSource(item)}/>}>
+                  <Card
+                    bodyStyle={{padding: '10px 20px'}}
+                    hoverable
+                    cover={<img alt={"Action"} src={getImageSource(item)}/>}
+                  >
                     <Meta title={get(item, 'title')} description={
                       <FormattedDate
                         value={get(item, 'created_at')}

@@ -104,7 +104,7 @@ const Drive = () => {
             size="large"
             icon={<PlusOutlined/>}
           >
-            글쓰기
+            업로드
           </Button>
         </Link>
       </TableHeaderWrapper>

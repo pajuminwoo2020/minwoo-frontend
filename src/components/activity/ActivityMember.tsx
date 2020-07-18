@@ -136,6 +136,7 @@ export const ActivityMemberDetail = () => {
 	  promiseCreate={createBoardActivityMember}
 	  promiseDelete={deleteBoardActivityMember}
 	  promiseUpdate={updateBoardActivityMember}
+      hasThumbnail={true}
 	  record={data}
 	/>
   );

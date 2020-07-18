@@ -26,41 +26,26 @@ import BoardDetail, {getImageSource} from 'components/base/BoardDetail';
 
 const {Meta} = Card;
 const GalleryWrapper = styled(Link)`
-  width: 100%;
+  max-width: 200px;
   overflow: hidden;
   display: block;
   position: relative;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
-  .ant-card-cover > * {
-    position: absolute;
+  img {
+    height: 180px;
     width: 100%;
+    max-width: 200px;
   }
 
-  .ant-card-cover img {
-    height: 100%;
-  }
-
-  .ant-card {
-    max-width: 300px;
-    width: 100%;
-    height: 300px;
-    overflow: hidden;
-  }
-
-  .ant-card-body {
-    position: absolute;
-    background-color: #fff;
-    width: 100%;
-    bottom: 0;
-  }
-
-  .ant-card-body:hover {
-    opacity: 1;
-  }
-
-  .ant-card-meta-title {
+  .title {
     font-weight: bold;
-    font-size: 14px;
+    font-size: 13px;
+  }
+
+  p {
+    margin: 5px;
+    font-size: 12px;
     height: 30px;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -108,7 +93,7 @@ const Gallery = () => {
             size="large"
             icon={<PlusOutlined/>}
           >
-            글쓰기
+            사진올리기
           </Button>
         </Link>
       </TableHeaderWrapper>
@@ -124,26 +109,25 @@ const Gallery = () => {
             });
           }
         }}
+        loading={loading}
         style={{paddingBottom: '20px'}}
-        grid={{gutter: 16, xs: 1, sm: 2, md: 4, lg: 4, xl: 4, xxl: 4}}
+        grid={{gutter: 16, xs: 1, sm: 3, md: 5, lg: 5, xl: 5, xxl: 5}}
         dataSource={get(data, 'contents')}
         renderItem={item => (
           <List.Item>
             <GalleryWrapper to={`${ERoute.BulletinGallery}/${EBoardOperation.View}/${get(item, 'id')}`}>
-              <Card
-                hoverable
-                loading={loading}
-                cover={<img alt={"Gallery"} src={getImageSource(item)}/>}
-              >
-                <Meta title={get(item, 'title')} description={
+              <img alt={"Gallery"} src={getImageSource(item)}/>
+              <div>
+                <p className="title">{get(item, 'title')}</p>
+                <p>
                   <FormattedDate
-                    value={get(item, 'created_at')}
-                    year="numeric"
-                    month="long"
-                    day="2-digit"
-                  />
-                }/>
-              </Card>
+                  value={get(item, 'created_at')}
+                  year="numeric"
+                  month="long"
+                  day="2-digit"
+                />
+                </p>
+              </div>
             </GalleryWrapper>
           </List.Item>
         )}

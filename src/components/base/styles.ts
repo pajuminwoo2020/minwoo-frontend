@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {device, PrimaryColor} from 'GlobalStyles';
 import {CDefaultEditorHeight, CWindowWidth} from 'constants/base.const';
+import HeartSource from 'assets/heart.png';
 
 export const HeaderWrapper = styled.div`
   height: 70px;
@@ -157,9 +158,22 @@ export const MainWrapper = styled.div`
 	height: 50%;
   }
 
+  .background-heart {
+    background-image: url(${HeartSource});
+    background-repeat: no-repeat;
+    background-size: 30px;
+    background-position: 80% 70%;
+    position: relative;
+  }
+  .background-heart::before {
+    z-index: -1;
+    opacity: 0.4;
+  }
+
   .area-right-top {
     padding: 0px 20px;
-	width: 100%;
+    width: 100%;
+    max-width: 300px;
 	height: 150px;
     margin: auto;
     border-radius: 5px;
@@ -201,6 +215,15 @@ export const MainWrapper = styled.div`
 	font-weight: bold;
   }
 
+  .red mark {
+    color: #fff;
+	background-color: ${PrimaryColor} !important;
+  }
+  .blue mark {
+    color: #fff;
+	background-color: #0dbeb5 !important;
+  }
+
   .title {
 	vertical-align: sub;
 	width: 100%;
@@ -212,6 +235,9 @@ export const MainWrapper = styled.div`
 	word-break: break-word;
 	white-space: normal;
 	overflow: hidden;
+  }
+  .title:hover {
+    color: ${PrimaryColor};
   }
   .board-title {
     font-weight: bold;

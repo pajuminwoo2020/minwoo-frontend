@@ -75,17 +75,14 @@ const Action = () => {
             });
           }
         }}
+        loading={loading}
         style={{paddingBottom: '20px'}}
         grid={{gutter: 16, xs: 1, sm: 2, md: 4, lg: 4, xl: 4, xxl: 4}}
         dataSource={get(data, 'contents')}
         renderItem={item => (
           <List.Item>
             <CardWrapper to={`${ERoute.ActivityAction}/${EBoardOperation.View}/${get(item, 'id')}`}>
-              <Card
-                hoverable
-                loading={loading}
-                cover={<img alt={"Action"} src={getImageSource(item)}/>}
-              >
+              <Card hoverable cover={<img alt={"Action"} src={getImageSource(item)}/>}>
                 <Meta title={get(item, 'title')} description={
                   <>
                     <FormattedDate
