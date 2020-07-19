@@ -55,6 +55,8 @@ export const CUploadProps = {
   multiple: true,
 };
 
+export const CDateFormat = 'YYYY-MM-DD';
+
 export const CAddress = '(10915) 경기도 파주시 금빛로 44, 마이프라자 501호, 502호';
 export const CUniqueNumber = '605-82-85023';
 export const CPhone = '031-946-2095';

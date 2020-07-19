@@ -17,6 +17,7 @@ export type TPagination = {
 export type TListRequestParams = {
   id?: number;
   params?: TPagination;
+  selected_date?: string;
 };
 
 export type TListResponse<T> = {
@@ -35,4 +36,9 @@ export type TFiles = {
   status: string;
   name: string;
   absolute_url: string;
+};
+
+export type TModalState = {
+  record: any;
+  visible: boolean;
 };

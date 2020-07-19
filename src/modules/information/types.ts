@@ -26,3 +26,14 @@ export type TDonation = {
   address: string;
   memo: string;
 };
+
+/**
+ * 일정표
+ */
+
+export type TCalendar = {
+  schedule_name: string;
+  schedule_from: string;
+  schedule_to: string;
+  memo?: string;
+};

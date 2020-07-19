@@ -1,6 +1,6 @@
 import {CancelTokenSource} from 'axios';
 import {TListRequestParams, TListResponse} from 'modules/types';
-import {TBanner, TDonation} from 'modules/information';
+import {TBanner, TDonation, TCalendar} from 'modules/information';
 import apiClient from 'libs/api/apiClient';
 
 /**
@@ -26,6 +26,24 @@ export const createDonation = (params: TDonation, cancel?: CancelTokenSource) =>
 
 export const getDonations = ({params}: TListRequestParams, cancel?: CancelTokenSource) => {
   return apiClient.get<TListResponse<TDonation>>(`/information/donations`, {
+    params: params,
+    cancelToken: cancel?.token,
+  });
+};
+
+/**
+ * 일정표
+ */
+
+export const getCalendarsAll = ({params}: TListRequestParams, cancel?: CancelTokenSource) => {
+  return apiClient.get<TListResponse<TCalendar>>(`/information/calendars/all`, {
+    params: params,
+    cancelToken: cancel?.token,
+  });
+};
+
+export const getCalendars = ({params}: TListRequestParams, cancel?: CancelTokenSource) => {
+  return apiClient.get<TListResponse<TCalendar>>(`/information/calendars`, {
     params: params,
     cancelToken: cancel?.token,
   });

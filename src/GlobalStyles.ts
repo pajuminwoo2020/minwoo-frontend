@@ -25,7 +25,7 @@ const GlobalStyles = createGlobalStyle`
   .ant-layout-header {
     box-shadow: 0 2px 15px 0 rgba(0,0,0,0.15);
     background-color: #fff !important;
-    z-index: 2;
+    z-index: 10 !important;
     min-width: 430px;
   }
 
