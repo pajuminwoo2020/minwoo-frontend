@@ -105,7 +105,7 @@ export const BoardDetail = ({
       <>
         <BoardTitle/>
         <div className="body-view">
-          <EditorComponent content={get(record, 'body', '')} disabled={true}/>
+          <div dangerouslySetInnerHTML={{ __html: `${get(record, 'body', '')}`}}/>
         </div>
         {get(record, 'files', []).length > 0 && (
           <div className="box-attachments">
@@ -189,7 +189,7 @@ export const BoardDetail = ({
             <Input size="large" placeholder="제목"/>
           </Form.Item>
           <Form.Item name="body">
-            <EditorComponent content={get(record, 'body', '')} setThumbnail={setThumbnail} disabled={false}/>
+            <EditorComponent content={get(record, 'body', '')} setThumbnail={setThumbnail}/>
           </Form.Item>
           <Form.Item
             noStyle
@@ -264,7 +264,7 @@ export const BoardDetail = ({
             <Input size="large" placeholder="제목"/>
           </Form.Item>
           <Form.Item name="body">
-            <EditorComponent setThumbnail={setThumbnail} disabled={false}/>
+            <EditorComponent setThumbnail={setThumbnail}/>
           </Form.Item>
           <Form.Item
             noStyle
