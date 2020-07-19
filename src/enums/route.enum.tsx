@@ -13,6 +13,7 @@ export enum ERoute {
   ActivityPress = '/activity/press',
   ActivityMember = '/activity/member',
   ActivityDonation = '/activity/donation',
+  ActivityDonationStep = '/activity/donation/step',
   ActivityCalendar = '/activity/calendar',
   AffiliateAbout = '/affiliate/about',
   AffiliateActivity = '/affiliate/activity',

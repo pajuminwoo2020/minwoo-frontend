@@ -24,4 +24,5 @@ export type TDonation = {
   email: string;
   bank_account: string;
   address: string;
+  memo: string;
 };

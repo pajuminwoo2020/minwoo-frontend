@@ -21,6 +21,7 @@ import Location from 'components/intro/Location';
 import Notice, {NoticeDetail} from 'components/activity/Notice';
 import Action, {ActionDetail} from 'components/activity/Action';
 import Donation from 'components/activity/Donation';
+import DonationStep from 'components/activity/DonationStep';
 import ActivityMember, {ActivityMemberDetail} from 'components/activity/ActivityMember';
 import Calendar from 'components/activity/Calendar';
 import Press, {PressDetail} from 'components/activity/Press';
@@ -121,6 +122,9 @@ const App = () => {
             </Route>
             <Route exact path={ERoute.ActivityDonation}>
               <BaseTemplate><Donation/></BaseTemplate>
+            </Route>
+            <Route exact path={ERoute.ActivityDonationStep}>
+              <BaseTemplate><DonationStep/></BaseTemplate>
             </Route>
             <Route exact path={ERoute.ActivityCalendar}>
               <BaseTemplate><Calendar/></BaseTemplate>
