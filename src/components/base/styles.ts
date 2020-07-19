@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import {device} from 'GlobalStyles';
+import {device, PrimaryColor} from 'GlobalStyles';
 import {CDefaultEditorHeight, CWindowWidth} from 'constants/base.const';
+import HeartSource from 'assets/heart.png';
 
 export const HeaderWrapper = styled.div`
   height: 70px;
@@ -139,3 +140,110 @@ export const BoardDetailWrapper = styled.div`
     }
   }
 `;
+
+export const MainWrapper = styled.div`
+  padding: 20px 0px;
+
+  .ant-carousel .slick-slide {
+    text-align: center;
+    height: 320px;
+    line-height: 160px;
+    background: transparent;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+
+  .ant-carousel img {
+	width: auto;
+	height: 50%;
+  }
+
+  .background-heart {
+    background-image: url(${HeartSource});
+    background-repeat: no-repeat;
+    background-size: 30px;
+    background-position: 80% 70%;
+    position: relative;
+  }
+  .background-heart::before {
+    z-index: -1;
+    opacity: 0.4;
+  }
+
+  .area-right-top {
+    padding: 0px 20px;
+    width: 100%;
+    max-width: 300px;
+	height: 150px;
+    margin: auto;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px #000;
+    display: block;
+
+    .title {
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      color: ${PrimaryColor};
+      margin: 10px 0px;
+    }
+
+    p {
+      text-align: left;
+      display: block;
+      margin: 0px;
+      padding: 2px;
+    }
+
+    ul {
+      padding: 0px 20px;
+    }
+  }
+
+  .ant-list-sm .ant-list-item {
+	padding: 6px 0px;
+  }
+
+  .ant-divider-horizontal {
+	margin: 5px 0px 20px 0px !important;
+	border-top: 1px solid ${PrimaryColor};
+  }
+
+  .mark {
+	margin-right: 5px;
+	color: ${PrimaryColor};
+	font-weight: bold;
+  }
+
+  .red mark {
+    color: #fff;
+	background-color: ${PrimaryColor} !important;
+  }
+  .blue mark {
+    color: #fff;
+	background-color: #0dbeb5 !important;
+  }
+
+  .title {
+	vertical-align: sub;
+	width: 100%;
+	text-overflow: ellipsis;
+	display: -webkit-inline-box;
+	-webkit-box-orient: vertical;
+	-webkit-box-pack: center;
+	-webkit-line-clamp: 1;
+	word-break: break-word;
+	white-space: normal;
+	overflow: hidden;
+  }
+  .title:hover {
+    color: ${PrimaryColor};
+  }
+  .board-title {
+    font-weight: bold;
+    color: ${PrimaryColor};
+    font-size: 18px;
+  }
+}
+`;
+

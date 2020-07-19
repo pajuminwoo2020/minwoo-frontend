@@ -1,5 +1,6 @@
 import {Button, Checkbox, Input, Menu, Modal, Radio, Typography} from 'antd';
 import {get} from 'lodash';
+import {Link} from 'react-router-dom';
 import styled, {createGlobalStyle, CSSProp} from 'styled-components';
 
 
@@ -62,6 +63,11 @@ const GlobalStyles = createGlobalStyle`
     padding: 0px 40px 40px 40px !important;
     background-color: #f8f8f8 !important;
     border-top: 0px !important;
+  }
+
+  .ant-pagination {
+    text-align: center;
+    float: none !important;
   }
 
   .form-item-upload-dragger .ant-form-item-control {
@@ -311,7 +317,7 @@ export const TableHeaderWrapper = styled.div`
   }
 `;
 
-export const CardWrapper = styled.a`
+export const CardWrapper = styled(Link)`
   width: 100%;
   overflow: hidden;
   display: block;
@@ -334,6 +340,7 @@ export const CardWrapper = styled.a`
   }
 
   .ant-card-body {
+    font-size: 12px;
     position: absolute;
     background-color: #fff;
     width: 100%;
@@ -341,6 +348,7 @@ export const CardWrapper = styled.a`
   }
 
   .ant-card-meta-title {
+    font-size: 15px;
     font-weight: bold;
     height: 40px;
     text-overflow: ellipsis;
@@ -352,6 +360,10 @@ export const CardWrapper = styled.a`
     white-space: normal;
     line-height: 22px;
     overflow: hidden;
+  }
+
+  .ant-card-meta-title:hover {
+    color: ${PrimaryColor};
   }
 `;
 

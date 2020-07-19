@@ -8,6 +8,7 @@ import {handleFieldError} from 'libs/api/errorHandle';
 import {userLogin} from 'libs/api/user';
 import {TUserLogin} from 'modules/user';
 import {Title, FormWrapper} from 'components/user/styles';
+import {CPhone} from 'constants/base.const';
 
 const Login = () => {
   const [form] = Form.useForm();
@@ -89,9 +90,9 @@ const Login = () => {
 		</div>
 	  </Form>
       <Form className="form">
-        가입 시 등록한 이메일 주소를 잊으신 경우, 회원팀으로 연락주시기 바랍니다.
+        가입 시 등록한 이메일 주소를 잊으신 경우, 관리자에게 연락주시기 바랍니다.
         <br/>
-        (회원팀 <PhoneOutlined/>) 02-737-5763
+        (<PhoneOutlined/>) {CPhone}
 	  </Form>
 	</FormWrapper>
   );

@@ -1,7 +1,12 @@
 import React, {useState} from 'react';
 import Configs from 'config';
 
-export function useThumbnail (use: boolean): [string, (value: string) => void] {
+export function useThumbnail (use: boolean): [
+  string,
+  (value: string) => void,
+  React.Dispatch<React.SetStateAction<string>>,
+] {
+
   const [thumbnailSource, setThumbnailSource] = useState('');
 
   function setThumbnail(innerHTML: string) {
@@ -19,7 +24,7 @@ export function useThumbnail (use: boolean): [string, (value: string) => void] {
   }
 
   if (use === true)
-    return [thumbnailSource, setThumbnail];
+    return [thumbnailSource, setThumbnail, setThumbnailSource];
 
-  return ['', (val: string) => {}];
+  return [thumbnailSource, (val: string) => {}, setThumbnailSource];
 }

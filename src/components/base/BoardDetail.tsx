@@ -6,9 +6,10 @@ import {ExclamationCircleOutlined, InboxOutlined} from '@ant-design/icons';
 import {UploadChangeParam} from 'antd/lib/upload/interface';
 import {Row, Col, Form, Input, Button, Modal, Upload} from 'antd';
 import {FormattedDate} from 'react-intl';
-import {useHistory} from 'react-router-dom';
+import {useHistory, Link} from 'react-router-dom';
 import {BoardDetailWrapper} from 'components/base/styles';
 import {EBoardOperation} from 'enums/board.enum';
+import DefaultSource from 'assets/default.png';
 import {ENotificationType} from 'enums/base.enum';
 import NoMatch from 'components/base/error/NoMatch';
 import {TBoardDetail, TCreateBoardDetail} from 'modules/board';
@@ -104,7 +105,7 @@ export const BoardDetail = ({
       <>
         <BoardTitle/>
         <div className="body-view">
-          <EditorComponent content={get(record, 'body', '')} disabled={true}/>
+          <div dangerouslySetInnerHTML={{ __html: `${get(record, 'body', '')}`}}/>
         </div>
         {get(record, 'files', []).length > 0 && (
           <div className="box-attachments">
@@ -116,7 +117,9 @@ export const BoardDetail = ({
         )}
         <Row justify="space-between" className="btn-bottom">
           <Col>
-            <Button type="primary" size="large" href={pathName}>목록</Button>
+            <Link to={pathName}>
+              <Button type="primary" size="large">목록</Button>
+            </Link>
           </Col>
           <Col>
             <Button
@@ -127,7 +130,9 @@ export const BoardDetail = ({
             >
               삭제
             </Button>
-            <Button type="primary" size="large" href={`${pathName}/${EBoardOperation.Edit}/${get(record, 'id')}`}>수정</Button>
+            <Link to={`${pathName}/${EBoardOperation.Edit}/${get(record, 'id')}`}>
+              <Button type="primary" size="large">수정</Button>
+            </Link>
           </Col>
         </Row>
       </>
@@ -136,7 +141,7 @@ export const BoardDetail = ({
 
   const BoardEdit = () => {
     const [form] = Form.useForm();
-    const [thumbnailSource, setThumbnail] = useThumbnail(hasThumbnail);
+    const [thumbnailSource, setThumbnail, setThumbnailSource] = useThumbnail(hasThumbnail);
     const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
 
     useEffect(() => {
@@ -149,6 +154,7 @@ export const BoardDetail = ({
             name: v.file_name,
           })),
         });
+        setThumbnailSource(get(record, 'thumbnail_source'));
       }
     }, [record]);
 
@@ -183,7 +189,7 @@ export const BoardDetail = ({
             <Input size="large" placeholder="제목"/>
           </Form.Item>
           <Form.Item name="body">
-            <EditorComponent content={get(record, 'body', '')} setThumbnail={setThumbnail} disabled={false}/>
+            <EditorComponent content={get(record, 'body', '')} setThumbnail={setThumbnail}/>
           </Form.Item>
           <Form.Item
             noStyle
@@ -203,7 +209,9 @@ export const BoardDetail = ({
         </Form>
         <Row justify="space-between" className="btn-bottom">
           <Col>
-            <Button type="primary" size="large" href={pathName}>목록</Button>
+            <Link to={pathName}>
+              <Button type="primary" size="large">목록</Button>
+            </Link>
           </Col>
           <Col>
             <Button
@@ -256,7 +264,7 @@ export const BoardDetail = ({
             <Input size="large" placeholder="제목"/>
           </Form.Item>
           <Form.Item name="body">
-            <EditorComponent setThumbnail={setThumbnail} disabled={false}/>
+            <EditorComponent setThumbnail={setThumbnail}/>
           </Form.Item>
           <Form.Item
             noStyle
@@ -276,7 +284,9 @@ export const BoardDetail = ({
         </Form>
         <Row justify="space-between" className="btn-bottom">
           <Col>
-            <Button type="primary" size="large" href={pathName}>목록</Button>
+            <Link to={pathName}>
+              <Button type="primary" size="large">목록</Button>
+            </Link>
           </Col>
           <Col>
             <Button
@@ -306,6 +316,13 @@ export const BoardDetail = ({
       }
     </BoardDetailWrapper>
   );
+}
+
+export function getImageSource(item: TBoardDetail) {
+  if (get(item, 'thumbnail_source'))
+    return `${Configs.API_HOST}${get(item, 'thumbnail_source')}`;
+
+  return DefaultSource;
 }
 
 export default BoardDetail;

@@ -1,8 +1,10 @@
 import {Col, Row, Divider} from 'antd';
 import React from 'react';
+import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 import LogoWhiteSource from 'assets/logo-white.png';
 import {ERoute} from 'enums/route.enum';
+import {CAddress, CEmail, CPhone, CFax, CBankAccount} from 'constants/base.const';
 
 const FooterWrapper = styled.div`
   background-color: #424242;
@@ -36,15 +38,15 @@ export const FooterArea = () => {
           <img className="block-title" src={LogoWhiteSource} style={{width: 'auto', height: '20px'}}/>
           <p className="block-title">파주여성민우회</p>
           <Divider/>
-          <p>주소 : (410-837) 경기도 고양시 일산동구 무궁화로 32-21 로데오메탈릭타워 602-2호</p>
-          <p>이메일 pjminwoo@hanmail.net / 대표전화 (031)907-1003 / 팩스 (031)907-5009</p>
-          <p>[후원계좌] 국민은행 813-25-0011-869 (예금주 한국여성민우회)</p>
+          <p>주소 : {CAddress}</p>
+          <p>이메일 {CEmail} / 대표전화 {CPhone} / 팩스 {CFax}</p>
+          <p>[후원계좌] {CBankAccount}</p>
         </Col>
         <Col md={{span: 24}} lg={{span: 4}}>
           <p className="block-title" style={{color: 'transparent'}}>Empty</p>
           <Divider/>
-          <p><a href={ERoute.MemberDonation}>후원하기</a></p>
-          <p><a href={ERoute.IntroLocation}>찾아오시는 길</a></p>
+          <p><Link to={ERoute.ActivityDonation}>후원하기</Link></p>
+          <p><Link to={ERoute.IntroLocation}>찾아오시는 길</Link></p>
         </Col>
         <Col span="4"></Col>
       </Row>

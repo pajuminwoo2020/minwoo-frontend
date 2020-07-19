@@ -10,14 +10,12 @@ type TEditorComponentProps = {
   content?: string,
   onChange?: (value: string) => void,
   setThumbnail?: (value: string) => void,
-  disabled?: boolean;
 };
 
 const EditorComponent: React.FC<TEditorComponentProps> = ({
   content,
   onChange,
   setThumbnail,
-  disabled = false,
 }) => {
   const [loading, setLoading] = useState(true);
   const onEditorChange = (editorContent: string) => {
@@ -35,7 +33,7 @@ const EditorComponent: React.FC<TEditorComponentProps> = ({
       />
       <Editor
         apiKey={Configs.EDITOR_API_KEY}
-        inline={disabled}
+        inline={false}
         value={content}
         init={{
           setup: function (ed: any) {
@@ -107,7 +105,7 @@ const EditorComponent: React.FC<TEditorComponentProps> = ({
           },
         }}
         onEditorChange={onEditorChange}
-        disabled={disabled}
+        disabled={false}
       />
     </Spin>
   );

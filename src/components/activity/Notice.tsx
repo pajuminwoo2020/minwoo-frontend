@@ -1,13 +1,12 @@
 import {CheckOutlined, PlusOutlined, EyeOutlined} from '@ant-design/icons/lib';
 import {Button, List, Typography, Card, Row, Col} from 'antd';
-import {useRouteMatch} from 'react-router-dom';
+import {useRouteMatch, Link} from 'react-router-dom';
 import {ColumnsType} from 'antd/es/table';
 import {get} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {TableHeaderWrapper, CardWrapper} from 'GlobalStyles';
 import {FormattedDate} from 'react-intl';
 import Configs from 'config';
-import LogoSource from 'assets/logo.png';
 import {
   getBoardNotices,
   getBoardNotice,
@@ -22,7 +21,7 @@ import {ERoute} from 'enums/route.enum';
 import {TListResponse, TPagination, RouteMatch} from 'modules/types';
 import {TUser} from 'modules/user';
 import SearchInput from 'components/base/SearchInput';
-import BoardDetail from 'components/base/BoardDetail';
+import BoardDetail, {getImageSource} from 'components/base/BoardDetail';
 
 const {Meta} = Card;
 const Notice = () => {
@@ -49,26 +48,20 @@ const Notice = () => {
     setCallback(() => getPromise);
   }, [pagination]);
 
-  function getImageSource(item: TBoardDetail) {
-    if (get(item, 'thumbnail_source'))
-      return `${Configs.API_HOST}${get(item, 'thumbnail_source')}`;
-
-    return LogoSource;
-  }
-
   return (
     <>
       <TableHeaderWrapper>
         <SearchInput pagination={pagination} reloadPage={reloadPage}/>
-        <Button
-          className="add-button"
-          type="primary"
-          size="large"
-          href={`${ERoute.ActivityNotice}/${EBoardOperation.Create}`}
-          icon={<PlusOutlined/>}
-        >
-          글쓰기
-        </Button>
+        <Link to={`${ERoute.ActivityNotice}/${EBoardOperation.Create}`}>
+          <Button
+            className="add-button"
+            type="primary"
+            size="large"
+            icon={<PlusOutlined/>}
+          >
+            글쓰기
+          </Button>
+        </Link>
       </TableHeaderWrapper>
       <List
         pagination={{
@@ -82,17 +75,14 @@ const Notice = () => {
             });
           }
         }}
+        loading={loading}
         style={{paddingBottom: '20px'}}
         grid={{gutter: 16, xs: 1, sm: 2, md: 4, lg: 4, xl: 4, xxl: 4}}
         dataSource={get(data, 'contents')}
         renderItem={item => (
           <List.Item>
-            <CardWrapper href={`${ERoute.ActivityNotice}/${EBoardOperation.View}/${get(item, 'id')}`}>
-              <Card
-                hoverable
-                loading={loading}
-                cover={<img alt={"Notice"} src={getImageSource(item)}/>}
-              >
+            <CardWrapper to={`${ERoute.ActivityNotice}/${EBoardOperation.View}/${get(item, 'id')}`}>
+              <Card hoverable cover={<img alt={"Notice"} src={getImageSource(item)}/>}>
                 <Meta title={get(item, 'title')} description={
                   <>
                     <FormattedDate

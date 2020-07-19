@@ -69,8 +69,12 @@ export const HeaderRight = () => {
         </Dropdown>
       ) : (
         <>
-          <Button size="large" type="primary" href={ERoute.UserLogin}><Text>로그인</Text></Button>
-          <Button size="large" href={ERoute.UserSignup}><Text>회원가입</Text></Button>
+          <Link to={ERoute.UserLogin}>
+            <Button size="large" type="primary">로그인</Button>
+          </Link>
+          <Link to={ERoute.UserSignup}>
+            <Button size="large">회원가입</Button>
+          </Link>
         </>
       )}
     </Row>

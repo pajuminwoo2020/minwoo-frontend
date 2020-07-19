@@ -7,11 +7,11 @@ import React, {useEffect, useState} from 'react';
 import {TableWrapper, TableHeaderWrapper} from 'GlobalStyles';
 import {FormattedDate} from 'react-intl';
 import {
-  getBoardSettlements,
-  getBoardSettlement,
-  createBoardSettlement,
-  deleteBoardSettlement,
-  updateBoardSettlement,
+  getBoardMemberSpaces,
+  getBoardMemberSpace,
+  createBoardMemberSpace,
+  deleteBoardMemberSpace,
+  updateBoardMemberSpace,
 } from 'libs/api/board';
 import {useDataApi, usePagination} from 'libs/hooks';
 import {TBoardDetail} from 'modules/board';
@@ -22,7 +22,7 @@ import {TUser} from 'modules/user';
 import SearchInput from 'components/base/SearchInput';
 import BoardDetail from 'components/base/BoardDetail';
 
-const Settlement = () => {
+const Space = () => {
   const [pagination, setPagination] = usePagination();
   const reloadPage = (page?: Partial<TPagination>) => {
     setPagination({
@@ -30,7 +30,7 @@ const Settlement = () => {
       ...page,
     });
   };
-  const getPromise = getBoardSettlements.bind(null, {
+  const getPromise = getBoardMemberSpaces.bind(null, {
     params: {
       current: pagination.current,
       pageSize: pagination.pageSize,
@@ -57,7 +57,7 @@ const Settlement = () => {
       dataIndex: 'title',
       className: 'column-title',
       render: (_: any, record: TBoardDetail) => (
-        <Link to={`${ERoute.IntroSettlement}/${EBoardOperation.View}/${record.id}`}>
+        <Link to={`${ERoute.MemberSpace}/${EBoardOperation.View}/${record.id}`}>
           {record.title}
         </Link>
       )
@@ -97,7 +97,7 @@ const Settlement = () => {
     <>
       <TableHeaderWrapper>
         <SearchInput pagination={pagination} reloadPage={reloadPage}/>
-        <Link to={`${ERoute.IntroSettlement}/${EBoardOperation.Create}`}>
+        <Link to={`${ERoute.MemberSpace}/${EBoardOperation.Create}`}>
           <Button
             className="add-button"
             type="primary"
@@ -124,23 +124,23 @@ const Settlement = () => {
   );
 };
 
-export const SettlementDetail = () => {
-  const match = useRouteMatch(`${ERoute.IntroSettlement}/:operation/:record_id?`);
+export const MemberSpaceDetail = () => {
+  const match = useRouteMatch(`${ERoute.MemberSpace}/:operation/:record_id?`);
   let {operation=EBoardOperation.View, record_id} = (match?.params as RouteMatch) || {};
-  const [{data, loading}] = useDataApi<TBoardDetail>(getBoardSettlement.bind(null, record_id), {}, operation != EBoardOperation.Create);
+  const [{data, loading}] = useDataApi<TBoardDetail>(getBoardMemberSpace.bind(null, record_id), {}, operation != EBoardOperation.Create);
 
   return (
 	<BoardDetail
 	  operation={operation}
-	  pathName={ERoute.IntroSettlement}
-	  promiseCreate={createBoardSettlement}
-	  promiseDelete={deleteBoardSettlement}
-	  promiseUpdate={updateBoardSettlement}
+	  pathName={ERoute.MemberSpace}
+	  promiseCreate={createBoardMemberSpace}
+	  promiseDelete={deleteBoardMemberSpace}
+	  promiseUpdate={updateBoardMemberSpace}
 	  record={data}
 	/>
   );
 };
 
-Settlement.defaultProps = {};
+Space.defaultProps = {};
 
-export default Settlement;
+export default Space;

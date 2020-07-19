@@ -5,11 +5,11 @@ import {useEffect, useState} from 'react';
 import {useLocation} from 'react-router-dom';
 import {TPagination} from 'modules/types';
 
-export function usePagination<T>(): [TablePaginationConfig & TPagination, any, any] {
+export function usePagination<T>(pageSize=20): [TablePaginationConfig & TPagination, any, any] {
   const location = useLocation();
   const query = {
     current: 1,
-    pageSize: 20,
+    pageSize: pageSize,
     q: '',
     ...queryString.parse(location.search),
   };

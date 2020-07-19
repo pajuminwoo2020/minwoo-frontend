@@ -1,8 +1,8 @@
 import {get, isPlainObject} from 'lodash';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import {RouteProps} from 'react-router';
-import {Redirect, Route, Switch} from 'react-router-dom';
+import {Redirect, Route, Switch, useLocation} from 'react-router-dom';
 import {IntlProvider} from 'react-intl';
 import {CoreProvider} from 'libs/contexts/CoreContext';
 import {getNavigatorLanguage} from 'libs/utils';
@@ -19,17 +19,20 @@ import History from 'components/intro/History';
 import Settlement, {SettlementDetail} from 'components/intro/Settlement';
 import Location from 'components/intro/Location';
 import Notice, {NoticeDetail} from 'components/activity/Notice';
-import Action from 'components/activity/Action';
-import Press from 'components/activity/Press';
+import Action, {ActionDetail} from 'components/activity/Action';
+import Donation from 'components/activity/Donation';
+import DonationStep from 'components/activity/DonationStep';
+import ActivityMember, {ActivityMemberDetail} from 'components/activity/ActivityMember';
+import Calendar from 'components/activity/Calendar';
+import Press, {PressDetail} from 'components/activity/Press';
 import AffiliateAbout from 'components/affiliate/About';
 import AffiliateActivity from 'components/affiliate/Activity';
-import MemberAbout from 'components/member/SocietyAbout';
-import MemberActivity from 'components/member/SocietyActivity';
-import MemberLocal from 'components/member/Local';
-import MemberDonation from 'components/member/Donation';
-import MemberBand from 'components/member/Band';
-import BulletinNewsLetter from 'components/bulletin/NewsLetter';
-import BulletinGallery from 'components/bulletin/Gallery';
+import SocietyAbout from 'components/member/SocietyAbout';
+import SocietyActivity, {SocietyActivityDetail} from 'components/member/SocietyActivity';
+import MemberSpace, {MemberSpaceDetail} from 'components/member/Space';
+import NewsLetter, {NewsLetterDetail} from 'components/bulletin/NewsLetter';
+import Gallery, {GalleryDetail} from 'components/bulletin/Gallery';
+import Drive, {DriveDetail} from 'components/bulletin/Drive';
 import Core from 'components/base/Core';
 import {BaseTemplate} from 'components/base/BaseTemplate';
 import ErrorBoundary from 'components/base/error/ErrorBoundary';
@@ -40,6 +43,7 @@ import {main} from 'libs/api/user';
 const data = main();
 
 const App = () => {
+  const location = useLocation();
   const dispatch = useDispatch();
   const currentUser = useSelector((state: RootState) => state.user.current_user, shallowEqual);
   if (currentUser === undefined) {
@@ -49,6 +53,10 @@ const App = () => {
       dispatch(setUserInfo(response));
     }
   }
+
+  useEffect(() => {
+	window.scrollTo(0,0);
+  }, [location]);
 
   return (
 	<IntlProvider locale={'ko'}>
@@ -97,8 +105,29 @@ const App = () => {
             <Route exact path={ERoute.ActivityAction}>
               <BaseTemplate><Action/></BaseTemplate>
             </Route>
+            <Route path={`${ERoute.ActivityAction}/:operation`}>
+              <BaseTemplate><ActionDetail/></BaseTemplate>
+            </Route>
+            <Route exact path={ERoute.ActivityMember}>
+              <BaseTemplate><ActivityMember/></BaseTemplate>
+            </Route>
+            <Route path={`${ERoute.ActivityMember}/:operation`}>
+              <BaseTemplate><ActivityMemberDetail/></BaseTemplate>
+            </Route>
             <Route exact path={ERoute.ActivityPress}>
               <BaseTemplate><Press/></BaseTemplate>
+            </Route>
+            <Route path={`${ERoute.ActivityPress}/:operation`}>
+              <BaseTemplate><PressDetail/></BaseTemplate>
+            </Route>
+            <Route exact path={ERoute.ActivityDonation}>
+              <BaseTemplate><Donation/></BaseTemplate>
+            </Route>
+            <Route exact path={ERoute.ActivityDonationStep}>
+              <BaseTemplate><DonationStep/></BaseTemplate>
+            </Route>
+            <Route exact path={ERoute.ActivityCalendar}>
+              <BaseTemplate><Calendar/></BaseTemplate>
             </Route>
             <Route exact path={ERoute.AffiliateAbout}>
               <BaseTemplate><AffiliateAbout/></BaseTemplate>
@@ -107,25 +136,37 @@ const App = () => {
               <BaseTemplate><AffiliateActivity/></BaseTemplate>
             </Route>
             <Route exact path={ERoute.MemberSocietyAbout}>
-              <BaseTemplate><MemberAbout/></BaseTemplate>
+              <BaseTemplate><SocietyAbout/></BaseTemplate>
             </Route>
             <Route exact path={ERoute.MemberSocietyActivity}>
-              <BaseTemplate><MemberActivity/></BaseTemplate>
+              <BaseTemplate><SocietyActivity/></BaseTemplate>
             </Route>
-            <Route exact path={ERoute.MemberLocal}>
-              <BaseTemplate><MemberLocal/></BaseTemplate>
+            <Route path={`${ERoute.MemberSocietyActivity}/:operation`}>
+              <BaseTemplate><SocietyActivityDetail/></BaseTemplate>
             </Route>
-            <Route exact path={ERoute.MemberDonation}>
-              <BaseTemplate><MemberDonation/></BaseTemplate>
+            <Route exact path={ERoute.MemberSpace}>
+              <BaseTemplate><MemberSpace/></BaseTemplate>
             </Route>
-            <Route exact path={ERoute.MemberBand}>
-              <BaseTemplate><MemberBand/></BaseTemplate>
+            <Route path={`${ERoute.MemberSpace}/:operation`}>
+              <BaseTemplate><MemberSpaceDetail/></BaseTemplate>
             </Route>
             <Route exact path={ERoute.BulletinNewsletter}>
-              <BaseTemplate><BulletinNewsLetter/></BaseTemplate>
+              <BaseTemplate><NewsLetter/></BaseTemplate>
+            </Route>
+            <Route path={`${ERoute.BulletinNewsletter}/:operation`}>
+              <BaseTemplate><NewsLetterDetail/></BaseTemplate>
             </Route>
             <Route exact path={ERoute.BulletinGallery}>
-              <BaseTemplate><BulletinGallery/></BaseTemplate>
+              <BaseTemplate><Gallery/></BaseTemplate>
+            </Route>
+            <Route path={`${ERoute.BulletinGallery}/:operation`}>
+              <BaseTemplate><GalleryDetail/></BaseTemplate>
+            </Route>
+            <Route exact path={ERoute.BulletinDrive}>
+              <BaseTemplate><Drive/></BaseTemplate>
+            </Route>
+            <Route path={`${ERoute.BulletinDrive}/:operation`}>
+              <BaseTemplate><DriveDetail/></BaseTemplate>
             </Route>
             <Route path="*" component={NoMatch}/>
           </Switch>
