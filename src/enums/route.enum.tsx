@@ -23,4 +23,6 @@ export enum ERoute {
   BulletinNewsletter = '/bulletin/newsletter',
   BulletinGallery = '/bulletin/gallery',
   BulletinDrive = '/bulletin/drive',
+  Privacy = '/privacy',
+  Agreement = '/agreement',
 }

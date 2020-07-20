@@ -79,7 +79,7 @@ export const BoardDetailWrapper = styled.div`
   .box-sub-title {
     border-bottom: 1px solid #ccc;
     padding: 5px 20px;
-    .label {
+    .label, .value {
       font-size: 12px;
     }
   }
@@ -113,7 +113,8 @@ export const BoardDetailWrapper = styled.div`
 
   .body-view {
     min-height: ${CDefaultEditorHeight}px;
-    padding: 10px 0px 20px 0px;
+    padding: 20px 40px;
+    overflow-x: hidden;
     .tox-tinymce {
       border: none;
       z-index: 0;

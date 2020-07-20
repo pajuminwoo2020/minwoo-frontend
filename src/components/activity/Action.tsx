@@ -16,12 +16,14 @@ import {
 } from 'libs/api/board';
 import {useDataApi, usePagination} from 'libs/hooks';
 import {TBoardDetail} from 'modules/board';
-import {EBoardOperation} from 'enums/board.enum';
+import {EBoardOperation, EBoardType} from 'enums/board.enum';
 import {ERoute} from 'enums/route.enum';
-import {TListResponse, TPagination, RouteMatch} from 'modules/types';
+import {TListResponse, TPagination, RouteMatch, TSelectList} from 'modules/types';
 import {TUser} from 'modules/user';
 import SearchInput from 'components/base/SearchInput';
+import Category from 'components/base/Category';
 import BoardDetail, {getImageSource} from 'components/base/BoardDetail';
+import {getCategoriesSelect} from 'libs/api/board';
 
 const {Meta} = Card;
 const Action = () => {
@@ -36,6 +38,7 @@ const Action = () => {
     params: {
       current: pagination.current,
       pageSize: pagination.pageSize,
+      category: pagination.category,
       q: pagination.q,
     },
   });
@@ -51,6 +54,7 @@ const Action = () => {
   return (
     <>
       <TableHeaderWrapper>
+        <Category pagination={pagination} reloadPage={reloadPage} boardType={EBoardType.Action}/>
         <SearchInput pagination={pagination} reloadPage={reloadPage}/>
         <Link to={`${ERoute.ActivityAction}/${EBoardOperation.Create}`}>
           <Button
@@ -83,20 +87,28 @@ const Action = () => {
           <List.Item>
             <CardWrapper to={`${ERoute.ActivityAction}/${EBoardOperation.View}/${get(item, 'id')}`}>
               <Card hoverable cover={<img alt={"Action"} src={getImageSource(item)}/>}>
-                <Meta title={get(item, 'title')} description={
-                  <>
-                    <FormattedDate
-                      value={get(item, 'created_at')}
-                      year="numeric"
-                      month="long"
-                      day="2-digit"
-                    />
-                    <Row justify="space-between">
-                      <Col>{get(item, 'created_by.fullname')} </Col>
-                      <Col><EyeOutlined/>&nbsp;{get(item, 'hit_count')}</Col>
-                    </Row>
-                  </>
-                }/>
+                <Meta
+                  title={
+                    <>
+                    <div className="title-category">{`${get(item, 'id')} | ${get(item, 'category.name')}`}</div>
+                    <div>{get(item, 'title')}</div>
+                    </>
+                  }
+                  description={
+                    <>
+                      <FormattedDate
+                        value={get(item, 'created_at')}
+                        year="numeric"
+                        month="long"
+                        day="2-digit"
+                      />
+                      <Row justify="space-between">
+                        <Col>{get(item, 'created_by.fullname')} </Col>
+                        <Col><EyeOutlined/>&nbsp;{get(item, 'hit_count')}</Col>
+                      </Row>
+                    </>
+                  }
+                />
               </Card>
             </CardWrapper>
           </List.Item>
@@ -110,6 +122,7 @@ export const ActionDetail = () => {
   const match = useRouteMatch(`${ERoute.ActivityAction}/:operation/:record_id?`);
   let {operation=EBoardOperation.View, record_id} = (match?.params as RouteMatch) || {};
   const [{data, loading}] = useDataApi<TBoardDetail>(getBoardAction.bind(null, record_id), {}, operation != EBoardOperation.Create);
+  const [{data: categories, loading: categoriesLoading}] = useDataApi<TSelectList>(getCategoriesSelect.bind(null, EBoardType.Action), []);
 
   return (
 	<BoardDetail
@@ -118,6 +131,7 @@ export const ActionDetail = () => {
 	  promiseCreate={createBoardAction}
 	  promiseDelete={deleteBoardAction}
       promiseUpdate={updateBoardAction}
+      categories={categories}
       hasThumbnail={true}
 	  record={data}
 	/>

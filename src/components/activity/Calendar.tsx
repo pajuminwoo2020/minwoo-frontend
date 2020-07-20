@@ -97,11 +97,11 @@ const CalendarPage = () => {
 
   function handleSelect(value: any) {
     setSelectedDate(value.format(CDateFormat));
-  };
+  }
 
   function handlePanelChange(value: any) {
     setPannelDate(value.format(CDateFormat));
-  };
+  }
 
   return (
     <CalendarWrapper>

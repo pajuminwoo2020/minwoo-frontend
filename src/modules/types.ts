@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import {EBoardOperation} from 'enums/board.enum';
 
 export type TErrorResponse = {
@@ -12,6 +12,7 @@ export type TPagination = {
   q?: string;
   current?: number;
   pageSize?: number;
+  category?: string;
 };
 
 export type TListRequestParams = {
@@ -42,3 +43,8 @@ export type TModalState = {
   record: any;
   visible: boolean;
 };
+
+export type TSelectList = Array<{
+  label: string | ReactNode;
+  value: number | string;
+}>;

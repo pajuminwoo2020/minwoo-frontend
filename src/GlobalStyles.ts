@@ -237,6 +237,14 @@ export const TableWrapper = styled.div`
     }
   }
 
+  .column-category {
+    text-align: center;
+    width: 100px;
+
+    @media screen and ${device.mobile} {
+      display: none;
+    }
+  }
   .column-title {
     padding: 0px 20px !important;
 
@@ -245,7 +253,7 @@ export const TableWrapper = styled.div`
     }
   }
   .column-created-at {
-    width: 150px;
+    width: 100px;
 
     @media screen and ${device.mobile} {
       display: none;
@@ -262,11 +270,15 @@ export const TableWrapper = styled.div`
     }
   }
   .column-created-by {
-    width: 200px;
+    width: 150px;
 
     @media screen and ${device.mobile} {
       display: none;
     }
+  }
+  .title-category {
+    font-weight: normal;
+    color: #bebebe;
   }
 
   td.ant-table-cell.column-created-at {
@@ -300,7 +312,7 @@ export const TableHeaderWrapper = styled.div`
 
   .search-input {
     float: left;
-    max-width: 400px;
+    max-width: 300px;
   }
   .add-button {
     display: inline-block;
@@ -308,7 +320,6 @@ export const TableHeaderWrapper = styled.div`
 
     @media screen and ${device.tablet} {
       display: block;
-      float: left;
     }
 
     @media screen and ${device.mobile} {
@@ -363,6 +374,12 @@ export const CardWrapper = styled(Link)`
   }
 
   .ant-card-meta-title:hover {
+    color: ${PrimaryColor};
+  }
+
+  .title-category {
+    font-size: 12px;
+    font-weight: normal;
     color: ${PrimaryColor};
   }
 `;

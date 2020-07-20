@@ -346,3 +346,13 @@ export const getBoardDrives = ({params}: TListRequestParams, cancel?: CancelToke
     cancelToken: cancel?.token,
   });
 };
+
+/**
+ * Category
+ */
+
+export const getCategoriesSelect = (board_type: string, cancel?: CancelTokenSource) => {
+  return apiClient.get(`board/categories/select/${board_type}`, {
+    cancelToken: cancel?.token,
+  });
+};

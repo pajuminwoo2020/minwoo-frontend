@@ -4,7 +4,7 @@ import {get, isEmpty, map} from 'lodash';
 import {AxiosResponse} from 'axios';
 import {ExclamationCircleOutlined, InboxOutlined} from '@ant-design/icons';
 import {UploadChangeParam} from 'antd/lib/upload/interface';
-import {Row, Col, Form, Input, Button, Modal, Upload} from 'antd';
+import {Row, Col, Form, Input, Button, Modal, Upload, Select} from 'antd';
 import {FormattedDate} from 'react-intl';
 import {useHistory, Link} from 'react-router-dom';
 import {BoardDetailWrapper} from 'components/base/styles';
@@ -12,7 +12,8 @@ import {EBoardOperation} from 'enums/board.enum';
 import DefaultSource from 'assets/default.png';
 import {ENotificationType} from 'enums/base.enum';
 import NoMatch from 'components/base/error/NoMatch';
-import {TBoardDetail, TCreateBoardDetail} from 'modules/board';
+import {TBoardDetail, TCreateBoardDetail, TUpdateBoardDetail} from 'modules/board';
+import {TSelectList} from 'modules/types';
 import EditorComponent from 'components/base/EditorComponent';
 import {showConfirm} from 'components/modal/showConfirm';
 import {handleFieldError} from 'libs/api/errorHandle';
@@ -28,15 +29,18 @@ type TBoardDetailProps = {
   promiseUpdate: any,
   promiseDelete: any,
   hasThumbnail?: boolean,
+  categories?: TSelectList;
   record?: TBoardDetail;
 };
 
+const {Option} = Select;
 export const BoardDetail = ({
   operation,
   pathName,
   promiseCreate,
   promiseDelete,
   promiseUpdate,
+  categories,
   hasThumbnail=false,
   record
 }: TBoardDetailProps) => {
@@ -74,6 +78,12 @@ export const BoardDetail = ({
           </Col>
         </Row>
         <Row className= "box-sub-title" justify="end">
+          <Col>
+            <div className="title-item">
+              <div className="label">카테고리</div>
+              <div className="value">{get(record, 'category.name')}</div>
+            </div>
+          </Col>
           <Col>
             <div className="title-item">
               <div className="label">조회수</div>
@@ -153,42 +163,73 @@ export const BoardDetail = ({
             status: 'done',
             name: v.file_name,
           })),
+          body: get(record, 'body'),
+          category: get(record, 'category.id'),
         });
         setThumbnailSource(get(record, 'thumbnail_source'));
       }
     }, [record]);
 
-    async function onClickUpdate() {
-      try {
-        setSubmitButtonDisabled(true);
-        await promiseUpdate(get(record, 'id'), {
-          title: form.getFieldValue('title'),
-          body: form.getFieldValue('body'),
-          file_ids: filteredFileNames(form.getFieldValue('files')),
-          thumbnail_source: thumbnailSource,
-        });
+    function onClickUpdate() {
+      form.validateFields().then(value => {
+        handleUpdate(value as TUpdateBoardDetail);
+      });
+      async function handleUpdate(value: TUpdateBoardDetail) {
+        try {
+          setSubmitButtonDisabled(true);
+          await promiseUpdate(get(record, 'id'), {
+            title: get(value, 'title'),
+            body: get(value, 'body'),
+            category: get(value, 'category'),
+            file_ids: filteredFileNames(get(value, 'files')),
+            thumbnail_source: thumbnailSource,
+          });
 
-        history.push({
-          pathname: pathName,
-          state: {
-            notification: {type: ENotificationType.Success, content: '성공적으로 글을 수정했습니다' }
-          },
-        });
-      } catch (e) {
-        handleFieldError(e, form);
-        throw e;
-      } finally {
-        setSubmitButtonDisabled(false);
+          history.push({
+            pathname: pathName,
+            state: {
+              notification: {type: ENotificationType.Success, content: '성공적으로 글을 수정했습니다' }
+            },
+          });
+        } catch (e) {
+          handleFieldError(e, form);
+          throw e;
+        } finally {
+          setSubmitButtonDisabled(false);
+        }
       }
     }
 
     return (
       <>
         <Form form={form} className="body-edit">
-          <Form.Item name="title" rules={[{required: true, message: '제목을 입력해주세요'}]}>
-            <Input size="large" placeholder="제목"/>
+          <Form.Item noStyle>
+            <Input.Group>
+              <Row>
+                {categories && (
+                  <Col flex='120px'>
+                    <Form.Item name="category">
+                      <Select size="large" style={{width: '100%'}} placeholder="카테고리">
+                        {categories.map(v => {
+                          return (
+                            <Option value={v.value} key={v.value}>
+                              {v.label}
+                            </Option>
+                          );
+                        })}
+                      </Select>
+                    </Form.Item>
+                  </Col>
+                )}
+                <Col flex='auto'>
+                  <Form.Item name="title" rules={[{required: true, message: '제목을 입력해주세요'}]}>
+                    <Input size="large" placeholder="제목"/>
+                  </Form.Item>
+                </Col>
+              </Row>
+            </Input.Group>
           </Form.Item>
-          <Form.Item name="body">
+          <Form.Item name="body" rules={[{required: true, message: '내용을 입력해주세요'}]}>
             <EditorComponent content={get(record, 'body', '')} setThumbnail={setThumbnail}/>
           </Form.Item>
           <Form.Item
@@ -233,37 +274,66 @@ export const BoardDetail = ({
     const [thumbnailSource, setThumbnail] = useThumbnail(hasThumbnail);
     const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
 
-    async function onClickCreate() {
-      try {
-        setSubmitButtonDisabled(true);
-        await promiseCreate({
-          title: form.getFieldValue('title'),
-          body: form.getFieldValue('body'),
-          file_ids: filteredFileNames(form.getFieldValue('files')),
-          thumbnail_source: thumbnailSource,
-        });
+    function onClickCreate() {
+      form.validateFields().then(value => {
+        handleCreate(value as TCreateBoardDetail);
+      });
+      async function handleCreate (value: TCreateBoardDetail) {
+        try {
+          setSubmitButtonDisabled(true);
+          await promiseCreate({
+            title: get(value, 'title'),
+            body: get(value, 'body'),
+            category: get(value, 'category'),
+            file_ids: filteredFileNames(get(value, 'files')),
+            thumbnail_source: thumbnailSource,
+          });
 
-        history.push({
-          pathname: pathName,
-          state: {
-            notification: {type: ENotificationType.Success, content: '성공적으로 글을 등록했습니다' }
-          },
-        });
-      } catch (e) {
-        handleFieldError(e, form);
-        throw e;
-      } finally {
-        setSubmitButtonDisabled(false);
+          history.push({
+            pathname: pathName,
+            state: {
+              notification: {type: ENotificationType.Success, content: '성공적으로 글을 등록했습니다' }
+            },
+          });
+        } catch (e) {
+          handleFieldError(e, form);
+          throw e;
+        } finally {
+          setSubmitButtonDisabled(false);
+        }
       }
     }
 
     return (
       <>
         <Form form={form} className="body-edit">
-          <Form.Item name="title" rules={[{required: true, message: '제목을 입력해주세요'}]}>
-            <Input size="large" placeholder="제목"/>
+          <Form.Item noStyle>
+            <Input.Group>
+              <Row>
+                {categories && (
+                  <Col flex='120px'>
+                    <Form.Item name="category">
+                      <Select size="large" style={{width: '100%'}} placeholder="카테고리">
+                        {categories.map(v => {
+                          return (
+                            <Option value={v.value} key={v.value}>
+                              {v.label}
+                            </Option>
+                          );
+                        })}
+                      </Select>
+                    </Form.Item>
+                  </Col>
+                )}
+                <Col flex='auto'>
+                  <Form.Item name="title" rules={[{required: true, message: '제목을 입력해주세요'}]}>
+                    <Input size="large" placeholder="제목"/>
+                  </Form.Item>
+                </Col>
+              </Row>
+            </Input.Group>
           </Form.Item>
-          <Form.Item name="body">
+          <Form.Item name="body" rules={[{required: true, message: '내용을 입력해주세요'}]}>
             <EditorComponent setThumbnail={setThumbnail}/>
           </Form.Item>
           <Form.Item

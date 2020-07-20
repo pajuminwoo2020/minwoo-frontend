@@ -11,6 +11,7 @@ export function usePagination<T>(pageSize=20): [TablePaginationConfig & TPaginat
     current: 1,
     pageSize: pageSize,
     q: '',
+    category: '',
     ...queryString.parse(location.search),
   };
   const [pagination, setPagination] = useState<TPagination>({

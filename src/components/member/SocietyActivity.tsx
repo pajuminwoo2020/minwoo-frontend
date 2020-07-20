@@ -14,13 +14,15 @@ import {
   updateBoardSocietyActivity,
 } from 'libs/api/board';
 import {useDataApi, usePagination} from 'libs/hooks';
-import {TBoardDetail} from 'modules/board';
-import {EBoardOperation} from 'enums/board.enum';
+import {TBoardDetail, TCategory} from 'modules/board';
+import {EBoardOperation, EBoardType} from 'enums/board.enum';
 import {ERoute} from 'enums/route.enum';
-import {TListResponse, TPagination, RouteMatch} from 'modules/types';
+import {TListResponse, TPagination, RouteMatch, TSelectList} from 'modules/types';
 import {TUser} from 'modules/user';
 import SearchInput from 'components/base/SearchInput';
+import Category from 'components/base/Category';
 import BoardDetail from 'components/base/BoardDetail';
+import {getCategoriesSelect} from 'libs/api/board';
 
 const SocietyActivity = () => {
   const [pagination, setPagination] = usePagination();
@@ -34,6 +36,7 @@ const SocietyActivity = () => {
     params: {
       current: pagination.current,
       pageSize: pagination.pageSize,
+      category: pagination.category,
       q: pagination.q,
     },
   });
@@ -53,12 +56,20 @@ const SocietyActivity = () => {
       className: 'column-id',
     },
     {
+      title: '카테고리',
+      dataIndex: 'category',
+      className: 'column-category',
+      render: (category: TCategory) => (
+        <span>{get(category, 'name')}</span>
+      )
+    },
+    {
       title: '제목',
       dataIndex: 'title',
       className: 'column-title',
       render: (_: any, record: TBoardDetail) => (
         <Link to={`${ERoute.MemberSocietyActivity}/${EBoardOperation.View}/${record.id}`}>
-          {record.title}
+          {get(record, 'title')}
         </Link>
       )
     },
@@ -96,6 +107,7 @@ const SocietyActivity = () => {
   return (
     <>
       <TableHeaderWrapper>
+        <Category pagination={pagination} reloadPage={reloadPage} boardType={EBoardType.SocietyActivity}/>
         <SearchInput pagination={pagination} reloadPage={reloadPage}/>
         <Link to={`${ERoute.MemberSocietyActivity}/${EBoardOperation.Create}`}>
           <Button
@@ -128,6 +140,7 @@ export const SocietyActivityDetail = () => {
   const match = useRouteMatch(`${ERoute.MemberSocietyActivity}/:operation/:record_id?`);
   let {operation=EBoardOperation.View, record_id} = (match?.params as RouteMatch) || {};
   const [{data, loading}] = useDataApi<TBoardDetail>(getBoardSocietyActivity.bind(null, record_id), {}, operation != EBoardOperation.Create);
+  const [{data: categories, loading: categoriesLoading}] = useDataApi<TSelectList>(getCategoriesSelect.bind(null, EBoardType.SocietyActivity), []);
 
   return (
 	<BoardDetail
@@ -136,6 +149,7 @@ export const SocietyActivityDetail = () => {
 	  promiseCreate={createBoardSocietyActivity}
 	  promiseDelete={deleteBoardSocietyActivity}
 	  promiseUpdate={updateBoardSocietyActivity}
+      categories={categories}
 	  record={data}
 	/>
   );

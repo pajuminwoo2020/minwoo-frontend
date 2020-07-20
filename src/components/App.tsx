@@ -9,6 +9,8 @@ import {getNavigatorLanguage} from 'libs/utils';
 import {RootState} from 'modules';
 import {ERoute} from 'enums/route.enum';
 import Main from 'components/base/Main';
+import Agreement from 'components/base/Agreement';
+import Privacy from 'components/base/Privacy';
 import Login from 'components/user/Login';
 import Signup from 'components/user/Signup';
 import Edit from 'components/user/Edit';
@@ -167,6 +169,12 @@ const App = () => {
             </Route>
             <Route path={`${ERoute.BulletinDrive}/:operation`}>
               <BaseTemplate><DriveDetail/></BaseTemplate>
+            </Route>
+            <Route exact path={ERoute.Privacy}>
+              <BaseTemplate><Privacy/></BaseTemplate>
+            </Route>
+            <Route exact path={ERoute.Agreement}>
+              <BaseTemplate><Agreement/></BaseTemplate>
             </Route>
             <Route path="*" component={NoMatch}/>
           </Switch>
