@@ -1,24 +1,7 @@
-/*
-import React, {useState} from 'react';
-
-const SocietyAbout = () => {
-  return (
-	<>
-	  SocietyAboutSocietyAbout
-	</>
-  );
-}
-
-export default SocietyAbout;
-*/
-import {CheckOutlined, PlusOutlined} from '@ant-design/icons/lib';
 import {List} from 'antd';
-import {useRouteMatch} from 'react-router-dom';
 import {ColumnsType} from 'antd/es/table';
 import {get} from 'lodash';
-import React, {useEffect, useState} from 'react';
-import {TableWrapper, TableHeaderWrapper} from 'GlobalStyles';
-import {FormattedDate} from 'react-intl';
+import React from 'react';
 import {
   getSocietyAbouts,
   getSocietyAbout,
@@ -26,37 +9,15 @@ import {
   deleteSocietyAbout,
   updateSocietyAbout,
 } from 'libs/api/society';
-import {useDataApi, usePagination} from 'libs/hooks';
+import {useDataApi} from 'libs/hooks';
 import {TSocietyAboutDetail} from 'modules/society';
-import {ERoute} from 'enums/route.enum';
-import {TListResponse, TPagination, RouteMatch} from 'modules/types';
-import {TUser} from 'modules/user';
-import SearchInput from 'components/base/SearchInput';
-import BoardDetail from 'components/base/BoardDetail';
+import {TListResponse} from 'modules/types';
 
 const SocietyAbout = () => {
-  const [pagination, setPagination] = usePagination();
-  const reloadPage = (page?: Partial<TPagination>) => {
-    setPagination({
-      ...pagination,
-      ...page,
-    });
-  };
-  const getPromise = getSocietyAbouts.bind(null, {
-    params: {
-      current: pagination.current,
-      pageSize: pagination.pageSize,
-      q: pagination.q,
-    },
-  });
-  const [{data, loading}, setCallback] = useDataApi<TListResponse<TSocietyAboutDetail>>(getPromise, {
+  const [{data, loading}] = useDataApi<TListResponse<TSocietyAboutDetail>>(getSocietyAbouts, {
     contents: [],
     last: false,
   });
-
-  useEffect(() => {
-    setCallback(() => getPromise);
-  }, [pagination]);
 
   const columns: ColumnsType<TSocietyAboutDetail> = [
 	{
@@ -89,8 +50,9 @@ const SocietyAbout = () => {
 		  renderItem={item => (
 		  <List.Item>
 			<List.Item.Meta
-			  title={<a href="https://ant.design">{item.name}</a>}
-			  description={item.activity}
+			  title={<div>{item.name}</div>}
+			  //description={<div style={{color: '#f86e6b'}}>{item.activity}</div>}
+			  description={<div dangerouslySetInnerHTML={{__html: item.activity}}></div>}
 			/>
 		  </List.Item>
 		  )}
