@@ -1,6 +1,6 @@
 import {CancelTokenSource} from 'axios';
 import {TListRequestParams, TListResponse} from 'modules/types';
-import {TBanner} from 'modules/information';
+import {TBanner, InformationHistory} from 'modules/information';
 import apiClient from 'libs/api/apiClient';
 
 /**
@@ -9,6 +9,13 @@ import apiClient from 'libs/api/apiClient';
 
 export const getBanners = ({params}: TListRequestParams, cancel?: CancelTokenSource) => {
   return apiClient.get<TListResponse<TBanner>>(`/information/banners`, {
+    params: params,
+    cancelToken: cancel?.token,
+  });
+};
+
+export const getHistories = ({params}: TListRequestParams, cancel?: CancelTokenSource) => {
+  return apiClient.get<TListResponse<InformationHistory>>(`/information/histories`, {
     params: params,
     cancelToken: cancel?.token,
   });

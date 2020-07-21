@@ -9,3 +9,15 @@ export type TBanner = {
   absolute_url: string;
   banner_type: EBannerType;
 };
+
+/** 
+ * 연혁 
+ */
+
+export type InformationHistory = {
+  kind: number;
+  year: number;
+  body: string;
+}
+
+
