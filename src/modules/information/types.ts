@@ -37,3 +37,13 @@ export type TCalendar = {
   schedule_to: string;
   memo?: string;
 };
+
+/**
+ * 연혁
+ */
+
+export type InformationHistory = {
+  kind: number;
+  year: number;
+  body: string;
+}
