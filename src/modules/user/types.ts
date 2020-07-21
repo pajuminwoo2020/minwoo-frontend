@@ -42,6 +42,10 @@ export type TUserCreate = {
   fullname_local: string;
 };
 
+export type TPasswordReset= {
+  userid: string;
+};
+
 export type TCreateUser = {
   userid: string;
   fullname_local: string;

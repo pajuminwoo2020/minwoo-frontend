@@ -9,10 +9,13 @@ import {userCreate} from 'libs/api/user';
 import {TUserCreate} from 'modules/user';
 import {Title, FormWrapper} from 'components/user/styles';
 import {ERoute} from 'enums/route.enum';
+import {ENotificationType} from 'enums/base.enum';
+import {useHistory} from 'react-router-dom';
 
 const Signup = () => {
   const [form] = Form.useForm();
   const next = queryString.parse(useLocation().search)?.next?.toString();
+  const history = useHistory();
   const onClickSignup = () => {
     form.validateFields().then(value => {
       handleSignup(value as TUserCreate);
@@ -24,9 +27,16 @@ const Signup = () => {
         userid: value.userid,
         password: value.password,
         fullname_local: value.fullname_local
+	  });
+	  
+	  let redirectPath = ERoute.UserLogin;
+	  
+      history.push({
+        pathname: redirectPath,
+        state: {
+          notification: {type: ENotificationType.Success, content: '회원가입이 완료되었습니다. 이메일을 확인하세요.'},
+        },
       });
-
-      window.location.href = next ? next : ERoute.UserLogin;
     } catch (e) {
       handleFieldError(e, form);
       throw e;

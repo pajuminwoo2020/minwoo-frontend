@@ -8,6 +8,7 @@ import {
   TUser,
   TUserLogin,
   TUserCreate,
+  TPasswordReset,
 } from 'modules/user';
 import apiClient from 'libs/api/apiClient';
 
@@ -23,6 +24,11 @@ export const createUser = (params: TCreateUser, cancel?: CancelTokenSource) => {
 
 export const getUser = () => {
   return apiClient.get<TUser>(`/user`);
+};
+
+export const passwordReset = (params: TPasswordReset) => {
+  return apiClient.post(`/password/reset`, params);
+  //return apiClient.post(`password_reset/`, params);
 };
 
 export const main = () => wrapPromise(
@@ -80,3 +86,9 @@ export const userCreate = (params: TUserCreate, cancel?: CancelTokenSource) => {
 };
 
 export const userLogout = () => apiClient.post('/user/logout');
+
+
+
+export const userActivate = (uidb64: string, token: string) => {
+  return apiClient.get(`/user/activate/${uidb64}/${token}`);
+};

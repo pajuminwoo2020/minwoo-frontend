@@ -36,6 +36,7 @@ import ErrorBoundary from 'components/base/error/ErrorBoundary';
 import NoMatch from 'components/base/error/NoMatch';
 import {TUser, setUserInfo} from 'modules/user';
 import {main} from 'libs/api/user';
+import Activate from 'components/user/Activate';
 
 const data = main();
 
@@ -63,6 +64,9 @@ const App = () => {
             </Route>
             <Route exact path={ERoute.UserSignup}>
               <BaseTemplate><Signup/></BaseTemplate>
+            </Route>
+            <Route exact path='/user/activate/:uidb64/:token'>
+              <BaseTemplate><Activate/></BaseTemplate>
             </Route>
             <Route exact path={ERoute.UserEdit}>
               <BaseTemplate><Edit/></BaseTemplate>
