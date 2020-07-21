@@ -85,7 +85,7 @@ const Donation = () => {
 			<p>
               <Text style={{fontWeight: 'bold', fontSize: '16px'}}>
                 여성이 웃는 세상, 평등한 사회를 위한 발걸음,<br></br>
-                민우회 회원이 되어주세요!
+                민우회와 함께해 주세요!
               </Text>
 			</p>
 			<p>

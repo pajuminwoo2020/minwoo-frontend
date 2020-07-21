@@ -4,7 +4,6 @@ import {Calendar, Badge, Alert, Modal, Descriptions} from 'antd';
 import {filter, get, map} from 'lodash';
 import moment from 'moment';
 import {useDataApi} from 'libs/hooks';
-import 'moment/locale/ko';
 import CalendarHeader from'components/base/CalendarHeader';
 import AddressModal from 'components/modal/AddressModal';
 import {TCalendar} from 'modules/information';
@@ -12,7 +11,6 @@ import {TListResponse, TListRequestParams, TModalState} from 'modules/types';
 import {getCalendars, getCalendarsAll} from 'libs/api/information';
 import {CDateFormat} from 'constants/base.const';
 
-moment.locale('ko');
 const CalendarWrapper = styled.div`
   .events {
     list-style: none;

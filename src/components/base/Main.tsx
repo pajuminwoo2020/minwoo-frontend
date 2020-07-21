@@ -210,20 +210,22 @@ const Main = () => {
           </iframe>
         </Col>
       </Row>
-      <List
-        size="small"
-        split={false}
-        grid={{gutter: 16, xs: 1, sm: 1, md: 3, lg: 3, xl: 3, xxl: 3}}
-        dataSource={filter(get(dataBanner, 'contents', []), v => v.banner_type === EBannerType.Small)}
-        loading={loadingBanner}
-        renderItem={item => (
-          <List.Item style={{textAlign: 'center'}}>
-            <Link to={get(item, 'href')}>
-              <img src={`${Configs.API_HOST}${get(item, 'absolute_url')}`} style={{height: '100px', width: '300px', margin: 'auto'}}/>
-            </Link>
-          </List.Item>
-        )}
-      />
+      {filter(get(dataBanner, 'contents', []), v => v.banner_type === EBannerType.Small).length > 0 && (
+        <List
+          size="small"
+          split={false}
+          grid={{gutter: 16, xs: 1, sm: 1, md: 3, lg: 3, xl: 3, xxl: 3}}
+          dataSource={filter(get(dataBanner, 'contents', []), v => v.banner_type === EBannerType.Small)}
+          loading={loadingBanner}
+          renderItem={item => (
+            <List.Item style={{textAlign: 'center'}}>
+              <Link to={get(item, 'href')}>
+                <img src={`${Configs.API_HOST}${get(item, 'absolute_url')}`} style={{height: '100px', width: '300px', margin: 'auto'}}/>
+              </Link>
+            </List.Item>
+          )}
+        />
+      )}
 	</MainWrapper>
   );
 }

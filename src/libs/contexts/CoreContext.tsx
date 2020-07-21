@@ -1,4 +1,5 @@
 import {ConfigProvider} from 'antd';
+import 'moment/locale/ko';
 import ko_KR from 'antd/es/locale/ko_KR';
 import {get} from 'lodash';
 import React from 'react';
