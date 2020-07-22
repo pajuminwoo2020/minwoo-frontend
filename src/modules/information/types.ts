@@ -49,3 +49,15 @@ export type TInformationHistory = Array<{
     memo: string;
   }>;
 }>;
+
+/**
+ * 소모임 소개
+ */
+export type TSocietyAboutDetail = {
+  name: string;
+  description: string;
+  schedule: Array<string>;
+  main_activity: Array<string>;
+  website: string;
+  is_default: boolean;
+};

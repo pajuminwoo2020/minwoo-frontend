@@ -71,17 +71,17 @@ const About = () => {
       </Tabs>
       <div className="tabs-content" id="purpose">
         <Title className="content-title">설립취지</Title>
-        <Row justify="center" gutter={[16, 16]}>
-          <Col flex="auto">
-            <div style={{maxWidth: '550px', margin: 'auto'}}>
+        <Row justify="center" gutter={[32, 16]}>
+          <Col xs={24} sm={24} md={14} lg={14} xl={14}>
+            <div style={{margin: 'auto'}}>
             <Title level={4}>성폭력 없는 세상, 함께 만들기</Title>
             <Text>
               한국여성민우회 성폭력상담소는 여성주의 시각을 바탕으로 한국 사회의 성문화와 제도를 바꾸기 위한 활동을 펼치고 있습니다. 자신과 상대방의 느낌과 의사를 존중하고 건강하게 표현함으로써 성폭력을 예방하고 성적 자기결정권이 존중되는 사회를 만들어 갑니다.
             </Text>
           </div>
           </Col>
-          <Col flex="300px">
-            <img src={Image1} style={{width: '300px', height: 'auto'}}/>
+          <Col xs={24} sm={24} md={10} lg={10} xl={10}>
+            <img src={Image1} style={{width: '100%', height: 'auto'}}/>
           </Col>
         </Row>
         <Title className="block-title" level={3}>&#9673;&nbsp;성폭력 없는 세상</Title>
