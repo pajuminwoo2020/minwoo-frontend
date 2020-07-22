@@ -64,3 +64,6 @@ export const CFax = '031-946-0396';
 export const ChiefExecutive = '윤숙희';
 export const CEmail = 'pajuminwoo@hanmail.net';
 export const CBankAccount = '국민은행 605701-01-41473';
+
+export const CPhoneCounseling = '031-946-2095';
+export const CWebHostCounseling = 'http://paju.womenlink.or.kr/2013/index.php';

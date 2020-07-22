@@ -248,3 +248,17 @@ export const MainWrapper = styled.div`
 }
 `;
 
+export const HistoryWrapper = styled.div`
+  .year {
+    color: ${PrimaryColor};
+    text-align: center;
+    font-size: 60px;
+  }
+  .memo-wrapper {
+    font-size: 15px;
+    display: block;
+    border-radius: 10px;
+    background-color: #f1f1f1;
+    padding: 10px 30px;
+  }
+`;

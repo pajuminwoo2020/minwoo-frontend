@@ -1,36 +1,32 @@
 import React, { useState } from 'react';
-import { Tabs, Timeline } from 'antd';
-import { getHistories } from 'libs/api/information';
-import { useDataApi } from 'libs/hooks';
-import { TListResponse } from 'modules/types';
-import { InformationHistory } from 'modules/information/types'
-import { get, map } from 'lodash';
+import {Timeline, Typography} from 'antd';
+import {getMainHistories} from 'libs/api/information';
+import {useDataApi} from 'libs/hooks';
+import {TListResponse} from 'modules/types';
+import {TInformationHistory} from 'modules/information/types'
+import {get, map} from 'lodash';
+import {HistoryWrapper} from 'components/base/styles';
 
-
-
-const { TabPane } = Tabs;
-
-
+const {Title} = Typography;
 const History = () => {
-  const [{data, loading}] = useDataApi<TListResponse<InformationHistory>>(getHistories.bind(null, {
-    params: {
-	current: 1,
-	pageSize: 999
-  }}));
-	
+  const [{data, loading}] = useDataApi<TInformationHistory>(getMainHistories.bind(null));
+
   const histories = get(data,'contents',[])
   return (
-	<>
-	<Tabs defaultActiveKey="1">
-	<TabPane tab="2020" key="1">
-	  <Timeline mode="alternate">
-        {map(get(data, 'contents', []).filter(v => v.year===2020), v => <Timeline.Item>{get(v, 'body')}</Timeline.Item>)}
-    </Timeline>
-    </TabPane>
-    </Tabs>
-  <br></br>
-  <p></p>  
-  </>
+    <HistoryWrapper>
+      {map(data, yearData =>
+        <>
+          <Title className='year'>{get(yearData, 'year')}</Title>
+          <Timeline mode="alternate">
+            {map(get(yearData, 'children', []), v =>
+              <Timeline.Item>
+                <div className='memo-wrapper'>{get(v, 'memo')}</div>
+              </Timeline.Item>
+            )}
+          </Timeline>
+        </>
+      )}
+    </HistoryWrapper>
   );
 }
 

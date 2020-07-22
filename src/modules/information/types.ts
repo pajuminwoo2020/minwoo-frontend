@@ -42,8 +42,10 @@ export type TCalendar = {
  * 연혁
  */
 
-export type InformationHistory = {
-  kind: number;
-  year: number;
-  body: string;
-}
+export type TInformationHistory = Array<{
+  year: string;
+  children: Array<{
+    date_at: string;
+    memo: string;
+  }>;
+}>;
