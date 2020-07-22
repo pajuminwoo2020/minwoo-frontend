@@ -31,3 +31,10 @@ export function filteredFileNames(files: UploadFile[] & TFiles[]) {
     v => (v.response ? get(v, 'response.id') : get(v, 'uid')),
   );
 }
+
+export function getLocalDate() {
+  const timezoneOffset = new Date().getTimezoneOffset() * 60000;
+  const timezoneDate = new Date(Date.now() - timezoneOffset);
+
+  return timezoneDate.toISOString().slice(0, 10);
+}

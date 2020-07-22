@@ -10,6 +10,7 @@ import {TCalendar} from 'modules/information';
 import {TListResponse, TListRequestParams, TModalState} from 'modules/types';
 import {getCalendars, getCalendarsAll} from 'libs/api/information';
 import {CDateFormat} from 'constants/base.const';
+import {getLocalDate} from 'libs/utils';
 
 const CalendarWrapper = styled.div`
   .events {
@@ -41,7 +42,7 @@ const CalendarWrapper = styled.div`
   }
 `;
 const CalendarPage = () => {
-  const today = new Date().toISOString().slice(0, 10)
+  const today = getLocalDate();
   const [calendarViewModal, setCalendarViewModal] = useState<TModalState>({record: '', visible: false});
   const [selectedDate, setSelectedDate] = useState<string>(today);
   const [pannelDate, setPannelDate] = useState<string>(today);
