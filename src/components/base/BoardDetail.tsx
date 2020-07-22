@@ -21,6 +21,7 @@ import {useThumbnail} from 'libs/hooks';
 import {CUploadProps} from 'constants/base.const';
 import {filteredFileNames} from 'libs/utils';
 import Configs from 'config';
+import {usePermission} from 'libs/hooks';
 
 type TBoardDetailProps = {
   operation: EBoardOperation;
@@ -45,6 +46,7 @@ export const BoardDetail = ({
   record
 }: TBoardDetailProps) => {
   const history = useHistory();
+  const [boardManagementPermission] = usePermission();
   const BoardTitle = () => {
     return (
       <>
@@ -131,19 +133,21 @@ export const BoardDetail = ({
               <Button type="primary" size="large">목록</Button>
             </Link>
           </Col>
-          <Col>
-            <Button
-              type="primary"
-              size="large"
-              onClick={() => showConfirm(() => onClickDelete(), '게시글을 삭제하시겠습니까?')}
-              style={{marginRight: '20px'}}
-            >
-              삭제
-            </Button>
-            <Link to={`${pathName}/${EBoardOperation.Edit}/${get(record, 'id')}`}>
-              <Button type="primary" size="large">수정</Button>
-            </Link>
-          </Col>
+          {boardManagementPermission &&
+            <Col>
+              <Button
+                type="primary"
+                size="large"
+                onClick={() => showConfirm(() => onClickDelete(), '게시글을 삭제하시겠습니까?')}
+                style={{marginRight: '20px'}}
+              >
+                삭제
+              </Button>
+              <Link to={`${pathName}/${EBoardOperation.Edit}/${get(record, 'id')}`}>
+                <Button type="primary" size="large">수정</Button>
+              </Link>
+            </Col>
+          }
         </Row>
       </>
     );
@@ -378,9 +382,13 @@ export const BoardDetail = ({
       {operation === EBoardOperation.View &&
         <BoardView/>
       || operation === EBoardOperation.Edit &&
-        <BoardEdit/>
+        <>
+          {boardManagementPermission && <BoardEdit/>}
+        </>
       || operation === EBoardOperation.Create &&
-        <BoardCreate/>
+        <>
+          {boardManagementPermission && <BoardCreate/>}
+        </>
       ||
         <NoMatch/>
       }

@@ -61,6 +61,14 @@ const App = () => {
 	window.scrollTo(0,0);
   }, [location]);
 
+  function redirectAfterLogin (component: React.ComponentElement<any, any>) {
+    return currentUser ? <Redirect to="/"/> : component;
+  }
+
+  function redirectBeforeLogin (component: React.ComponentElement<any, any>) {
+    return currentUser ? component : <Redirect to={`${ERoute.UserLogin}?next=${location.pathname}`}/>;
+  }
+
   return (
 	<IntlProvider locale={'ko'}>
       <CoreProvider>
@@ -70,19 +78,19 @@ const App = () => {
               <BaseTemplate><Main/></BaseTemplate>
             </Route>
             <Route exact path={ERoute.UserLogin}>
-              <BaseTemplate><Login/></BaseTemplate>
+              {redirectAfterLogin(<BaseTemplate><Login/></BaseTemplate>)}
             </Route>
             <Route exact path={ERoute.UserSignup}>
-              <BaseTemplate><Signup/></BaseTemplate>
+              {redirectAfterLogin(<BaseTemplate><Signup/></BaseTemplate>)}
             </Route>
             <Route exact path='/user/activate/:uidb64/:token'>
               <BaseTemplate><Activate/></BaseTemplate>
             </Route>
             <Route exact path={ERoute.UserEdit}>
-              <BaseTemplate><Edit/></BaseTemplate>
+              {redirectBeforeLogin(<BaseTemplate><Edit/></BaseTemplate>)}
             </Route>
             <Route exact path={ERoute.UserPasswordReset}>
-              <BaseTemplate><PasswordReset/></BaseTemplate>
+              {redirectAfterLogin(<BaseTemplate><PasswordReset/></BaseTemplate>)}
             </Route>
             <Route exact path={ERoute.IntroAbout}>
               <BaseTemplate><IntroAbout/></BaseTemplate>

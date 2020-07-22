@@ -3,3 +3,4 @@ export * from './useDidMount';
 export * from './useModal';
 export * from './usePagination';
 export * from './useThumbnail';
+export * from './usePermission';

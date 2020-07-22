@@ -23,6 +23,7 @@ import {TListResponse, TPagination, RouteMatch} from 'modules/types';
 import {TUser} from 'modules/user';
 import SearchInput from 'components/base/SearchInput';
 import BoardDetail, {getImageSource} from 'components/base/BoardDetail';
+import {usePermission} from 'libs/hooks';
 
 const {Meta} = Card;
 const GalleryWrapper = styled(Link)`
@@ -60,6 +61,7 @@ const GalleryWrapper = styled(Link)`
 `;
 const Gallery = () => {
   const [pagination, setPagination] = usePagination();
+  const [boardManagementPermission] = usePermission();
   const reloadPage = (page?: Partial<TPagination>) => {
     setPagination({
       ...pagination,
@@ -86,16 +88,18 @@ const Gallery = () => {
     <>
       <TableHeaderWrapper>
         <SearchInput pagination={pagination} reloadPage={reloadPage}/>
-        <Link to={`${ERoute.BulletinGallery}/${EBoardOperation.Create}`}>
-          <Button
-            className="add-button"
-            type="primary"
-            size="large"
-            icon={<PlusOutlined/>}
-          >
-            사진올리기
-          </Button>
-        </Link>
+        {boardManagementPermission &&
+          <Link to={`${ERoute.BulletinGallery}/${EBoardOperation.Create}`}>
+            <Button
+              className="add-button"
+              type="primary"
+              size="large"
+              icon={<PlusOutlined/>}
+            >
+              사진올리기
+            </Button>
+          </Link>
+        }
       </TableHeaderWrapper>
       <List
         pagination={{

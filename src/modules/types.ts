@@ -40,8 +40,13 @@ export type TFiles = {
 };
 
 export type TModalState = {
-  record: any;
+  record?: any;
   visible: boolean;
+};
+
+export type TModalProps = {
+  modalState: TModalState;
+  setModalState: React.Dispatch<React.SetStateAction<TModalState>>;
 };
 
 export type TSelectList = Array<{

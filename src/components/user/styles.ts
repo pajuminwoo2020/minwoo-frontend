@@ -30,7 +30,7 @@ export const FormWrapper = styled.div`
     margin: 0 auto;
   }
   .form-button {
-    margin-top: 10px;
+    margin-top: 30px;
     margin-bottom: 10px;
     & button {
       width: 100%;
@@ -47,6 +47,11 @@ export const FormWrapper = styled.div`
     .ant-form-item {
       display: inline-block;
     }
+  }
+  .ant-form-item-extra {
+    font-size: 13px;
+    margin-top: 2px;
+    padding-left: 3px;
   }
 `;
 

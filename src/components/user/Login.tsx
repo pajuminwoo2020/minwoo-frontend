@@ -4,15 +4,20 @@ import {get} from 'lodash';
 import queryString from 'query-string';
 import React, {useState} from 'react';
 import {Link, useLocation} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
 import {handleFieldError} from 'libs/api/errorHandle';
 import {userLogin} from 'libs/api/user';
-import {TUserLogin} from 'modules/user';
+import {TUserLogin, TUser, setUserInfo} from 'modules/user';
 import {Title, FormWrapper} from 'components/user/styles';
 import {CPhone} from 'constants/base.const';
+import {useHistory} from 'react-router-dom';
 
 const Login = () => {
   const [form] = Form.useForm();
   const next = queryString.parse(useLocation().search)?.next?.toString();
+  const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
+  const dispatch = useDispatch();
+  const history = useHistory();
   const onClickLogin = () => {
     form.validateFields().then(value => {
       handleLogin(value as TUserLogin);
@@ -20,16 +25,20 @@ const Login = () => {
   };
   const handleLogin = async (value: TUserLogin) => {
     try {
+      setSubmitButtonDisabled(true);
       const response = await userLogin({
         userid: value.userid,
         password: value.password,
         is_remember: value.is_remember
       });
 
+      //history.push({pathname: next ? next : '/'}); TODO csrf에러 해결 후 없애기
       window.location.href = next ? next : '/';
     } catch (e) {
       handleFieldError(e, form);
       throw e;
+    } finally {
+      setSubmitButtonDisabled(false);
     }
   };
 
@@ -63,7 +72,7 @@ const Login = () => {
 		</Form.Item>
 		<Form.Item
 		  name={'password'}
-		  className="form-item"
+          className="form-item"
 		  rules={[{required: true, message: '패스워드를 입력해주세요'}]}
 		>
 		  <Input.Password
@@ -75,7 +84,13 @@ const Login = () => {
 		</Form.Item>
 		<Form.Item shouldUpdate={true} className="form-button">
 		  {() => (
-			<Button type="primary" htmlType="submit" size="large" onClick={onClickLogin}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              size="large"
+              onClick={onClickLogin}
+              disabled={submitButtonDisabled}
+            >
 			  로그인
 			</Button>
 		  )}

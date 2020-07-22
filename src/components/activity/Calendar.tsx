@@ -7,7 +7,7 @@ import {useDataApi} from 'libs/hooks';
 import CalendarHeader from'components/base/CalendarHeader';
 import AddressModal from 'components/modal/AddressModal';
 import {TCalendar} from 'modules/information';
-import {TListResponse, TListRequestParams, TModalState} from 'modules/types';
+import {TListResponse, TListRequestParams, TModalState, TModalProps} from 'modules/types';
 import {getCalendars, getCalendarsAll} from 'libs/api/information';
 import {CDateFormat} from 'constants/base.const';
 import {getLocalDate} from 'libs/utils';
@@ -116,10 +116,6 @@ const CalendarPage = () => {
   );
 }
 
-type TModalProps = {
-  modalState: TModalState;
-  setModalState: React.Dispatch<React.SetStateAction<TModalState>>;
-};
 const CalendarViewModal = ({modalState, setModalState}: TModalProps) => {
   const [visible, setVisible] = useState(false);
   const getPromise = getCalendars.bind(null, {

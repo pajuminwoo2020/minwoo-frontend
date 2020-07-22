@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useLocation, Link} from 'react-router-dom';
+import {useLocation, Link, useHistory} from 'react-router-dom';
 import {ClickParam,} from 'antd/lib/menu';
 import {DownOutlined, UserOutlined} from '@ant-design/icons';
 import {shallowEqual, useSelector} from 'react-redux';
@@ -15,6 +15,7 @@ const {Text} = Typography;
 export const HeaderRight = () => {
   const currentUser = useSelector((state: RootState) => state.user.current_user, shallowEqual);
   const [visible, setVisible] = useState(false);
+  const history = useHistory();
   const rightMenu = (
     <Menu onClick={onClickMenu}>
       <Menu.Item key="user-setting">정보수정</Menu.Item>
@@ -36,7 +37,7 @@ export const HeaderRight = () => {
   function onClickMenu(e: ClickParam) {
     switch (e.key) {
       case 'user-setting':
-        window.location.href = ERoute.UserEdit;
+        history.push({pathname: ERoute.UserEdit});
         break;
       case 'logout':
         onClickLogout();

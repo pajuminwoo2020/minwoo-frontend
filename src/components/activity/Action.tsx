@@ -24,10 +24,12 @@ import SearchInput from 'components/base/SearchInput';
 import Category from 'components/base/Category';
 import BoardDetail, {getImageSource} from 'components/base/BoardDetail';
 import {getCategoriesSelect} from 'libs/api/board';
+import {usePermission} from 'libs/hooks';
 
 const {Meta} = Card;
 const Action = () => {
   const [pagination, setPagination] = usePagination();
+  const [boardManagementPermission] = usePermission();
   const reloadPage = (page?: Partial<TPagination>) => {
     setPagination({
       ...pagination,
@@ -56,16 +58,18 @@ const Action = () => {
       <TableHeaderWrapper>
         <Category pagination={pagination} reloadPage={reloadPage} boardType={EBoardType.Action}/>
         <SearchInput pagination={pagination} reloadPage={reloadPage}/>
-        <Link to={`${ERoute.ActivityAction}/${EBoardOperation.Create}`}>
-          <Button
-            className="add-button"
-            type="primary"
-            size="large"
-            icon={<PlusOutlined/>}
-          >
-            글쓰기
-          </Button>
-        </Link>
+        {boardManagementPermission &&
+          <Link to={`${ERoute.ActivityAction}/${EBoardOperation.Create}`}>
+            <Button
+              className="add-button"
+              type="primary"
+              size="large"
+              icon={<PlusOutlined/>}
+            >
+              글쓰기
+            </Button>
+          </Link>
+        }
       </TableHeaderWrapper>
       <List
         pagination={{

@@ -23,6 +23,7 @@ import {TListResponse, TPagination, RouteMatch} from 'modules/types';
 import {TUser} from 'modules/user';
 import SearchInput from 'components/base/SearchInput';
 import BoardDetail, {getImageSource} from 'components/base/BoardDetail';
+import {usePermission} from 'libs/hooks';
 
 const {Meta} = Card;
 const NewsLetterWrapper = styled(Link)`
@@ -76,6 +77,7 @@ const NewsLetterWrapper = styled(Link)`
 
 const NewsLetter = () => {
   const [pagination, setPagination] = usePagination();
+  const [boardManagementPermission] = usePermission();
   const reloadPage = (page?: Partial<TPagination>) => {
     setPagination({
       ...pagination,
@@ -102,16 +104,18 @@ const NewsLetter = () => {
     <>
       <TableHeaderWrapper>
         <SearchInput pagination={pagination} reloadPage={reloadPage}/>
-        <Link to={`${ERoute.BulletinNewsletter}/${EBoardOperation.Create}`}>
-          <Button
-            className="add-button"
-            type="primary"
-            size="large"
-            icon={<PlusOutlined/>}
-          >
-            글쓰기
-          </Button>
-        </Link>
+        {boardManagementPermission &&
+          <Link to={`${ERoute.BulletinNewsletter}/${EBoardOperation.Create}`}>
+            <Button
+              className="add-button"
+              type="primary"
+              size="large"
+              icon={<PlusOutlined/>}
+            >
+              글쓰기
+            </Button>
+          </Link>
+        }
       </TableHeaderWrapper>
       <List
         pagination={{

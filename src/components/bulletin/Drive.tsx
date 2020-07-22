@@ -21,9 +21,11 @@ import {TListResponse, TPagination, RouteMatch} from 'modules/types';
 import {TUser} from 'modules/user';
 import SearchInput from 'components/base/SearchInput';
 import BoardDetail from 'components/base/BoardDetail';
+import {usePermission} from 'libs/hooks';
 
 const Drive = () => {
   const [pagination, setPagination] = usePagination();
+  const [boardManagementPermission] = usePermission();
   const reloadPage = (page?: Partial<TPagination>) => {
     setPagination({
       ...pagination,
@@ -97,16 +99,18 @@ const Drive = () => {
     <>
       <TableHeaderWrapper>
         <SearchInput pagination={pagination} reloadPage={reloadPage}/>
-        <Link to={`${ERoute.BulletinDrive}/${EBoardOperation.Create}`}>
-          <Button
-            className="add-button"
-            type="primary"
-            size="large"
-            icon={<PlusOutlined/>}
-          >
-            업로드
-          </Button>
-        </Link>
+        {boardManagementPermission &&
+          <Link to={`${ERoute.BulletinDrive}/${EBoardOperation.Create}`}>
+            <Button
+              className="add-button"
+              type="primary"
+              size="large"
+              icon={<PlusOutlined/>}
+            >
+              업로드
+            </Button>
+          </Link>
+        }
       </TableHeaderWrapper>
       <TableWrapper>
         <Table

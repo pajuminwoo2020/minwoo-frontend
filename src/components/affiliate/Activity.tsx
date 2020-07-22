@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 const Activity = () => {
   return (
 	<>
-	  ActivityActivity
+	  부설기구 활동
 	</>
   );
 }

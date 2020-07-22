@@ -15,11 +15,10 @@ export type TUser = {
   id: number;
   userid: string;
   fullname: string;
-  fullname_local: string;
-  fullname_en: string;
   language: string;
   timezone: string;
   last_login: string;
+  groups: Array<string>;
 };
 
 export type TUpdateUser = {
@@ -42,13 +41,15 @@ export type TUserCreate = {
   fullname_local: string;
 };
 
-export type TPasswordReset= {
-  userid: string;
+export type TUserUpdate = {
+  fullname_local?: string;
 };
 
-export type TCreateUser = {
+export type TPasswordChange = {
+  password_old: string;
+  password_new: string;
+};
+
+export type TPasswordReset = {
   userid: string;
-  fullname_local: string;
-  fullname_en?: string;
-  password: string;
 };
