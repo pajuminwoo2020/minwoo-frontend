@@ -120,9 +120,9 @@ const About = () => {
         <Divider/>
         <Title className="content-title">연혁</Title>
         <HistoryWrapper>
-          {map(data, yearData =>
+          {map(data, (yearData, index) =>
             <>
-              <Title className='year'>{get(yearData, 'year')}</Title>
+              <Title className={`year row${index%3}`}>{get(yearData, 'year')}</Title>
               <Timeline mode="alternate">
                 {map(get(yearData, 'children', []), v =>
                   <Timeline.Item>

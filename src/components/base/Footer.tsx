@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 import LogoWhiteSource from 'assets/logo-white.png';
 import {ERoute} from 'enums/route.enum';
-import {CAddress, CEmail, CPhone, CFax, CBankAccount, CWindowWidth} from 'constants/base.const';
+import {CAddressStreet, CEmail, CPhone, CFax, CBankAccount, CWindowWidth} from 'constants/base.const';
 
 const FooterWrapper = styled.div`
   background-color: #424242;
@@ -37,7 +37,7 @@ export const FooterArea = () => {
           <img className="block-title" src={LogoWhiteSource} style={{width: 'auto', height: '20px'}}/>
           <p className="block-title">파주여성민우회</p>
           <Divider/>
-          <p>주소 : {CAddress}</p>
+          <p>주소 : {CAddressStreet}</p>
           <p>이메일 {CEmail} / 대표전화 {CPhone} / 팩스 {CFax}</p>
           <p>[후원계좌] {CBankAccount}</p>
         </Col>

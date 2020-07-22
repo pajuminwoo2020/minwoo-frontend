@@ -254,6 +254,12 @@ export const HistoryWrapper = styled.div`
     text-align: center;
     font-size: 60px;
   }
+  .year.row1 {
+    color: #ffe58f;
+  }
+  .year.row2 {
+    color: #0dbeb5;
+  }
   .memo-wrapper {
     font-size: 15px;
     display: block;

@@ -31,7 +31,7 @@ export const PrivacyWrapper = styled.div`
 const Privacy = () => {
   return (
     <PrivacyWrapper>
-      <Title>개인 정보 보호 정책</Title>
+      <Title level={3}><Text>개인 정보 보호 정책</Text></Title>
       <Title className="sub-title">1. 개인 정보 수집 목적과 용도는?</Title>
       <Paragraph className="paragraph">
         파주여성민우회(이하 회사라 함)에서는 회원님께서 당사에서 운영하는 사이트와 서비스를 이용하는데 있어, 필요한 최소한의 정보를 필수 사항으로 수집합니다. 회원님께서 제공하신 모든 정보는 상기 목적에 필요한 용도 이외로는 사용되지 않으며, 수집 정보의 범위나 사용 목적, 용도가 변경될 시에는 반드시 회원님께 사전 동의를 구할 것입니다. (이용약관 참고)

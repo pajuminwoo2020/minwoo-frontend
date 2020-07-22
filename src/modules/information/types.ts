@@ -61,3 +61,14 @@ export type TSocietyAboutDetail = {
   website: string;
   is_default: boolean;
 };
+
+/**
+ * 조직도
+ */
+export type TPeople = Array<{
+  position: string;
+  children: Array<{
+    name: string;
+    job: string;
+  }>;
+}>;

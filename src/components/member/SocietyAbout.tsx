@@ -10,8 +10,11 @@ import {PrimaryColor} from 'GlobalStyles';
 
 const {Title, Text} = Typography;
 const SocietyAboutWrapper = styled.div`
-  .sub-title {
+  .red {
     color: ${PrimaryColor};
+  }
+  .blue {
+    color: #0dbeb5;
   }
   .default-content {
     background-color: #fafafa;
@@ -33,7 +36,7 @@ const SocietyAbout = () => {
         filter(get(data, 'contents', []), v => get(v, 'is_default', false) == true),
         item => (
           <div className="default-content">
-            <Title level={2}><Text className="sub-title">{get(item, 'name')}</Text></Title>
+            <Title level={2}><Text className="blue">{get(item, 'name')}</Text></Title>
             {get(item, 'description')}
             <Title level={4}><Text>주요활동</Text></Title>
             <ul>
@@ -63,7 +66,7 @@ const SocietyAbout = () => {
 		  renderItem={item => (
 		  <List.Item>
 			<List.Item.Meta
-			  title={<Title level={4} className="sub-title">{get(item, 'name')}</Title>}
+			  title={<Title level={4} className="red">{get(item, 'name')}</Title>}
               description={
                 <div style={{margin: '10px'}}>
                   {get(item, 'description')}

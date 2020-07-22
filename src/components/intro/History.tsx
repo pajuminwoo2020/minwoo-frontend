@@ -11,12 +11,11 @@ const {Title} = Typography;
 const History = () => {
   const [{data, loading}] = useDataApi<TInformationHistory>(getMainHistories.bind(null));
 
-  const histories = get(data,'contents',[])
   return (
     <HistoryWrapper>
-      {map(data, yearData =>
+      {map(data, (yearData, index) =>
         <>
-          <Title className='year'>{get(yearData, 'year')}</Title>
+          <Title className={`year row${index%3}`}>{get(yearData, 'year')}</Title>
           <Timeline mode="alternate">
             {map(get(yearData, 'children', []), v =>
               <Timeline.Item>

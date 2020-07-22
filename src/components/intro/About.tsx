@@ -79,7 +79,7 @@ const About = () => {
                   </strong>
                 </p>
                 <p>
-                  한국여성민우회는<br />
+                  파주여성민우회는<br />
                   차별 없이 평등하게 공존하는 세상을 향해 각자의 존엄성을 지키며
                 </p>
                 <p>
@@ -101,10 +101,6 @@ const About = () => {
             <div className="about-subtitle" style={{marginTop: '50px'}}>
               민우회의 별칭 & 로고
             </div>
-            <Text>
-              긴 시간의 흐름 속에서도 유연하고 대담하게 변화 해 온 한국여성민우회는 2012년 25주년을 맞아<br />
-              내일의 바람과 꿈을 담아 별칭을 만들었습니다.<br />
-            </Text>
             <div style={{textAlign: 'center'}}><img src={MinwooIntroLogo} style={{width: '100%'}}/></div>
           </div>
         </TabPane>
@@ -181,16 +177,15 @@ const About = () => {
               정관 & 운영규정
             </div>
             <div className='rule-scroll-box'>
-              <h3>(사단법인) 한국여성민우회 정관</h3>
+              <h3>(사단법인) 파주여성민우회 정관</h3>
               <br />
               <br />
               제1장 총 칙
               <br />
               <br />
               제1조 (명칭) <br />
-              ① 이 단체는 사단법인 한국여성민우회(이하 본회라 한다)라 칭한다. <br />
+              ① 이 단체는 사단법인 파주여성민우회라 칭한다. <br />
               ② 본회의 영문표기는 WomenLink로 한다. <br />
-              ③ 본회의 지부명칭은 00여성민우회로 한다. <br />
               <br />
               <br />
               제2조 (사무소의 위치)<br />

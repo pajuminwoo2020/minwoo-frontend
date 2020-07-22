@@ -6,7 +6,7 @@ const {Title, Paragraph, Text} = Typography;
 const Agreement = () => {
   return (
     <PrivacyWrapper>
-      <Title>이용약관</Title>
+      <Title level={3}><Text>이용약관</Text></Title>
       <Title className="sub-title">제 1조 [목적]</Title>
       <Paragraph className="paragraph">
 이 약관은 파주여성민우회(paju.womenlink.or.kr) 를 통해 인터넷상에서 제공되는 서비스 등 모든 웹서비스(이하 ‘서비스’라 함)의 이용조건 및 절차에 관한 기본사항을 정하는데 목적이 있다.

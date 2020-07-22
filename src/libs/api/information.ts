@@ -6,6 +6,7 @@ import {
   TCalendar,
   TInformationHistory,
   TSocietyAboutDetail,
+  TPeople,
 } from 'modules/information';
 import apiClient from 'libs/api/apiClient';
 
@@ -76,6 +77,15 @@ export const getMainHistories = (cancel?: CancelTokenSource) => {
 export const getSocietyAbouts = ({params}: TListRequestParams, cancel?: CancelTokenSource) => {
   return apiClient.get<TListResponse<TSocietyAboutDetail>>(`/society/abouts`, {
     params: params,
+    cancelToken: cancel?.token,
+  });
+};
+
+/**
+ * 조직도
+ */
+export const getPeople = (cancel?: CancelTokenSource) => {
+  return apiClient.get<TPeople>(`/intro/people`, {
     cancelToken: cancel?.token,
   });
 };
