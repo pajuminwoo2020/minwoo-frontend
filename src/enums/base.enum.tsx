@@ -31,3 +31,8 @@ export enum ECountryType {
   China = 'CN',
   Japan = 'JP',
 }
+
+export enum EGroup {
+  Admin = '관리자',
+  Staff = '스태프',
+}
