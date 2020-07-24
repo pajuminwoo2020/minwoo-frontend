@@ -25,9 +25,7 @@ export const HeaderRight = ({onClick}: TRightMenuProps) => {
   const rightMenu = (
     <Menu onClick={onClickMenu}>
       {adminPagePermission && (
-        <Menu.Item key="user-setting">
-          <a href={`${Configs.API_HOST}/admin/main`}> 관리자페이지</a>
-        </Menu.Item>
+        <Menu.Item key="admin-page">관리자페이지</Menu.Item>
       )}
       <Menu.Item key="user-setting">정보수정</Menu.Item>
       <Menu.Item key="logout">로그아웃</Menu.Item>
@@ -52,6 +50,9 @@ export const HeaderRight = ({onClick}: TRightMenuProps) => {
         break;
       case 'logout':
         onClickLogout();
+        break;
+      case 'admin-page':
+        window.location.href = `${Configs.API_HOST}/admin/main`;
         break;
     }
     onClick && onClick();
