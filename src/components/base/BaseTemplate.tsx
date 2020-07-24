@@ -54,7 +54,7 @@ export const BaseTemplate = ({children}: {children: React.ReactNode;}) => {
                 visible={visible}
               >
                 <div style={{marginTop: '20px'}}>
-                  <HeaderRight/>
+                  <HeaderRight onClick={() => {setVisible(false);}}/>
                   <div style={{marginTop: '20px'}}>
                     <HeaderLeft mode="inline" onClick={() => {setVisible(false);}}/>
                   </div>
@@ -63,7 +63,7 @@ export const BaseTemplate = ({children}: {children: React.ReactNode;}) => {
             </Col>
           </Row>
         </Header>
-        <Breadcrumb style={{margin: '80px auto', width: CWindowWidth, padding: '0px 10px'}} className="hide-on-mobile">
+        <Breadcrumb style={{margin: '80px auto', maxWidth: CWindowWidth, padding: '0px 10px'}}>
           {getMenuTitle(location.pathname)[0] && (
             <>
               <Breadcrumb.Item><HomeOutlined/></Breadcrumb.Item>
@@ -80,7 +80,7 @@ export const BaseTemplate = ({children}: {children: React.ReactNode;}) => {
         </ContentTitle>
       )}
       <Content>
-        <div style={{margin: '0px auto', minHeight: '90vh', maxWidth: CWindowWidth, padding: '0px 10px'}}>
+        <div style={{margin: '0px auto', maxWidth: CWindowWidth, minHeight: '400px', padding: '0px 10px'}}>
           {children}
         </div>
         <Footer/>

@@ -32,8 +32,8 @@ const FooterWrapper = styled.div`
 export const FooterArea = () => {
   return (
     <FooterWrapper>
-      <Row gutter={20} style={{width: CWindowWidth, margin: '0px auto'}}>
-        <Col md={{span: 24}} lg={{span: 12}}>
+      <Row gutter={20} style={{maxWidth: CWindowWidth, margin: '0px auto'}}>
+        <Col xs={24} sm={24} md={24} lg={12} xl={12}>
           <img className="block-title" src={LogoWhiteSource} style={{width: 'auto', height: '20px'}}/>
           <p className="block-title">파주여성민우회</p>
           <Divider/>
@@ -41,14 +41,14 @@ export const FooterArea = () => {
           <p>이메일 {CEmail} / 대표전화 {CPhone} / 팩스 {CFax}</p>
           <p>[후원계좌] {CBankAccount}</p>
         </Col>
-        <Col md={{span: 24}} lg={{span: 6}}>
+        <Col xs={12} sm={12} md={12} lg={6} xl={6}>
           <p className="block-title" style={{color: 'transparent'}}>Empty</p>
           <Divider/>
           <p><Link to={ERoute.IntroAbout}>단체소개</Link></p>
           <p><Link to={ERoute.ActivityDonation}>후원하기</Link></p>
           <p><Link to={ERoute.IntroLocation}>찾아오시는 길</Link></p>
         </Col>
-        <Col md={{span: 24}} lg={{span: 6}}>
+        <Col xs={12} sm={12} md={12} lg={6} xl={6}>
           <p className="block-title" style={{color: 'transparent'}}>Empty</p>
           <Divider/>
           <p><Link to={ERoute.Privacy}>개인정보보호정책</Link></p>

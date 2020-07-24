@@ -8,16 +8,27 @@ import {Avatar, Menu, Col, Row, Typography, Button, Drawer, Breadcrumb, Dropdown
 import styled from 'styled-components';
 import {RootState} from 'modules';
 import {userLogout} from 'libs/api/user';
+import {usePermission} from 'libs/hooks/usePermission';
 import {cookies, CCSRFToken} from 'libs/api/apiClient';
+import Configs from 'config';
 
 const {Text} = Typography;
 
-export const HeaderRight = () => {
+type TRightMenuProps = {
+  onClick?: () => void;
+};
+export const HeaderRight = ({onClick}: TRightMenuProps) => {
   const currentUser = useSelector((state: RootState) => state.user.current_user, shallowEqual);
   const [visible, setVisible] = useState(false);
+  const [adminPagePermission] = usePermission();
   const history = useHistory();
   const rightMenu = (
     <Menu onClick={onClickMenu}>
+      {adminPagePermission && (
+        <Menu.Item key="user-setting">
+          <a href={`${Configs.API_HOST}/admin/main`}> 관리자페이지</a>
+        </Menu.Item>
+      )}
       <Menu.Item key="user-setting">정보수정</Menu.Item>
       <Menu.Item key="logout">로그아웃</Menu.Item>
     </Menu>
@@ -43,7 +54,12 @@ export const HeaderRight = () => {
         onClickLogout();
         break;
     }
+    onClick && onClick();
     setVisible(false);
+  }
+
+  function onClickButton() {
+    onClick && onClick();
   }
 
   return (
@@ -62,19 +78,23 @@ export const HeaderRight = () => {
               cursor: 'pointer',
             }}
           >
-            <Avatar shape="circle" style={{marginRight: '5px'}} size="small" icon={<UserOutlined />}/>
-            <Text strong={true}>{currentUser.fullname}</Text>
-            <Text>&nbsp;&nbsp;{currentUser.userid}</Text>
-            <DownOutlined style={{marginLeft: 10}}/>
+            <div style={{display: 'inline-block'}}>
+              <Avatar shape="circle" style={{marginRight: '5px'}} size="small" icon={<UserOutlined />}/>
+              <Text strong={true}>{currentUser.fullname}</Text>
+            </div>
+            <div style={{display: 'inline-block'}}>
+              <Text>&nbsp;&nbsp;{currentUser.userid}</Text>
+              <DownOutlined style={{marginLeft: 10}}/>
+            </div>
           </div>
         </Dropdown>
       ) : (
         <>
           <Link to={ERoute.UserLogin}>
-            <Button size="large" type="primary">로그인</Button>
+            <Button size="large" type="primary" onClick={onClickButton}>로그인</Button>
           </Link>
           <Link to={ERoute.UserSignup}>
-            <Button size="large">회원가입</Button>
+            <Button size="large" onClick={onClickButton}>회원가입</Button>
           </Link>
         </>
       )}

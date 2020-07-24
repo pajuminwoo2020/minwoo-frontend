@@ -12,6 +12,7 @@ export const HeaderWrapper = styled.div`
     height: 70px;
     line-height: 70px;
     padding: 0px 20px;
+	max-width: 100%;
 	width: 100%;
 	position: fixed;
 	z-index: 1;
@@ -67,7 +68,7 @@ export const ContentTitle = styled.div`
   margin: 60px auto 20px auto;
   font-size: 25px;
   text-align: left;
-  width: ${CWindowWidth};
+  max-width: ${CWindowWidth};
   padding: 0px 10px;
 `;
 
@@ -147,7 +148,6 @@ export const MainWrapper = styled.div`
 
   .ant-carousel .slick-slide {
     text-align: center;
-    height: 320px;
     line-height: 160px;
     background: transparent;
     overflow: hidden;
@@ -155,8 +155,9 @@ export const MainWrapper = styled.div`
   }
 
   .ant-carousel img {
-	width: auto;
-	height: 50%;
+    margin: auto;
+	width: 100%;
+	height: auto;
   }
 
   .background-heart {
