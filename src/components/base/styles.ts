@@ -152,6 +152,7 @@ export const MainWrapper = styled.div`
     background: transparent;
     overflow: hidden;
     margin-bottom: 20px;
+    max-height: 320px;
   }
 
   .ant-carousel img {
