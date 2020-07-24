@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
-import {Calendar, Badge, Alert, Modal, Descriptions} from 'antd';
+import {Calendar, Badge, Alert, Modal, Descriptions, Skeleton} from 'antd';
 import {filter, get, map} from 'lodash';
 import moment from 'moment';
 import {useDataApi} from 'libs/hooks';
@@ -151,16 +151,22 @@ const CalendarViewModal = ({modalState, setModalState}: TModalProps) => {
       footer={null}
       onCancel={handleCancel}
     >
-      {map(get(data, 'contents', []), v => (
-        <Descriptions column={2} style={{marginBottom: '10px'}} bordered>
-          <Descriptions.Item span={2} label="일정">{get(v, 'schedule_name')}</Descriptions.Item>
-          <Descriptions.Item label="시작">{get(v, 'schedule_from')}</Descriptions.Item>
-          <Descriptions.Item label="종료">{get(v, 'schedule_to')}</Descriptions.Item>
-          <Descriptions.Item label="메모">
-            <span style={{whiteSpace: 'pre-wrap'}}>{get(v, 'memo')}</span>
-          </Descriptions.Item>
-        </Descriptions>
-      ))}
+      {loading === true ? (
+        <Skeleton active title={false} paragraph={{rows: 4}} />
+      ) : (
+        <>
+          {map(get(data, 'contents', []), v => (
+            <Descriptions column={2} style={{marginBottom: '10px'}} bordered>
+              <Descriptions.Item span={2} label="일정">{get(v, 'schedule_name')}</Descriptions.Item>
+              <Descriptions.Item label="시작">{get(v, 'schedule_from')}</Descriptions.Item>
+              <Descriptions.Item label="종료">{get(v, 'schedule_to')}</Descriptions.Item>
+              <Descriptions.Item label="메모">
+                <span style={{whiteSpace: 'pre-wrap'}}>{get(v, 'memo')}</span>
+              </Descriptions.Item>
+            </Descriptions>
+          ))}
+        </>
+      )}
     </Modal>
   );
 };

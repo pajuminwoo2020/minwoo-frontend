@@ -28,7 +28,7 @@ import ActivityMember, {ActivityMemberDetail} from 'components/activity/Activity
 import Calendar from 'components/activity/Calendar';
 import Press, {PressDetail} from 'components/activity/Press';
 import AffiliateAbout from 'components/affiliate/About';
-import AffiliateActivity from 'components/affiliate/Activity';
+import AffiliateActivity, {AffiliateActivityDetail} from 'components/affiliate/Activity';
 import SocietyAbout from 'components/member/SocietyAbout';
 import SocietyActivity, {SocietyActivityDetail} from 'components/member/SocietyActivity';
 import MemberSpace, {MemberSpaceDetail} from 'components/member/Space';
@@ -70,7 +70,7 @@ const App = () => {
   }
 
   return (
-	<IntlProvider locale={'ko'}>
+	<IntlProvider locale={'ko-KR'}>
       <CoreProvider>
         <ErrorBoundary>
           <Switch>
@@ -148,6 +148,9 @@ const App = () => {
             </Route>
             <Route exact path={ERoute.AffiliateActivity}>
               <BaseTemplate><AffiliateActivity/></BaseTemplate>
+            </Route>
+            <Route path={`${ERoute.AffiliateActivity}/:operation`}>
+              <BaseTemplate><AffiliateActivityDetail/></BaseTemplate>
             </Route>
             <Route exact path={ERoute.MemberSocietyAbout}>
               <BaseTemplate><SocietyAbout/></BaseTemplate>

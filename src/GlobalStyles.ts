@@ -212,12 +212,14 @@ const GlobalStyles = createGlobalStyle`
 
 export const size = {
   mobile: '450px',
+  small_tablet: '700px',
   tablet: '1150px',
   desktop: '2560px',
 };
 
 export const device = {
   mobile: `(max-width: ${size.mobile})`,
+  small_tablet: `(max-width: ${size.small_tablet})`,
   tablet: `(max-width: ${size.tablet})`,
   desktop: `(max-width: ${size.desktop})`,
 };
@@ -249,13 +251,16 @@ export const TableWrapper = styled.div`
     padding: 0px 20px !important;
 
     @media screen and ${device.tablet} {
-      width: 300px;
+      width: 100%;
+    }
+    @media screen and ${device.mobile} {
+      width: 100%;
     }
   }
   .column-created-at {
     width: 100px;
 
-    @media screen and ${device.mobile} {
+    @media screen and ${device.small_tablet} {
       display: none;
     }
   }
@@ -265,14 +270,14 @@ export const TableWrapper = styled.div`
   .column-hit-count {
     width: 80px;
 
-    @media screen and ${device.mobile} {
+    @media screen and ${device.small_tablet} {
       display: none;
     }
   }
   .column-created-by {
     width: 150px;
 
-    @media screen and ${device.mobile} {
+    @media screen and ${device.small_tablet} {
       display: none;
     }
   }
@@ -348,6 +353,7 @@ export const CardWrapper = styled(Link)`
     width: 100%;
     height: 300px;
     overflow: hidden;
+    margin: 0px auto;
   }
 
   .ant-card-body {

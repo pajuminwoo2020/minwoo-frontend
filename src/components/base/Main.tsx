@@ -56,19 +56,19 @@ const Main = () => {
 
   return (
     <MainWrapper>
-      <Row gutter={[16, 16]}>
-        <Col flex='720px'>
-          <div style={{width: '720px'}}>
+      <Row gutter={[16, 16]} justify="center">
+        <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+          <div>
             <Carousel autoplay>
               {map(filter(get(dataBanner, 'contents', []), v => v.banner_type === EBannerType.Large), v => (
-                <Link to={get(v, 'href')}>
+                <a href={get(v, 'href')}>
                   <img src={`${Configs.API_HOST}${get(v, 'absolute_url')}`}/>
-                </Link>
+                </a>
               ))}
             </Carousel>
           </div>
         </Col>
-        <Col flex='auto'>
+        <Col xs={24} sm={24} md={6} lg={6} xl={6}>
           <Row>
             <Link
               className="area-right-top background-heart"
@@ -92,7 +92,7 @@ const Main = () => {
           </Row>
         </Col>
       </Row>
-      <Row gutter={[16, 16]}>
+      <Row gutter={[16, 16]} justify="center">
         <Col xs={24} sm={24} md={18} lg={18} xl={18}>
           <Link to={ERoute.ActivityAction}><Text className="board-title">민우뉴스</Text></Link>
           <Divider/>
@@ -219,9 +219,9 @@ const Main = () => {
           loading={loadingBanner}
           renderItem={item => (
             <List.Item style={{textAlign: 'center'}}>
-              <Link to={get(item, 'href')}>
-                <img src={`${Configs.API_HOST}${get(item, 'absolute_url')}`} style={{height: '100px', width: '300px', margin: 'auto'}}/>
-              </Link>
+              <a href={get(item, 'href')}>
+                <img src={`${Configs.API_HOST}${get(item, 'absolute_url')}`} style={{height: '100px', width: '300px', maxWidth: '100%', margin: 'auto'}}/>
+              </a>
             </List.Item>
           )}
         />
