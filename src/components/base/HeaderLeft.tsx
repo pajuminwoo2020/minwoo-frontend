@@ -4,6 +4,7 @@ import {Layout, Menu, Col, Row, Typography, Button, Drawer, Breadcrumb} from 'an
 import styled from 'styled-components';
 import {filter, get, map} from 'lodash';
 import {ERoute} from 'enums/route.enum';
+import {usePermission} from 'libs/hooks/usePermission';
 
 type TMenuProps = {
   mode: "horizontal" | "inline";
@@ -90,6 +91,19 @@ const menuNames = [{
     name: '자료실',
     path: 'drive',
   }],
+}, {
+  name: '인트라넷',
+  path: 'intranet',
+  children: [{
+    name: '공유방',
+    path: 'share',
+  }, {
+    name: '자료실',
+    path: 'drive',
+  }, {
+    name: '자유게시판',
+    path: 'general',
+  }],
 }];
 
 export function getMenuTitle(route: string) {
@@ -111,6 +125,7 @@ export function getMenuTitle(route: string) {
 
 export const HeaderLeft = ({mode, onClick}: TMenuProps) => {
   const location = useLocation();
+  const [boardManagementPermission] = usePermission();
 
   return (
     <Menu selectedKeys={[location.pathname]} mode={mode} onClick={onClick}>
@@ -183,6 +198,19 @@ export const HeaderLeft = ({mode, onClick}: TMenuProps) => {
           <Link to={ERoute.BulletinDrive}>{getMenuTitle(ERoute.BulletinDrive)[1]}</Link>
         </Menu.Item>
       </SubMenu>
+      {boardManagementPermission && (
+        <SubMenu title={getMenuTitle('/intranet')[0]}>
+          <Menu.Item key={ERoute.IntranetShare}>
+            <Link to={ERoute.IntranetShare}>{getMenuTitle(ERoute.IntranetShare)[1]}</Link>
+          </Menu.Item>
+          <Menu.Item key={ERoute.IntranetDrive}>
+            <Link to={ERoute.IntranetDrive}>{getMenuTitle(ERoute.IntranetDrive)[1]}</Link>
+          </Menu.Item>
+          <Menu.Item key={ERoute.IntranetGeneral}>
+            <Link to={ERoute.IntranetGeneral}>{getMenuTitle(ERoute.IntranetGeneral)[1]}</Link>
+          </Menu.Item>
+        </SubMenu>
+      )}
     </Menu>
   );
 };

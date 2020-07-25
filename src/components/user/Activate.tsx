@@ -6,16 +6,14 @@ import { ERoute } from 'enums/route.enum';
 
 const Activate = () => {
   const history = useHistory();
-
   let {uidb64 = '', token = ''} = useParams();
 
   const handleAction = async (uidb64: string, token: string) => {
-    try {  
+    try {
       await userActivate(uidb64, token);
-      let redirectPath = ERoute.UserLogin;
 
       history.push({
-        pathname: redirectPath,
+        pathname: ERoute.UserLogin,
         state: {
           notification: {type: ENotificationType.Success, content: '이메일 인증이 완료되었습니다.'},
         },

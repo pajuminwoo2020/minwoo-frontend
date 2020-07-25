@@ -28,6 +28,7 @@ import {usePermission} from 'libs/hooks';
 const {Meta} = Card;
 const GalleryWrapper = styled(Link)`
   max-width: 200px;
+  margin: 0px auto;
   overflow: hidden;
   display: block;
   position: relative;
@@ -115,7 +116,7 @@ const Gallery = () => {
         }}
         loading={loading}
         style={{paddingBottom: '20px'}}
-        grid={{gutter: 16, xs: 1, sm: 3, md: 5, lg: 5, xl: 5, xxl: 5}}
+        grid={{gutter: 16, xs: 2, sm: 3, md: 5, lg: 5, xl: 5, xxl: 5}}
         dataSource={get(data, 'contents')}
         renderItem={item => (
           <List.Item>

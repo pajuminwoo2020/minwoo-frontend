@@ -326,10 +326,6 @@ export const TableHeaderWrapper = styled.div`
     @media screen and ${device.tablet} {
       display: block;
     }
-
-    @media screen and ${device.mobile} {
-      display: none;
-    }
   }
 `;
 
@@ -349,7 +345,6 @@ export const CardWrapper = styled(Link)`
   }
 
   .ant-card {
-    max-width: 300px;
     width: 100%;
     height: 300px;
     overflow: hidden;

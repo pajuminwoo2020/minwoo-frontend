@@ -53,3 +53,7 @@ export type TPasswordChange = {
 export type TPasswordReset = {
   userid: string;
 };
+
+export type TPasswordUpdate = {
+  password_new: string;
+};

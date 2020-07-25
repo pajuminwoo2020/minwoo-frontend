@@ -15,7 +15,14 @@ export const HeaderWrapper = styled.div`
 	max-width: 100%;
 	width: 100%;
 	position: fixed;
-	z-index: 1;
+    z-index: 1;
+    margin: 0px auto;
+    @media screen and (max-width: 420px) {
+      padding 0px 60px 0px 5px
+    }
+    @media screen and (max-width: 370px) {
+      padding 0px 100px 0px 5px
+    }
   }
 
   .ant-menu-submenu {
@@ -123,6 +130,10 @@ export const BoardDetailWrapper = styled.div`
     .tox-editor-header {
       display: none;
     }
+    img {
+      width: 100%;
+      height: auto;
+    }
   }
 
   .btn-bottom {
@@ -157,8 +168,15 @@ export const MainWrapper = styled.div`
 
   .ant-carousel img {
     margin: auto;
-	width: 100%;
+	width: 99%;
 	height: auto;
+  }
+  .ant-carousel {
+    overflow: hidden;
+    height: webkit-fit-content;
+    @media screen and ${device.mobile} {
+      height: 200px;
+    }
   }
 
   .background-heart {
@@ -246,6 +264,11 @@ export const MainWrapper = styled.div`
     font-weight: bold;
     color: ${PrimaryColor};
     font-size: 18px;
+  }
+  .img-banner {
+    height: auto;
+    width: 100%;
+    margin: auto;
   }
 }
 `;

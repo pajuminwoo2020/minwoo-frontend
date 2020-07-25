@@ -58,15 +58,13 @@ const Main = () => {
     <MainWrapper>
       <Row gutter={[16, 16]} justify="center">
         <Col xs={24} sm={24} md={18} lg={18} xl={18}>
-          <div>
-            <Carousel autoplay>
-              {map(filter(get(dataBanner, 'contents', []), v => v.banner_type === EBannerType.Large), v => (
-                <a href={get(v, 'href')}>
-                  <img src={`${Configs.API_HOST}${get(v, 'absolute_url')}`}/>
-                </a>
-              ))}
-            </Carousel>
-          </div>
+          <Carousel autoplay>
+            {map(filter(get(dataBanner, 'contents', []), v => v.banner_type === EBannerType.Large), v => (
+              <a href={get(v, 'href')}>
+                <img src={`${Configs.API_HOST}${get(v, 'absolute_url')}`}/>
+              </a>
+            ))}
+          </Carousel>
         </Col>
         <Col xs={24} sm={24} md={6} lg={6} xl={6}>
           <Row>
@@ -214,13 +212,13 @@ const Main = () => {
         <List
           size="small"
           split={false}
-          grid={{gutter: 16, xs: 1, sm: 1, md: 3, lg: 3, xl: 3, xxl: 3}}
+          grid={{gutter: 16, xs: 1, sm: 3, md: 3, lg: 3, xl: 3, xxl: 3}}
           dataSource={filter(get(dataBanner, 'contents', []), v => v.banner_type === EBannerType.Small)}
           loading={loadingBanner}
           renderItem={item => (
             <List.Item style={{textAlign: 'center'}}>
               <a href={get(item, 'href')}>
-                <img src={`${Configs.API_HOST}${get(item, 'absolute_url')}`} style={{height: '100px', width: '300px', maxWidth: '100%', margin: 'auto'}}/>
+                <img src={`${Configs.API_HOST}${get(item, 'absolute_url')}`} className="img-banner"/>
               </a>
             </List.Item>
           )}
