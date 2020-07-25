@@ -10,20 +10,18 @@ export const BoxPadding = '46px';
 
 export const FormWrapper = styled.div`
   margin: auto;
-
+  overflow: hidden;
   padding: 40px ${BoxPadding};
 
   @media ${device.mobile} {
-    min-width: 350px;
+    width: 100%;
     padding: 40px 26px;
   }
 
   @media ${device.tablet} {
-    width: ${BoxWidth};
+    max-width: ${BoxWidth};
     margin: auto;
   }
-
-  overflow: hidden;
 
   .form {
     max-width: 450px;
