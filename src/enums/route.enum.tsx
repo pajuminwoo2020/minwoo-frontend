@@ -3,6 +3,8 @@ export enum ERoute {
   UserSignup = '/user/signup',
   UserEdit = '/user/edit',
   UserPasswordReset = '/user/password/reset',
+  UserActivate = '/user/activate',
+  PasswordUpdate = '/password/update',
   IntroAbout = '/intro/about',
   IntroPeople = '/intro/people',
   IntroHistory = '/intro/history',
@@ -23,6 +25,9 @@ export enum ERoute {
   BulletinNewsletter = '/bulletin/newsletter',
   BulletinGallery = '/bulletin/gallery',
   BulletinDrive = '/bulletin/drive',
+  IntranetShare = '/intranet/share',
+  IntranetDrive = '/intranet/drive',
+  IntranetGeneral = '/intranet/general',
   Privacy = '/privacy',
   Agreement = '/agreement',
 }

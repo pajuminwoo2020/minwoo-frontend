@@ -26,7 +26,7 @@ const PasswordReset = () => {
       history.push({
         pathname: ERoute.UserLogin,
         state: {
-          notification: {type: ENotificationType.Success, content: '비밀번호 재설정 메일을 보냈습니다. 이메일을 확인하세요'},
+          notification: {type: ENotificationType.Success, content: `비밀번호 재설정 메일을 보냈습니다. 이메일[${value.userid}]을 확인하세요`},
         },
       });
     } catch (e) {

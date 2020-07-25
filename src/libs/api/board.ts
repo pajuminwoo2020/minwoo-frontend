@@ -390,3 +390,105 @@ export const getCategoriesSelect = (board_type: string, cancel?: CancelTokenSour
     cancelToken: cancel?.token,
   });
 };
+
+/**
+ * 인트라넷 공유방 게시판
+ */
+
+export const getBoardIntranetShare = (id: number, cancel?: CancelTokenSource) => {
+  return apiClient.get<TBoardDetail>(`/board/intranetshare/${id}`, {
+    cancelToken: cancel?.token,
+  });
+};
+export const createBoardIntranetShare = (params: TCreateBoardDetail, cancel?: CancelTokenSource) => {
+  return apiClient.post('/board/intranetshare', params, {
+    cancelToken: cancel?.token,
+  });
+};
+
+export const updateBoardIntranetShare = (id?: number, params?: TUpdateBoardDetail, cancel?: CancelTokenSource) => {
+  return apiClient.put(`/board/intranetshare/${id}`, params, {
+    cancelToken: cancel?.token,
+  });
+};
+
+export const deleteBoardIntranetShare = (id: number, cancel?: CancelTokenSource) => {
+  return apiClient.delete(`/board/intranetshare/${id}`, {
+    cancelToken: cancel?.token,
+  });
+};
+
+export const getBoardIntranetShares = ({params}: TListRequestParams, cancel?: CancelTokenSource) => {
+  return apiClient.get<TListResponse<TBoardDetail>>(`/board/intranetshares`, {
+    params: params,
+    cancelToken: cancel?.token,
+  });
+};
+
+/**
+ * 인트라넷 자료실 게시판
+ */
+
+export const getBoardIntranetDrive = (id: number, cancel?: CancelTokenSource) => {
+  return apiClient.get<TBoardDetail>(`/board/intranetdrive/${id}`, {
+    cancelToken: cancel?.token,
+  });
+};
+export const createBoardIntranetDrive = (params: TCreateBoardDetail, cancel?: CancelTokenSource) => {
+  return apiClient.post('/board/intranetdrive', params, {
+    cancelToken: cancel?.token,
+  });
+};
+
+export const updateBoardIntranetDrive = (id?: number, params?: TUpdateBoardDetail, cancel?: CancelTokenSource) => {
+  return apiClient.put(`/board/intranetdrive/${id}`, params, {
+    cancelToken: cancel?.token,
+  });
+};
+
+export const deleteBoardIntranetDrive = (id: number, cancel?: CancelTokenSource) => {
+  return apiClient.delete(`/board/intranetdrive/${id}`, {
+    cancelToken: cancel?.token,
+  });
+};
+
+export const getBoardIntranetDrives = ({params}: TListRequestParams, cancel?: CancelTokenSource) => {
+  return apiClient.get<TListResponse<TBoardDetail>>(`/board/intranetdrives`, {
+    params: params,
+    cancelToken: cancel?.token,
+  });
+};
+
+/**
+ * 인트라넷 자유게시판
+ */
+
+export const getBoardIntranetGeneral = (id: number, cancel?: CancelTokenSource) => {
+  return apiClient.get<TBoardDetail>(`/board/intranetgeneral/${id}`, {
+    cancelToken: cancel?.token,
+  });
+};
+export const createBoardIntranetGeneral = (params: TCreateBoardDetail, cancel?: CancelTokenSource) => {
+  return apiClient.post('/board/intranetgeneral', params, {
+    cancelToken: cancel?.token,
+  });
+};
+
+export const updateBoardIntranetGeneral = (id?: number, params?: TUpdateBoardDetail, cancel?: CancelTokenSource) => {
+  return apiClient.put(`/board/intranetgeneral/${id}`, params, {
+    cancelToken: cancel?.token,
+  });
+};
+
+export const deleteBoardIntranetGeneral = (id: number, cancel?: CancelTokenSource) => {
+  return apiClient.delete(`/board/intranetgeneral/${id}`, {
+    cancelToken: cancel?.token,
+  });
+};
+
+export const getBoardIntranetGenerals = ({params}: TListRequestParams, cancel?: CancelTokenSource) => {
+  return apiClient.get<TListResponse<TBoardDetail>>(`/board/intranetgenerals`, {
+    params: params,
+    cancelToken: cancel?.token,
+  });
+};

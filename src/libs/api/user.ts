@@ -10,6 +10,7 @@ import {
   TUserUpdate,
   TPasswordChange,
   TPasswordReset,
+  TPasswordUpdate,
 } from 'modules/user';
 import apiClient from 'libs/api/apiClient';
 
@@ -40,6 +41,10 @@ export const passwordChange = (params: TPasswordChange) => {
 
 export const passwordReset = (params: TPasswordReset) => {
   return apiClient.post(`/password/reset`, params);
+};
+
+export const passwordUpdate = (uidb64: string, token: string, params: TPasswordUpdate) => {
+  return apiClient.post(`/password/update/${uidb64}/${token}`, params);
 };
 
 export const main = () => wrapPromise(
@@ -93,5 +98,5 @@ export const userLogin = (params: TUserLogin, cancel?: CancelTokenSource) => {
 export const userLogout = () => apiClient.post('/user/logout');
 
 export const userActivate = (uidb64: string, token: string) => {
-  return apiClient.get(`/user/activate/${uidb64}/${token}`);
+  return apiClient.post(`/user/activate/${uidb64}/${token}`);
 };

@@ -33,7 +33,7 @@ const Signup = () => {
       history.push({
         pathname: ERoute.UserLogin,
         state: {
-          notification: {type: ENotificationType.Success, content: '회원가입이 완료되었습니다. 이메일을 확인하세요.'},
+          notification: {type: ENotificationType.Success, content: `회원가입이 완료되었습니다. 이메일[${value.userid}] 인증 후에 로그인할 수 있습니다.`},
         },
       });
     } catch (e) {

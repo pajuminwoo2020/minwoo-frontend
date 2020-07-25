@@ -46,6 +46,7 @@ const NewsLetterWrapper = styled(Link)`
     width: 100%;
     height: 350px;
     overflow: hidden;
+    margin: 0px auto;
   }
 
   .ant-card-body {
@@ -131,7 +132,7 @@ const NewsLetter = () => {
         }}
         loading={loading}
         style={{paddingBottom: '20px'}}
-        grid={{gutter: 16, xs: 1, sm: 2, md: 4, lg: 4, xl: 4, xxl: 4}}
+        grid={{gutter: 16, xs: 1, sm: 2, md: 3, lg: 4, xl: 4, xxl: 4}}
         dataSource={get(data, 'contents')}
         renderItem={item => (
           <List.Item>

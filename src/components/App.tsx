@@ -35,13 +35,17 @@ import MemberSpace, {MemberSpaceDetail} from 'components/member/Space';
 import NewsLetter, {NewsLetterDetail} from 'components/bulletin/NewsLetter';
 import Gallery, {GalleryDetail} from 'components/bulletin/Gallery';
 import Drive, {DriveDetail} from 'components/bulletin/Drive';
+import IntranetShare, {IntranetShareDetail} from 'components/intranet/IntranetShare';
+import IntranetDrive, {IntranetDriveDetail} from 'components/intranet/IntranetDrive';
+import IntranetGeneral, {IntranetGeneralDetail} from 'components/intranet/IntranetGeneral';
+import Activate from 'components/user/Activate';
+import PasswordUpdate from 'components/user/PasswordUpdate';
 import Core from 'components/base/Core';
 import {BaseTemplate} from 'components/base/BaseTemplate';
 import ErrorBoundary from 'components/base/error/ErrorBoundary';
 import NoMatch from 'components/base/error/NoMatch';
 import {TUser, setUserInfo} from 'modules/user';
 import {main} from 'libs/api/user';
-import Activate from 'components/user/Activate';
 
 const data = main();
 
@@ -83,14 +87,17 @@ const App = () => {
             <Route exact path={ERoute.UserSignup}>
               {redirectAfterLogin(<BaseTemplate><Signup/></BaseTemplate>)}
             </Route>
-            <Route exact path='/user/activate/:uidb64/:token'>
-              <BaseTemplate><Activate/></BaseTemplate>
-            </Route>
             <Route exact path={ERoute.UserEdit}>
               {redirectBeforeLogin(<BaseTemplate><Edit/></BaseTemplate>)}
             </Route>
             <Route exact path={ERoute.UserPasswordReset}>
               {redirectAfterLogin(<BaseTemplate><PasswordReset/></BaseTemplate>)}
+            </Route>
+            <Route path={`${ERoute.UserActivate}/:uidb64/:token`}>
+              <BaseTemplate><Activate/></BaseTemplate>
+            </Route>
+            <Route path={`${ERoute.PasswordUpdate}/:uidb64/:token`}>
+              <BaseTemplate><PasswordUpdate/></BaseTemplate>
             </Route>
             <Route exact path={ERoute.IntroAbout}>
               <BaseTemplate><IntroAbout/></BaseTemplate>
@@ -184,6 +191,24 @@ const App = () => {
             </Route>
             <Route path={`${ERoute.BulletinDrive}/:operation`}>
               <BaseTemplate><DriveDetail/></BaseTemplate>
+            </Route>
+            <Route exact path={ERoute.IntranetShare}>
+              <BaseTemplate><IntranetShare/></BaseTemplate>
+            </Route>
+            <Route path={`${ERoute.IntranetShare}/:operation`}>
+              <BaseTemplate><IntranetShareDetail/></BaseTemplate>
+            </Route>
+            <Route exact path={ERoute.IntranetDrive}>
+              <BaseTemplate><IntranetDrive/></BaseTemplate>
+            </Route>
+            <Route path={`${ERoute.IntranetDrive}/:operation`}>
+              <BaseTemplate><IntranetDriveDetail/></BaseTemplate>
+            </Route>
+            <Route exact path={ERoute.IntranetGeneral}>
+              <BaseTemplate><IntranetGeneral/></BaseTemplate>
+            </Route>
+            <Route path={`${ERoute.IntranetGeneral}/:operation`}>
+              <BaseTemplate><IntranetGeneralDetail/></BaseTemplate>
             </Route>
             <Route exact path={ERoute.Privacy}>
               <BaseTemplate><Privacy/></BaseTemplate>
