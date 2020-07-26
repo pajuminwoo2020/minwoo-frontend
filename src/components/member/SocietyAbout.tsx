@@ -1,4 +1,4 @@
-import {List, Typography, Button} from 'antd';
+import {List, Typography, Button, Spin} from 'antd';
 import {get, map, filter} from 'lodash';
 import React from 'react';
 import {getSocietyAbouts} from 'libs/api/information';
@@ -32,41 +32,42 @@ const SocietyAbout = () => {
 
   return (
     <SocietyAboutWrapper>
-      {map(
-        filter(get(data, 'contents', []), v => get(v, 'is_default', false) == true),
-        item => (
-          <div className="default-content">
-            <Title level={2}><Text className="blue">{get(item, 'name')}</Text></Title>
-            {get(item, 'description')}
-            <Title level={4}><Text>주요활동</Text></Title>
-            <ul>
-              {map(
-                get(item, 'main_activity', []),
-                activity => <li>{activity}</li>
-              )}
-            </ul>
-            <Title level={4}><Text>정기모임</Text></Title>
-            <ul>
-              {map(
-                get(item, 'schedule', []),
-                schedule => <li>{schedule}</li>
-              )}
-            </ul>
-            {get(item, 'website') &&
-              <div style={{marginTop: '10px'}}>
-                <Button type="primary" href={get(item, 'website')}>홈페이지 바로가기</Button>
-              </div>
-            }
-          </div>
-        )
-      )}
-      <List
-		  itemLayout='horizontal'
-		  dataSource={filter(get(data, 'contents', []), v => get(v, 'is_default', false) == false)}
-		  renderItem={item => (
-		  <List.Item>
-			<List.Item.Meta
-			  title={<Title level={4} className="red">{get(item, 'name')}</Title>}
+      <Spin tip="로딩중..." spinning={loading}>
+        {map(
+          filter(get(data, 'contents', []), v => get(v, 'is_default', false) == true),
+          item => (
+            <div className="default-content">
+              <Title level={2}><Text className="blue">{get(item, 'name')}</Text></Title>
+              {get(item, 'description')}
+              <Title level={4}><Text>주요활동</Text></Title>
+              <ul>
+                {map(
+                  get(item, 'main_activity', []),
+                  activity => <li>{activity}</li>
+                )}
+              </ul>
+              <Title level={4}><Text>정기모임</Text></Title>
+              <ul>
+                {map(
+                  get(item, 'schedule', []),
+                  schedule => <li>{schedule}</li>
+                )}
+              </ul>
+              {get(item, 'website') &&
+                <div style={{marginTop: '10px'}}>
+                  <Button type="primary" href={get(item, 'website')}>홈페이지 바로가기</Button>
+                </div>
+              }
+            </div>
+          )
+        )}
+        <List
+          itemLayout='horizontal'
+          dataSource={filter(get(data, 'contents', []), v => get(v, 'is_default', false) == false)}
+          renderItem={item => (
+          <List.Item>
+            <List.Item.Meta
+              title={<Title level={4} className="red">{get(item, 'name')}</Title>}
               description={
                 <div style={{margin: '10px'}}>
                   {get(item, 'description')}
@@ -77,10 +78,11 @@ const SocietyAbout = () => {
                   }
                 </div>
               }
-			/>
-		  </List.Item>
-		  )}
-	  />
+            />
+          </List.Item>
+          )}
+        />
+      </Spin>
     </SocietyAboutWrapper>
   );
 };

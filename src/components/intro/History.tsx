@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Timeline, Typography} from 'antd';
+import {Timeline, Typography, Spin} from 'antd';
 import {getMainHistories} from 'libs/api/information';
 import {useDataApi} from 'libs/hooks';
 import {TListResponse} from 'modules/types';
@@ -13,18 +13,20 @@ const History = () => {
 
   return (
     <HistoryWrapper>
-      {map(data, (yearData, index) =>
-        <>
-          <Title className={`year row${index%3}`}>{get(yearData, 'year')}</Title>
-          <Timeline mode="alternate">
-            {map(get(yearData, 'children', []), v =>
-              <Timeline.Item>
-                <div className='memo-wrapper'>{get(v, 'memo')}</div>
-              </Timeline.Item>
-            )}
-          </Timeline>
-        </>
-      )}
+      <Spin tip="로딩중..." spinning={loading}>
+        {map(data, (yearData, index) =>
+          <>
+            <Title className={`year row${index%3}`}>{get(yearData, 'year')}</Title>
+            <Timeline mode="alternate">
+              {map(get(yearData, 'children', []), v =>
+                <Timeline.Item>
+                  <div className='memo-wrapper'>{get(v, 'memo')}</div>
+                </Timeline.Item>
+              )}
+            </Timeline>
+          </>
+        )}
+      </Spin>
     </HistoryWrapper>
   );
 }

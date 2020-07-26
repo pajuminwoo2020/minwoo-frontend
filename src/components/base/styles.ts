@@ -63,12 +63,6 @@ export const HeaderWrapper = styled.div`
       display: inline-block;
     }
   }
-
-  @media screen and ${device.mobile} {
-    .hide-on-mobile {
-      display: none;
-    }
-  }
 `;
 
 export const ContentTitle = styled.div`
