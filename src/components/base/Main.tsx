@@ -197,6 +197,7 @@ const Main = () => {
         </Col>
         <Col flex='240px'>
           <iframe
+            className="hide-on-mobile"
             style={{border: 'none'}}
             name="f33be3bc0afec"
             width="100%"

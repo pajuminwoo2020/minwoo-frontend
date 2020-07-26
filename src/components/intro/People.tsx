@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Row, Col, Divider, List, Typography} from 'antd';
+import {Row, Col, Divider, List, Typography, Spin} from 'antd';
 import {useDataApi} from 'libs/hooks';
 import {get, map} from 'lodash';
 import GlobalStyles, {PrimaryColor} from 'GlobalStyles'
@@ -44,20 +44,22 @@ const People = () => {
 
   return (
     <PeopleWrapper>
-      {map(data, (positionData, index) =>
-        <Row align="middle" gutter={[32, 32]}>
-          <Col flex="130px">
-            <div className={`circle row${index%3}`}>{get(positionData, 'position')}</div>
-          </Col>
-          <Col flex="auto">
-            {map(get(positionData, 'children', []), v =>
-            <p className="person">
-              <div style={{width: '85px', display: 'inline-block'}}>{`${get(v, 'name')}`}</div><span>|&nbsp;&nbsp;&nbsp;{`${get(v, 'job')}`}</span>
-            </p>
-            )}
-          </Col>
-        </Row>
-      )}
+      <Spin tip="로딩중..." spinning={loading}>
+        {map(data, (positionData, index) =>
+          <Row align="middle" gutter={[32, 32]}>
+            <Col flex="130px">
+              <div className={`circle row${index%3}`}>{get(positionData, 'position')}</div>
+            </Col>
+            <Col flex="auto">
+              {map(get(positionData, 'children', []), v =>
+              <p className="person">
+                <div style={{width: '85px', display: 'inline-block'}}>{`${get(v, 'name')}`}</div><span>|&nbsp;&nbsp;&nbsp;{`${get(v, 'job')}`}</span>
+              </p>
+              )}
+            </Col>
+          </Row>
+        )}
+      </Spin>
     </PeopleWrapper>
   );
 }

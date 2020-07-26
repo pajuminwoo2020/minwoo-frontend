@@ -3,7 +3,19 @@ import {get} from 'lodash';
 import {Link} from 'react-router-dom';
 import styled, {createGlobalStyle, CSSProp} from 'styled-components';
 
+export const size = {
+  mobile: '450px',
+  small_tablet: '700px',
+  tablet: '1150px',
+  desktop: '2560px',
+};
 
+export const device = {
+  mobile: `(max-width: ${size.mobile})`,
+  small_tablet: `(max-width: ${size.small_tablet})`,
+  tablet: `(max-width: ${size.tablet})`,
+  desktop: `(max-width: ${size.desktop})`,
+};
 export const PrimaryColor = '#f86e6b';
 const GlobalStyles = createGlobalStyle`
   body {
@@ -208,21 +220,13 @@ const GlobalStyles = createGlobalStyle`
       content: '*';
     }
   }
+
+  @media screen and ${device.mobile} {
+    .hide-on-mobile {
+      display: none;
+    }
+  }
 `;
-
-export const size = {
-  mobile: '450px',
-  small_tablet: '700px',
-  tablet: '1150px',
-  desktop: '2560px',
-};
-
-export const device = {
-  mobile: `(max-width: ${size.mobile})`,
-  small_tablet: `(max-width: ${size.small_tablet})`,
-  tablet: `(max-width: ${size.tablet})`,
-  desktop: `(max-width: ${size.desktop})`,
-};
 
 export const TableWrapper = styled.div`
   .ant-table-small .ant-table-thead > tr > th {
