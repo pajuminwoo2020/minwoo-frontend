@@ -46,7 +46,7 @@ export const BoardDetail = ({
   record
 }: TBoardDetailProps) => {
   const history = useHistory();
-  const [boardManagementPermission] = usePermission();
+  const {boardManagementPermission} = usePermission();
   const BoardTitle = () => {
     return (
       <>
@@ -80,12 +80,14 @@ export const BoardDetail = ({
           </Col>
         </Row>
         <Row className= "box-sub-title" justify="end">
-          <Col>
-            <div className="title-item">
-              <div className="label">카테고리</div>
-              <div className="value">{get(record, 'category.name')}</div>
-            </div>
-          </Col>
+          {get(record, 'category') && (
+            <Col>
+              <div className="title-item">
+                <div className="label">카테고리</div>
+                <div className="value">{get(record, 'category.name')}</div>
+              </div>
+            </Col>
+          )}
           <Col>
             <div className="title-item">
               <div className="label">조회수</div>

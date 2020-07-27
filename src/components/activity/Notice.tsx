@@ -29,7 +29,7 @@ import {usePermission} from 'libs/hooks';
 const {Meta} = Card;
 const Notice = () => {
   const [pagination, setPagination] = usePagination();
-  const [boardManagementPermission] = usePermission();
+  const {boardManagementPermission} = usePermission();
   const reloadPage = (page?: Partial<TPagination>) => {
     setPagination({
       ...pagination,

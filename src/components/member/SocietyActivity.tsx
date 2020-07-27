@@ -27,7 +27,7 @@ import {usePermission} from 'libs/hooks';
 
 const SocietyActivity = () => {
   const [pagination, setPagination] = usePagination();
-  const [boardManagementPermission] = usePermission();
+  const {boardManagementPermission} = usePermission();
   const reloadPage = (page?: Partial<TPagination>) => {
     setPagination({
       ...pagination,
