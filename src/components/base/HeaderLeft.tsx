@@ -125,7 +125,7 @@ export function getMenuTitle(route: string) {
 
 export const HeaderLeft = ({mode, onClick}: TMenuProps) => {
   const location = useLocation();
-  const [boardManagementPermission] = usePermission();
+  const {boardManagementPermission} = usePermission();
 
   return (
     <Menu selectedKeys={[location.pathname]} mode={mode} onClick={onClick}>

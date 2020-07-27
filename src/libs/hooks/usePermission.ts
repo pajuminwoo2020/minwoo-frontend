@@ -14,5 +14,5 @@ export function usePermission() {
   if (currentUser?.groups?.includes(EGroup.Admin))
     adminPagePermission = true;
 
-  return [boardManagementPermission, adminPagePermission];
+  return {boardManagementPermission, adminPagePermission};
 }

@@ -62,7 +62,7 @@ const GalleryWrapper = styled(Link)`
 `;
 const Gallery = () => {
   const [pagination, setPagination] = usePagination();
-  const [boardManagementPermission] = usePermission();
+  const {boardManagementPermission} = usePermission();
   const reloadPage = (page?: Partial<TPagination>) => {
     setPagination({
       ...pagination,

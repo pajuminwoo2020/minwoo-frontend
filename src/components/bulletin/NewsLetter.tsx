@@ -78,7 +78,7 @@ const NewsLetterWrapper = styled(Link)`
 
 const NewsLetter = () => {
   const [pagination, setPagination] = usePagination();
-  const [boardManagementPermission] = usePermission();
+  const {boardManagementPermission} = usePermission();
   const reloadPage = (page?: Partial<TPagination>) => {
     setPagination({
       ...pagination,

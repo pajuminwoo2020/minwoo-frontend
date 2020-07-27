@@ -125,7 +125,7 @@ export const BoardDetailWrapper = styled.div`
       display: none;
     }
     img {
-      width: 100%;
+      max-width: 100%;
       height: auto;
     }
   }

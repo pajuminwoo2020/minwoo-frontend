@@ -20,7 +20,7 @@ type TRightMenuProps = {
 export const HeaderRight = ({onClick}: TRightMenuProps) => {
   const currentUser = useSelector((state: RootState) => state.user.current_user, shallowEqual);
   const [visible, setVisible] = useState(false);
-  const [adminPagePermission] = usePermission();
+  const {adminPagePermission} = usePermission();
   const history = useHistory();
   const rightMenu = (
     <Menu onClick={onClickMenu}>
