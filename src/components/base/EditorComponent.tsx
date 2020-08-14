@@ -73,6 +73,10 @@ const EditorComponent: React.FC<TEditorComponentProps> = ({
               success(`${Configs.API_HOST}${json.location}`);
             };
 
+            xhr.ontimeout = function () {
+              console.log('hello');
+            }
+
             xhr.onerror = function () {
               failure('Image upload failed due to a XHR Transport error. Code: ' + xhr.status);
             };
