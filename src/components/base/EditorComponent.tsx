@@ -53,7 +53,7 @@ const EditorComponent: React.FC<TEditorComponentProps> = ({
             xhr.withCredentials = true;
             xhr.open('POST', `${Configs.API_HOST}/board/image`);
             xhr.setRequestHeader('X-CSRFToken', cookies.get(CCSRFToken));
-            xhr.timeout = 15000;
+            xhr.timeout = 30000;
 
             xhr.upload.onprogress = function (e) {
               progress(e.loaded / e.total * 100);
