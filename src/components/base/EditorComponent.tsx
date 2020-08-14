@@ -73,10 +73,6 @@ const EditorComponent: React.FC<TEditorComponentProps> = ({
               success(`${Configs.API_HOST}${json.location}`);
             };
 
-            xhr.ontimeout = function () {
-              console.log('hello');
-            }
-
             xhr.onerror = function () {
               failure('Image upload failed due to a XHR Transport error. Code: ' + xhr.status);
             };
@@ -88,24 +84,46 @@ const EditorComponent: React.FC<TEditorComponentProps> = ({
           paste_data_images: true,
           file_browser_callback_types: 'image',
           file_picker_callback: (callback: any, value: any, meta: any) => {
+            function resize(image: any) {
+              // image크기 줄이기
+              const maxSize = 1000;
+              const canvas = document.createElement('canvas');
+              let width = image.width;
+              let height = image.height;
+
+              if (width > height && width > maxSize) {
+                height *= maxSize / width;
+                width = maxSize;
+              } else if (height > maxSize) {
+                width *= maxSize / height;
+                height = maxSize;
+              }
+              canvas.width = width;
+              canvas.height = height;
+              canvas.getContext('2d')?.drawImage(image, 0, 0, width, height);
+
+              return canvas.toDataURL('image/jpeg');
+            }
+
             if (meta.filetype == 'image') {
               const input = document.getElementById('image-upload-tinymce') as HTMLInputElement;
-
               input.click();
               input.onchange = () => {
-                  const file = (input.files as FileList)[0];
-                  const reader = new FileReader();
+                const file = (input.files as FileList)[0];
+                const reader = new FileReader();
 
-                  reader.onload = (e: any) => {
-                      let img = new Image();
-                      img.src = reader.result as string;
+                reader.onload = (e: any) => {
+                  let img = new Image();
+                  img.onload = () => {
+                    callback(resize(img), {
+                      alt: file.name
+                    });
+                  }
+                  img.src = reader.result as string;
 
-                      callback(e.target.result, {
-                          alt: file.name
-                      });
-                      debounce(onEditorChange, 10000);
-                  };
-                  reader.readAsDataURL(file);
+                  debounce(onEditorChange, 10000);
+                };
+                reader.readAsDataURL(file);
               };
             }
           },
