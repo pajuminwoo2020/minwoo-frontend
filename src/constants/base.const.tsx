@@ -5,7 +5,7 @@ import {message} from 'antd';
 import {cookies, CCSRFToken} from 'libs/api/apiClient';
 import {UploadChangeParam} from 'antd/lib/upload/interface';
 
-export const CWindowWidth = '1000px';
+export const CWindowWidth = 1000;
 export const CCurrencyList = {
   [ECurrencyType.KRW]: 'KRW',
   [ECurrencyType.USD]: 'USD',

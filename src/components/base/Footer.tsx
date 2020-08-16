@@ -32,7 +32,7 @@ const FooterWrapper = styled.div`
 export const FooterArea = () => {
   return (
     <FooterWrapper>
-      <Row gutter={20} style={{maxWidth: CWindowWidth, margin: '0px auto'}}>
+      <Row gutter={20} style={{maxWidth: `${CWindowWidth}px`, margin: '0px auto'}}>
         <Col xs={24} sm={24} md={24} lg={12} xl={12}>
           <img className="block-title" src={LogoWhiteSource} style={{width: 'auto', height: '20px'}}/>
           <p className="block-title">파주여성민우회</p>

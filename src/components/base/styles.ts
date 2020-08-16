@@ -11,7 +11,7 @@ export const HeaderWrapper = styled.div`
     background-color: transparent;
     height: 70px;
     line-height: 70px;
-    padding: 0px 20px;
+    padding: 0px 20px 0px 0px;
 	max-width: 100%;
 	width: 100%;
 	position: fixed;
@@ -69,7 +69,7 @@ export const ContentTitle = styled.div`
   margin: 60px auto 20px auto;
   font-size: 25px;
   text-align: left;
-  max-width: ${CWindowWidth};
+  max-width: ${CWindowWidth}px;
   padding: 0px 10px;
 `;
 
@@ -87,20 +87,19 @@ export const BoardDetailWrapper = styled.div`
   }
 
   .title-item {
-    display: inline-block;
-    margin: 0px 20px;
+    margin: 0px 10px;
+    word-wrap: break-word;
+    word-break: break-all;
   }
 
   .label {
     font-weight: bold;
-    margin-right: 20px;
-    display: inline-block;
-    font-size: 15px;
+    margin-right: 10px;
+    font-size: 14px;
   }
   .value {
     font-weight: normal;
-    display: inline-block;
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .body-edit {
@@ -159,7 +158,20 @@ export const MainWrapper = styled.div`
     margin-bottom: 20px;
     max-height: 320px;
   }
-
+  .ant-carousel .slick-dots-top {
+    top: 0px;
+  }
+  .ant-carousel .slick-dots {
+    right: auto;
+    height: 50px;
+    margin: 0px;
+    padding-top: 12px;
+    padding-left: 5%;
+    padding-right: 5%;
+    li button {
+      height: 10px;
+    }
+  }
   .ant-carousel img {
     margin: auto;
 	width: 99%;
@@ -255,12 +267,22 @@ export const MainWrapper = styled.div`
     color: ${PrimaryColor};
   }
   .board-title {
+    display: inline-block;
+    width: 100%;
     font-weight: bold;
     color: ${PrimaryColor};
     font-size: 18px;
   }
+  .board-title::after {
+    float: right;
+    line-height: 28px;
+    font-weight: normal;
+    color: #a9a9a9;
+    font-size: 12px;
+    content: '더보기 >';
+  }
   .img-banner {
-    height: auto;
+    height: 40px;
     width: 100%;
     margin: auto;
   }

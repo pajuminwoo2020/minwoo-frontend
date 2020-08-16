@@ -58,7 +58,7 @@ const Main = () => {
     <MainWrapper>
       <Row gutter={[16, 16]} justify="center">
         <Col xs={24} sm={24} md={18} lg={18} xl={18}>
-          <Carousel autoplay>
+          <Carousel autoplay dotPosition="top">
             {map(filter(get(dataBanner, 'contents', []), v => v.banner_type === EBannerType.Large), v => (
               <a href={get(v, 'href')}>
                 <img src={`${Configs.API_HOST}${get(v, 'absolute_url')}`}/>
@@ -196,35 +196,52 @@ const Main = () => {
           />
         </Col>
         <Col flex='240px'>
-          <iframe
-            className="hide-on-mobile"
-            style={{border: 'none'}}
-            name="f33be3bc0afec"
-            width="100%"
-            height="250px"
-            data-testid="fb:page Facebook Social Plugin"
-            title="fb:page Facebook Social Plugin"
-            src="https://www.facebook.com/v2.0/plugins/page.php?adapt_container_width=true&amp;app_id=&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Df61399cf36e77c%26domain%3Dwww.paju.womenlink.or.kr%26origin%3Dhttps%253A%252F%252Fwww.paju.womenlink.or.kr%252Ff1bc07eebc708a%26relation%3Dparent.parent&amp;container_width=220&amp;height=250&amp;hide_cover=true&amp;href=https%3A%2F%2Fwww.facebook.com%2Fpajuminwoo%2F&amp;locale=ko_KR&amp;sdk=joey&amp;show_facepile=false&amp;small_header=true&amp;tabs=timeline"
-          >
-          </iframe>
+          <Row style={{height: '200px'}}>
+            <iframe
+              className="hide-on-mobile"
+              style={{border: 'none'}}
+              name="f33be3bc0afec"
+              width="100%"
+              height="100%"
+              data-testid="fb:page Facebook Social Plugin"
+              title="fb:page Facebook Social Plugin"
+              src="https://www.facebook.com/v2.0/plugins/page.php?adapt_container_width=true&amp;app_id=&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Df61399cf36e77c%26domain%3Dwww.paju.womenlink.or.kr%26origin%3Dhttps%253A%252F%252Fwww.paju.womenlink.or.kr%252Ff1bc07eebc708a%26relation%3Dparent.parent&amp;container_width=220&amp;height=250&amp;hide_cover=true&amp;href=https%3A%2F%2Fwww.facebook.com%2Fpajuminwoo%2F&amp;locale=ko_KR&amp;sdk=joey&amp;show_facepile=false&amp;small_header=true&amp;tabs=timeline"
+            >
+            </iframe>
+          </Row>
+          <Row gutter={[8,8]} style={{height: '50px', marginTop: '5px'}} align="bottom" justify="space-between">
+            <Col span={12}>
+              <a href="https://www.nts.go.kr/">
+                <Button style={{fontWeight: 'bold', width: '100%', height: '50px'}}>
+                  국세청<br></br>바로가기
+                </Button>
+              </a>
+            </Col>
+            <Col span={12}>
+              <a href="https://www.humanrights.go.kr/">
+                <Button style={{fontWeight: 'bold', width: '100%', height: '50px'}}>
+                  인권위원회<br></br>바로가기
+                </Button>
+              </a>
+            </Col>
+          </Row>
         </Col>
       </Row>
-      {filter(get(dataBanner, 'contents', []), v => v.banner_type === EBannerType.Small).length > 0 && (
-        <List
-          size="small"
-          split={false}
-          grid={{gutter: 16, xs: 1, sm: 3, md: 3, lg: 3, xl: 3, xxl: 3}}
-          dataSource={filter(get(dataBanner, 'contents', []), v => v.banner_type === EBannerType.Small)}
-          loading={loadingBanner}
-          renderItem={item => (
-            <List.Item style={{textAlign: 'center'}}>
-              <a href={get(item, 'href')}>
-                <img src={`${Configs.API_HOST}${get(item, 'absolute_url')}`} className="img-banner"/>
-              </a>
-            </List.Item>
-          )}
-        />
-      )}
+      <Row justify="space-between" gutter={[0, 8]} style={{marginTop: '12px'}}>
+        {map(
+          filter(filter(get(dataBanner, 'contents', []), (v, idx) => v.banner_type === EBannerType.Small), (v, idx) => idx < 3),
+          (item, idx) => (
+            <>
+              <Col xs={24} sm={24} md={5} lg={5} xl={5}>
+                <a href={get(item, 'href')}>
+                  <img src={`${Configs.API_HOST}${get(item, 'absolute_url')}`} className="img-banner"/>
+                </a>
+              </Col>
+              {idx != 2 && <Col xs={0} sm={0} md={4} lg={4} xl={4}></Col>}
+            </>
+          )
+        )}
+      </Row>
 	</MainWrapper>
   );
 }

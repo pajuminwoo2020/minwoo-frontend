@@ -6,7 +6,7 @@ import {CWindowWidth, CPhone, CEmail} from 'constants/base.const';
 
 const {Title, Paragraph, Text} = Typography;
 export const PrivacyWrapper = styled.div`
-  wdith: ${CWindowWidth};
+  wdith: ${CWindowWidth}px;
   margin: 30px;
 
   .sub-title {

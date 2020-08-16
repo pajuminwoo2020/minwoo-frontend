@@ -31,7 +31,7 @@ const GlobalStyles = createGlobalStyle`
   }
 
   .ant-layout {
-	height: 100vh;
+	min-height: 100vh !important;
   }
 
   .ant-layout-header {

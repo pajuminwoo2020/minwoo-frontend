@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useLocation, Link} from 'react-router-dom';
-import {Layout, Menu, Col, Row, Typography, Button, Drawer, Breadcrumb} from 'antd';
+import {Layout, Menu, Typography, Button, Drawer, Breadcrumb} from 'antd';
 import styled from 'styled-components';
 import {filter, get, map} from 'lodash';
 import {ERoute} from 'enums/route.enum';
