@@ -11,7 +11,7 @@ import {BoardDetailWrapper} from 'components/base/styles';
 import {EBoardOperation} from 'enums/board.enum';
 import DefaultSource from 'assets/default.png';
 import {ENotificationType} from 'enums/base.enum';
-import {ERoute, EMessageID} from 'enums/route.enum';
+import {EMessageID} from 'enums/route.enum';
 import NoMatch from 'components/base/error/NoMatch';
 import {TBoardDetail, TCreateBoardDetail, TUpdateBoardDetail} from 'modules/board';
 import {TSelectList} from 'modules/types';
@@ -118,7 +118,7 @@ export const BoardDetail = ({
       <>
         {boardManagementPermission &&
           <div style={{textAlign: 'right', marginBottom: '10px'}}>
-            <Link to={`${ERoute.ActivityNotice}/${EBoardOperation.Create}`}>
+            <Link to={`${pathName}/${EBoardOperation.Create}`}>
               <Button
                 type="primary"
                 size="large"
