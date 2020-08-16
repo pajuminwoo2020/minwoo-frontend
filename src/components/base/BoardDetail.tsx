@@ -6,12 +6,12 @@ import {ExclamationCircleOutlined, InboxOutlined, PlusOutlined} from '@ant-desig
 import {UploadChangeParam} from 'antd/lib/upload/interface';
 import {Row, Col, Form, Input, Button, Modal, Upload, Select} from 'antd';
 import {FormattedDate} from 'react-intl';
-import {useHistory, Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {BoardDetailWrapper} from 'components/base/styles';
 import {EBoardOperation} from 'enums/board.enum';
 import DefaultSource from 'assets/default.png';
 import {ENotificationType} from 'enums/base.enum';
-import {ERoute} from 'enums/route.enum';
+import {ERoute, EMessageID} from 'enums/route.enum';
 import NoMatch from 'components/base/error/NoMatch';
 import {TBoardDetail, TCreateBoardDetail, TUpdateBoardDetail} from 'modules/board';
 import {TSelectList} from 'modules/types';
@@ -46,7 +46,6 @@ export const BoardDetail = ({
   hasThumbnail=false,
   record
 }: TBoardDetailProps) => {
-  const history = useHistory();
   const {boardManagementPermission} = usePermission();
   const BoardTitle = () => {
     return (
@@ -109,12 +108,7 @@ export const BoardDetail = ({
       try {
         await promiseDelete(get(record, 'id'));
 
-        history.push({
-          pathname: pathName,
-          state: {
-            notification: {type: ENotificationType.Success, content: '성공적으로 글을 삭제했습니다' }
-          },
-        });
+        window.location.href = `${pathName}?messageID=${EMessageID.BoardDelete}`;
       } catch (e) {
         throw e;
       }
@@ -209,12 +203,7 @@ export const BoardDetail = ({
             thumbnail_source: thumbnailSource,
           });
 
-          history.push({
-            pathname: pathName,
-            state: {
-              notification: {type: ENotificationType.Success, content: '성공적으로 글을 수정했습니다' }
-            },
-          });
+          window.location.href = `${pathName}?messageID=${EMessageID.BoardEdit}`;
         } catch (e) {
           handleFieldError(e, form);
           throw e;
@@ -313,12 +302,7 @@ export const BoardDetail = ({
             thumbnail_source: thumbnailSource,
           });
 
-          history.push({
-            pathname: pathName,
-            state: {
-              notification: {type: ENotificationType.Success, content: '성공적으로 글을 등록했습니다' }
-            },
-          });
+          window.location.href = `${pathName}?messageID=${EMessageID.BoardCreate}`;
         } catch (e) {
           handleFieldError(e, form);
           throw e;

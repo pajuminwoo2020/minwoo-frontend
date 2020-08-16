@@ -69,10 +69,6 @@ const App = () => {
     return currentUser ? <Redirect to="/"/> : component;
   }
 
-  function redirectBeforeLogin (component: React.ComponentElement<any, any>) {
-    return currentUser ? component : <Redirect to={`${ERoute.UserLogin}?next=${location.pathname}`}/>;
-  }
-
   return (
 	<IntlProvider locale={'ko-KR'}>
       <CoreProvider>
@@ -88,7 +84,7 @@ const App = () => {
               {redirectAfterLogin(<BaseTemplate><Signup/></BaseTemplate>)}
             </Route>
             <Route exact path={ERoute.UserEdit}>
-              {redirectBeforeLogin(<BaseTemplate><Edit/></BaseTemplate>)}
+              <BaseTemplate><Edit/></BaseTemplate>
             </Route>
             <Route exact path={ERoute.UserPasswordReset}>
               {redirectAfterLogin(<BaseTemplate><PasswordReset/></BaseTemplate>)}

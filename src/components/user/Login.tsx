@@ -10,14 +10,12 @@ import {userLogin} from 'libs/api/user';
 import {TUserLogin, TUser, setUserInfo} from 'modules/user';
 import {Title, FormWrapper} from 'components/user/styles';
 import {CPhone} from 'constants/base.const';
-import {useHistory} from 'react-router-dom';
 
 const Login = () => {
   const [form] = Form.useForm();
   const next = queryString.parse(useLocation().search)?.next?.toString();
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
   const dispatch = useDispatch();
-  const history = useHistory();
   const onClickLogin = () => {
     form.validateFields().then(value => {
       handleLogin(value as TUserLogin);
@@ -32,7 +30,6 @@ const Login = () => {
         is_remember: value.is_remember
       });
 
-      //history.push({pathname: next ? next : '/'}); TODO csrf에러 해결 후 없애기
       window.location.href = next ? next : '/';
     } catch (e) {
       handleFieldError(e, form);
@@ -89,7 +86,7 @@ const Login = () => {
               htmlType="submit"
               size="large"
               onClick={onClickLogin}
-              disabled={submitButtonDisabled}
+              loading={submitButtonDisabled}
             >
 			  로그인
 			</Button>

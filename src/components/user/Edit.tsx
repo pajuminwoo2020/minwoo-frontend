@@ -1,7 +1,6 @@
 import {LockOutlined, UserOutlined, PhoneOutlined} from '@ant-design/icons';
 import {Button, Checkbox, Form, Input} from 'antd';
 import {get} from 'lodash';
-import queryString from 'query-string';
 import React, {useState, useEffect} from 'react';
 import {Link, useLocation} from 'react-router-dom';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
@@ -14,12 +13,10 @@ import {Title, FormWrapper} from 'components/user/styles';
 import {showNotification} from 'components/base/Common';
 import {ERoute} from 'enums/route.enum';
 import {ENotificationType} from 'enums/base.enum';
-import {useHistory} from 'react-router-dom';
 import {useDataApi} from 'libs/hooks';
 
 const UserEdit = () => {
   const [form] = Form.useForm();
-  const history = useHistory();
   const dispatch = useDispatch();
   const [passwordChangeModal, setPasswordChangeModal] = useState<TModalState>({record: '', visible: false});
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
@@ -80,7 +77,7 @@ const UserEdit = () => {
               htmlType="submit"
               size="large"
               onClick={onClickUserEdit}
-              disabled={submitButtonDisabled}
+              loading={submitButtonDisabled}
             >
 			  수정하기
 			</Button>

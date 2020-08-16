@@ -110,7 +110,7 @@ function PasswordChangeModal({modalState, setModalState}: TModalProps) {
             htmlType="submit"
             size="large"
             onClick={onClickSubmit}
-            disabled={submitButtonDisabled}
+            loading={submitButtonDisabled}
             style={{float: 'right'}}
           >
             비밀번호 변경

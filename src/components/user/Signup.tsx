@@ -1,20 +1,17 @@
 import {LockOutlined, UserOutlined, PhoneOutlined} from '@ant-design/icons';
 import {Button, Checkbox, Form, Input} from 'antd';
 import {get} from 'lodash';
-import queryString from 'query-string';
 import React, {useState} from 'react';
 import {Link, useLocation} from 'react-router-dom';
 import {handleFieldError} from 'libs/api/errorHandle';
 import {userCreate} from 'libs/api/user';
 import {TUserCreate} from 'modules/user';
 import {Title, FormWrapper} from 'components/user/styles';
-import {ERoute} from 'enums/route.enum';
+import {ERoute, EMessageID} from 'enums/route.enum';
 import {ENotificationType} from 'enums/base.enum';
-import {useHistory} from 'react-router-dom';
 
 const Signup = () => {
   const [form] = Form.useForm();
-  const history = useHistory();
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
   const onClickSignup = () => {
     form.validateFields().then(value => {
@@ -30,12 +27,7 @@ const Signup = () => {
         fullname_local: value.fullname_local
 	  });
 
-      history.push({
-        pathname: ERoute.UserLogin,
-        state: {
-          notification: {type: ENotificationType.Success, content: `회원가입이 완료되었습니다. 이메일[${value.userid}] 인증 후에 로그인할 수 있습니다.`},
-        },
-      });
+      window.location.href = `${ERoute.UserLogin}?messageID=${EMessageID.SignupSuccess}&messageParam=${value.userid}`;
     } catch (e) {
       handleFieldError(e, form);
       throw e;
@@ -129,6 +121,7 @@ const Signup = () => {
               htmlType="submit"
               size="large"
               onClick={onClickSignup}
+              loading={submitButtonDisabled}
               disabled={
                 submitButtonDisabled ||
                 !form.getFieldValue('agreement')
