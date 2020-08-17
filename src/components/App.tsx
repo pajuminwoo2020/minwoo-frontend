@@ -45,20 +45,28 @@ import {BaseTemplate} from 'components/base/BaseTemplate';
 import ErrorBoundary from 'components/base/error/ErrorBoundary';
 import NoMatch from 'components/base/error/NoMatch';
 import {TUser, setUserInfo} from 'modules/user';
-import {main} from 'libs/api/user';
+import {main, wrapPromise} from 'libs/api/user';
+import {getInformation} from 'libs/api/information';
+import {setInformation} from 'modules/information';
 
-const data = main();
-
+const data = wrapPromise(main());
 const App = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const currentUser = useSelector((state: RootState) => state.user.current_user, shallowEqual);
+  const information = useSelector((state: RootState) => state.information.info, shallowEqual);
   if (currentUser === undefined) {
     const response: TUser = data.read();
 
     if (isPlainObject(response)) {
       dispatch(setUserInfo(response));
     }
+  }
+  if (information === undefined) {
+    (async function () {
+      const response = await getInformation();
+      dispatch(setInformation(get(response, 'data')));
+    })();
   }
 
   useEffect(() => {

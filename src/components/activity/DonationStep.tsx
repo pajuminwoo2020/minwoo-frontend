@@ -4,6 +4,8 @@ import {Link} from 'react-router-dom';
 import {FormInstance} from 'rc-field-form';
 import {PhoneOutlined} from '@ant-design/icons';
 import {Divider, Steps, Button, Form, Select, Radio, Typography, Input, InputNumber, Row, Col, Descriptions} from 'antd';
+import {shallowEqual, useSelector} from 'react-redux';
+import {RootState} from 'modules';
 import {get} from 'lodash';
 import styled from 'styled-components';
 import {ERoute} from 'enums/route.enum';
@@ -14,7 +16,6 @@ import AddressModal from 'components/modal/AddressModal';
 import {TDonation} from 'modules/information/types';
 import {createDonation} from 'libs/api/information';
 import {showNotification} from 'components/base/Common';
-import {CPhone} from 'constants/base.const';
 
 const {Step} = Steps;
 const {Text} = Typography;
@@ -421,11 +422,13 @@ const DonationStep = () => {
   }
 
   function Completed() {
+    const information = useSelector((state: RootState) => state.information.info, shallowEqual);
+
     return (
       <div style={{textAlign: 'center', marginTop: '70px'}}>
         <p><Text style={{fontSize: '30px'}}>후원신청 감사합니다.</Text></p>
         <p><Text style={{fontSize: '25px'}}>빠른 시일 내에 연락드리도록 하겠습니다.</Text></p>
-        <p><Text>(<PhoneOutlined/>)&nbsp;{CPhone}</Text></p>
+        <p><Text>(<PhoneOutlined/>)&nbsp;{get(information, 'phone')}</Text></p>
         <Divider/>
         <div className="steps-action">
           <Link to={ERoute.ActivityDonation}>

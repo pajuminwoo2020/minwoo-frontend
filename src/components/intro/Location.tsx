@@ -7,7 +7,8 @@ import MapBus from 'assets/map-bus.png'
 import MapCar from 'assets/map-car.png'
 import Map1 from 'assets/map1.png';
 import Map2 from 'assets/map2.png';
-import {CAddressStreet, CAddressJibun} from 'constants/base.const';
+import {shallowEqual, useSelector} from 'react-redux';
+import {RootState} from 'modules';
 
 export const LocationWrapper = styled.div`
   .location_name_title {
@@ -55,6 +56,7 @@ export const LocationWrapper = styled.div`
   }
 `;
 const Location = () => {
+  const information = useSelector((state: RootState) => state.information.info, shallowEqual);
 
   return (
     <LocationWrapper>
@@ -65,11 +67,11 @@ const Location = () => {
       <div className = "location_address_div">
         <p style={{marginBottom: '3px'}}>
           <div className="location_address_title"> 도로명 주소</div>
-          <span>{CAddressStreet}</span>
+          <span>{get(information, 'address_street')}</span>
         </p>
         <p>
           <div className="location_address_title"> 지번 주소</div>
-          <span>{CAddressJibun}</span>
+          <span>{get(information, 'address_jibun')}</span>
         </p>
       </div>
       <ul className = "traffic_ul">

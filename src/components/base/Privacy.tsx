@@ -1,8 +1,11 @@
 import React, {useState} from 'react';
+import {get} from 'lodash';
 import {Typography} from 'antd';
 import styled from 'styled-components';
 import {PrimaryColor} from 'GlobalStyles';
-import {CWindowWidth, CPhone, CEmail} from 'constants/base.const';
+import {CWindowWidth} from 'constants/base.const';
+import {shallowEqual, useSelector} from 'react-redux';
+import {RootState} from 'modules';
 
 const {Title, Paragraph, Text} = Typography;
 export const PrivacyWrapper = styled.div`
@@ -29,6 +32,8 @@ export const PrivacyWrapper = styled.div`
   }
 `;
 const Privacy = () => {
+  const information = useSelector((state: RootState) => state.information.info, shallowEqual);
+
   return (
     <PrivacyWrapper>
       <Title level={3}><Text>개인 정보 보호 정책</Text></Title>
@@ -80,8 +85,8 @@ const Privacy = () => {
         <Text className="indent1">
           <ul>
             <li>1. 이 름 : 개인정보취급방침 담당자</li>
-            <li>2. 전 화 : {CPhone}</li>
-            <li>3. 메 일 : {CEmail}</li>
+            <li>2. 전 화 : {get(information, 'phone')}</li>
+            <li>3. 메 일 : {get(information, 'email')}</li>
           </ul>
         </Text>
       </Paragraph>

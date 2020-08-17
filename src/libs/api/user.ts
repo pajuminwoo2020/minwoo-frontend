@@ -1,4 +1,5 @@
-import {CancelTokenSource} from 'axios';
+import axios, {AxiosError, CancelTokenSource} from 'axios';
+import {get} from 'lodash';
 import {
   TListRequestParams,
   TListResponse,
@@ -13,6 +14,8 @@ import {
   TPasswordUpdate,
 } from 'modules/user';
 import apiClient from 'libs/api/apiClient';
+import {getInformation} from 'libs/api/information';
+import {handleHTTPError} from 'libs/api/errorHandle';
 
 /**
  * User
@@ -47,24 +50,21 @@ export const passwordUpdate = (uidb64: string, token: string, params: TPasswordU
   return apiClient.post(`/password/update/${uidb64}/${token}`, params);
 };
 
-export const main = () => wrapPromise(
-  apiClient.get<TUser>('/user').then(
-    async response => {
-      return response.data;
-    },
-    e => {
-      return e;
-    },
-  ),
-);
+export const main = () => {
+  return axios.all([getUser()]).then(
+    axios.spread(function(user) {
+      return user;
+    }),
+  );
+};
 
-function wrapPromise(promise: any) {
+export function wrapPromise(promise: any) {
   let status = 'pending';
   let result: any;
   let suspender = promise.then(
     (r: any) => {
       status = 'success';
-      result = r;
+      result = r.data;
     },
     (e: any) => {
       status = 'error';
@@ -77,7 +77,7 @@ function wrapPromise(promise: any) {
       if (status === 'pending') {
         throw suspender;
       } else if (status === 'error') {
-        throw result;
+        throw handleHTTPError(result as AxiosError);
       } else if (status === 'success') {
         return result;
       }

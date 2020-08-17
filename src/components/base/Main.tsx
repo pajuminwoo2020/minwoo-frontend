@@ -3,6 +3,8 @@ import {EyeOutlined, BankOutlined, PhoneOutlined} from '@ant-design/icons/lib';
 import {FormattedDate} from 'react-intl';
 import {Link} from 'react-router-dom';
 import {get, map, filter} from 'lodash';
+import {shallowEqual, useSelector} from 'react-redux';
+import {RootState} from 'modules';
 import {Card, Divider, List, Carousel, Row, Col, Button, Typography} from 'antd';
 import {MainWrapper} from 'components/base/styles';
 import {getImageSource} from 'components/base/BoardDetail';
@@ -18,11 +20,11 @@ import {EBoardOperation} from 'enums/board.enum'
 import {EBannerType} from 'enums/information.enum'
 import Configs from 'config';
 import LogoSource from 'assets/logo.png';
-import {CPhone, CBankAccount} from 'constants/base.const';
 
 const {Text} = Typography;
 const {Meta} = Card;
 const Main = () => {
+  const information = useSelector((state: RootState) => state.information.info, shallowEqual);
   const [{data:dataBanner, loading:loadingBanner}] = useDataApi<TListResponse<TBanner>>(getBanners.bind(null, {
     params: {
       current: 1,
@@ -74,8 +76,8 @@ const Main = () => {
               style={{marginBottom: '20px', textAlign: 'center'}}
             >
               <p className="title">후원하기</p>
-              <p><BankOutlined/>&nbsp;<Text>{CBankAccount}</Text></p>
-              <p><PhoneOutlined/>&nbsp;<Text>{CPhone}</Text></p>
+              <p><BankOutlined/>&nbsp;<Text>{get(information, 'bank_account')}</Text></p>
+              <p><PhoneOutlined/>&nbsp;<Text>{get(information, 'phone')}</Text></p>
             </Link>
           </Row>
           <Row>

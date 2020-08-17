@@ -3,6 +3,8 @@ import {Button, Checkbox, Form, Input} from 'antd';
 import {get} from 'lodash';
 import React, {useState} from 'react';
 import {Link, useLocation} from 'react-router-dom';
+import {shallowEqual, useSelector} from 'react-redux';
+import {RootState} from 'modules';
 import {handleFieldError} from 'libs/api/errorHandle';
 import {userLogin} from 'libs/api/user';
 import {TUserLogin} from 'modules/user';
@@ -11,9 +13,9 @@ import {Title, FormWrapper} from 'components/user/styles';
 import {ERoute, EMessageID} from 'enums/route.enum';
 import {ENotificationType} from 'enums/base.enum';
 import {passwordReset} from 'libs/api/user';
-import {CPhone} from 'constants/base.const';
 
 const PasswordReset = () => {
+  const information = useSelector((state: RootState) => state.information.info, shallowEqual);
   const [form] = Form.useForm();
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
   const handleSubmit = async (value: TPasswordReset) => {
@@ -79,7 +81,7 @@ const PasswordReset = () => {
         <br/>
         가입 시 등록한 이메일 주소를 잊으신 경우, 관리자에게 연락주시기 바랍니다.
         <br/>
-        (<PhoneOutlined/>) {CPhone}
+        (<PhoneOutlined/>) {get(information, 'membership_management_phone')}
 	  </Form>
     </FormWrapper>
   );

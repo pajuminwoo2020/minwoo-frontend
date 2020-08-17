@@ -1,4 +1,31 @@
 import {EBannerType} from 'enums/information.enum';
+import {ActionType} from 'typesafe-actions';
+import * as actions from 'modules/information/actions';
+
+/**
+ * 회사정보
+ */
+export type TInformation = {
+  membership_management: string;
+  membership_management_email: string;
+  membership_management_phone: string;
+  chief_executive: string;
+  address_street: string;
+  address_jibun: string;
+  registration_number: string;
+  email: string;
+  phone: string;
+  fax: string;
+  bank_account: string;
+  phone_counseling: string;
+  webhost_counseling: string;
+};
+
+export type InformationAction = ActionType<typeof actions>;
+
+export type TInformationState = {
+  info: TInformation | undefined;
+};
 
 /**
  * 배너

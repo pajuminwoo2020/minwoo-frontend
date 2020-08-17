@@ -7,8 +7,18 @@ import {
   TInformationHistory,
   TSocietyAboutDetail,
   TPeople,
+  TInformation,
 } from 'modules/information';
 import apiClient from 'libs/api/apiClient';
+
+/**
+ * 회사 정보
+ */
+
+export const getInformation = () => {
+  return apiClient.get<TInformation>(`/information`);
+}
+
 
 /**
  * 메인화면 배너
