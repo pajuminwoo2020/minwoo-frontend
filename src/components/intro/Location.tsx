@@ -80,7 +80,7 @@ const Location = () => {
             지하철 이용
           </p>
           <p style={{marginBottom:15}}>
-            망원역 1번출구 우회전 → [망원우체국교차로]까지 275m 이동 → 횡단보도 이용 후 [노랑통닭과 닭갈비]까지 직진후 우회전 진입 → [시민공간 나루]까지 234m<br/><br/>
+            <div dangerouslySetInnerHTML={{__html: `${get(information, 'location_subway')}`}}/>
           </p>
         </li>
         <li className = "traffic_li" style={{backgroundImage: `url(${MapBus})`}}>
@@ -88,8 +88,7 @@ const Location = () => {
             버스 이용
           </p>
           <p style={{marginBottom:15}}>
-            <strong>271</strong> 성산시장입구역 하차 후 도보 5분 <br/>
-            <strong>7013A/B</strong> 성서초등학교역 하차 후 도보 3분 <br/><br/>
+            <div dangerouslySetInnerHTML={{__html: `${get(information, 'location_bus')}`}}/>
           </p>
         </li>
         <li className = "traffic_li" style={{backgroundImage: `url(${MapCar})`}}>
@@ -97,8 +96,7 @@ const Location = () => {
               차량 이용
           </p>
           <p style={{marginBottom:15}}>
-          망원우체국 서교동(연남동) 방면 227m 직진 → 성미산로 5길(작은나무카페와 세븐일레븐 사이골목) 좌회전 후 97m → 월드컵로26길(작은 사거리) 좌회전 후 48m 이동 → 시민공간 나루 3층 <br/><br/>
-          *주차공간이 협소하니 되도록 대중교통을 이용해 주시기 바랍니다.
+            <div dangerouslySetInnerHTML={{__html: `${get(information, 'location_car')}`}}/>
           </p>
         </li>
       </ul>

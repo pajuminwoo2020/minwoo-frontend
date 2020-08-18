@@ -12,6 +12,9 @@ export type TInformation = {
   chief_executive: string;
   address_street: string;
   address_jibun: string;
+  location_subway : string;
+  location_bus : string;
+  location_car : string;
   registration_number: string;
   email: string;
   phone: string;
