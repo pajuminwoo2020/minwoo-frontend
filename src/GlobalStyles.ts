@@ -389,4 +389,12 @@ export const CardWrapper = styled(Link)`
   }
 `;
 
+export const SignatureWrapper = styled.div`
+  border-radius: 4px;
+  border: solid 1px #dedfe1;
+  background-color: #f8f8f8;
+  max-width: 400px;
+  height: 220px;
+`;
+
 export default GlobalStyles;

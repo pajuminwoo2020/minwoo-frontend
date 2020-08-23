@@ -44,14 +44,23 @@ export type TBanner = {
 export type TDonation = {
   donation_type: string;
   price: number;
-  period: number;
-  user_name: string;
-  birthday: string;
-  phone: string;
+  applicant_name: string;
+  applicant_birthday: string;
+  applicant_phone: string;
+  account_holder_name: string;
+  account_holder_birthday: string;
+  account_holder_phone: string;
   email: string;
-  bank_account: string;
-  address: string;
-  memo: string;
+  bank_name: string;
+  account_number: string;
+  address?: string;
+  memo?: string;
+  resident_registration_number?: string;
+  image_signature: Blob;
+  agree_receipt: boolean;
+  agree_unique: boolean;
+  agree_personal: boolean;
+  agree_offer: boolean;
 };
 
 /**

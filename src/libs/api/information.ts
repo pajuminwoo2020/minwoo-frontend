@@ -35,7 +35,7 @@ export const getBanners = ({params}: TListRequestParams, cancel?: CancelTokenSou
  * 후원금
  */
 
-export const createDonation = (params: TDonation, cancel?: CancelTokenSource) => {
+export const createDonation = (params: FormData, cancel?: CancelTokenSource) => {
   return apiClient.post('/information/donation', params, {
     cancelToken: cancel?.token,
   });
