@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useLayoutEffect, useState, useEffect} from 'react';
 import {useLocation, Link} from 'react-router-dom';
 import {shallowEqual, useSelector} from 'react-redux';
 import {Layout, Menu, Col, Row, Typography, Button, Drawer, Breadcrumb, Divider} from 'antd';
@@ -28,12 +28,21 @@ export const LogoImage = () => {
 export const BaseTemplate = ({children}: {children: React.ReactNode;}) => {
   const location = useLocation();
   const [visible, setVisible] = useState(false);
+  const [leftPadding, setLeftPadding] = useState(0);
+
+  useLayoutEffect(() => {
+    function updateSize() {
+      setLeftPadding(window.innerWidth > CWindowWidth + 8 ? (window.innerWidth - CWindowWidth)/2 : 8);
+    }
+    window.addEventListener('resize', updateSize);
+    updateSize();
+  }, []);
 
   return (
     <Layout>
       <HeaderWrapper>
         <Header>
-          <Row>
+          <Row style={{paddingLeft: leftPadding}}>
             <Col flex="200px">
               <LogoImage/>
             </Col>
@@ -63,10 +72,10 @@ export const BaseTemplate = ({children}: {children: React.ReactNode;}) => {
             </Col>
           </Row>
         </Header>
-        <Breadcrumb style={{margin: '80px auto', maxWidth: CWindowWidth, padding: '0px 10px'}}>
+        <Breadcrumb style={{margin: '80px auto', maxWidth: `${CWindowWidth}px`, padding: '0px 10px'}}>
           {getMenuTitle(location.pathname)[0] && (
             <>
-              <Breadcrumb.Item><HomeOutlined/></Breadcrumb.Item>
+              <Breadcrumb.Item><Link to="/"><HomeOutlined/></Link></Breadcrumb.Item>
               {map(getMenuTitle(location.pathname), v => (
                 <Breadcrumb.Item>{v}</Breadcrumb.Item>
               ))}
@@ -79,12 +88,12 @@ export const BaseTemplate = ({children}: {children: React.ReactNode;}) => {
           <Text strong={true}>{getMenuTitle(location.pathname).pop()}</Text>
         </ContentTitle>
       )}
-      <Content>
-        <div style={{margin: '0px auto', maxWidth: CWindowWidth, minHeight: '400px', padding: '0px 10px'}}>
-          {children}
-        </div>
-        <Footer/>
-      </Content>
+	  <Content>
+		<div style={{margin: '0px auto', maxWidth: `${CWindowWidth}px`, minHeight: '400px', padding: '0px 10px'}}>
+		  {children}
+		</div>
+	  </Content>
+      <Footer/>
     </Layout>
   );
 };

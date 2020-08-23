@@ -5,7 +5,7 @@ import {message} from 'antd';
 import {cookies, CCSRFToken} from 'libs/api/apiClient';
 import {UploadChangeParam} from 'antd/lib/upload/interface';
 
-export const CWindowWidth = '1000px';
+export const CWindowWidth = 1000;
 export const CCurrencyList = {
   [ECurrencyType.KRW]: 'KRW',
   [ECurrencyType.USD]: 'USD',
@@ -56,15 +56,3 @@ export const CUploadProps = {
 };
 
 export const CDateFormat = 'YYYY-MM-DD';
-
-export const CAddressStreet = '(10915) 경기도 파주시 금빛로 44, 마이프라자 501호, 502호';
-export const CAddressJibun = '(10915) 경기도 파주시 금촌동 987-4, 마이프라자 501호, 502호';
-export const CUniqueNumber = '605-82-85023';
-export const CPhone = '031-946-2095';
-export const CFax = '031-946-0396';
-export const ChiefExecutive = '윤숙희';
-export const CEmail = 'pajuminwoo@hanmail.net';
-export const CBankAccount = '국민은행 605701-01-41473';
-
-export const CPhoneCounseling = '031-946-2095';
-export const CWebHostCounseling = 'http://paju.womenlink.or.kr/2013/index.php';

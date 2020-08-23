@@ -1,10 +1,13 @@
 import {Col, Row, Divider} from 'antd';
+import {get} from 'lodash';
 import React from 'react';
 import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 import LogoWhiteSource from 'assets/logo-white.png';
+import {shallowEqual, useSelector} from 'react-redux';
+import {RootState} from 'modules';
 import {ERoute} from 'enums/route.enum';
-import {CAddressStreet, CEmail, CPhone, CFax, CBankAccount, CWindowWidth} from 'constants/base.const';
+import {CWindowWidth} from 'constants/base.const';
 
 const FooterWrapper = styled.div`
   background-color: #424242;
@@ -30,16 +33,18 @@ const FooterWrapper = styled.div`
 `;
 
 export const FooterArea = () => {
+  const information = useSelector((state: RootState) => state.information.info, shallowEqual);
+
   return (
     <FooterWrapper>
-      <Row gutter={20} style={{maxWidth: CWindowWidth, margin: '0px auto'}}>
+      <Row gutter={20} style={{maxWidth: `${CWindowWidth}px`, margin: '0px auto'}}>
         <Col xs={24} sm={24} md={24} lg={12} xl={12}>
           <img className="block-title" src={LogoWhiteSource} style={{width: 'auto', height: '20px'}}/>
           <p className="block-title">파주여성민우회</p>
           <Divider/>
-          <p>주소 : {CAddressStreet}</p>
-          <p>이메일 {CEmail} / 대표전화 {CPhone} / 팩스 {CFax}</p>
-          <p>[후원계좌] {CBankAccount}</p>
+          <p>주소 : {get(information, 'address_street')}</p>
+          <p>이메일 {get(information, 'email')} / 대표전화 {get(information, 'phone')} / 팩스 {get(information, 'fax')}</p>
+          <p>[후원계좌] {get(information, 'bank_account')}</p>
         </Col>
         <Col xs={12} sm={12} md={12} lg={6} xl={6}>
           <p className="block-title" style={{color: 'transparent'}}>Empty</p>

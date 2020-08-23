@@ -1,4 +1,31 @@
 import {EBannerType} from 'enums/information.enum';
+import {ActionType} from 'typesafe-actions';
+import * as actions from 'modules/information/actions';
+
+/**
+ * 회사정보
+ */
+export type TInformation = {
+  membership_management: string;
+  membership_management_email: string;
+  membership_management_phone: string;
+  chief_executive: string;
+  address_street: string;
+  address_jibun: string;
+  registration_number: string;
+  email: string;
+  phone: string;
+  fax: string;
+  bank_account: string;
+  phone_counseling: string;
+  webhost_counseling: string;
+};
+
+export type InformationAction = ActionType<typeof actions>;
+
+export type TInformationState = {
+  info: TInformation | undefined;
+};
 
 /**
  * 배너
@@ -17,14 +44,23 @@ export type TBanner = {
 export type TDonation = {
   donation_type: string;
   price: number;
-  period: number;
-  user_name: string;
-  birthday: string;
-  phone: string;
+  applicant_name: string;
+  applicant_birthday: string;
+  applicant_phone: string;
+  account_holder_name: string;
+  account_holder_birthday: string;
+  account_holder_phone: string;
   email: string;
-  bank_account: string;
-  address: string;
-  memo: string;
+  bank_name: string;
+  account_number: string;
+  address?: string;
+  memo?: string;
+  resident_registration_number?: string;
+  image_signature: Blob;
+  agree_receipt: boolean;
+  agree_unique: boolean;
+  agree_personal: boolean;
+  agree_offer: boolean;
 };
 
 /**

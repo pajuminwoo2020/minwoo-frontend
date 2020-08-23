@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useLocation, Link, useHistory} from 'react-router-dom';
+import {useLocation, Link} from 'react-router-dom';
 import {ClickParam,} from 'antd/lib/menu';
 import {DownOutlined, UserOutlined} from '@ant-design/icons';
 import {shallowEqual, useSelector} from 'react-redux';
@@ -21,13 +21,16 @@ export const HeaderRight = ({onClick}: TRightMenuProps) => {
   const currentUser = useSelector((state: RootState) => state.user.current_user, shallowEqual);
   const [visible, setVisible] = useState(false);
   const {adminPagePermission} = usePermission();
-  const history = useHistory();
   const rightMenu = (
     <Menu onClick={onClickMenu}>
       {adminPagePermission && (
         <Menu.Item key="admin-page">관리자페이지</Menu.Item>
       )}
-      <Menu.Item key="user-setting">정보수정</Menu.Item>
+      <Menu.Item key="user-setting">
+        <Link to={ERoute.UserEdit}>
+          정보수정
+        </Link>
+      </Menu.Item>
       <Menu.Item key="logout">로그아웃</Menu.Item>
     </Menu>
   );
@@ -46,7 +49,6 @@ export const HeaderRight = ({onClick}: TRightMenuProps) => {
   function onClickMenu(e: ClickParam) {
     switch (e.key) {
       case 'user-setting':
-        history.push({pathname: ERoute.UserEdit});
         break;
       case 'logout':
         onClickLogout();

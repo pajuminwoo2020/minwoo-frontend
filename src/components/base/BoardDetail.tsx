@@ -2,15 +2,16 @@ import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {get, isEmpty, map} from 'lodash';
 import {AxiosResponse} from 'axios';
-import {ExclamationCircleOutlined, InboxOutlined} from '@ant-design/icons';
+import {ExclamationCircleOutlined, InboxOutlined, PlusOutlined} from '@ant-design/icons';
 import {UploadChangeParam} from 'antd/lib/upload/interface';
 import {Row, Col, Form, Input, Button, Modal, Upload, Select} from 'antd';
 import {FormattedDate} from 'react-intl';
-import {useHistory, Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {BoardDetailWrapper} from 'components/base/styles';
 import {EBoardOperation} from 'enums/board.enum';
 import DefaultSource from 'assets/default.png';
 import {ENotificationType} from 'enums/base.enum';
+import {EMessageID} from 'enums/route.enum';
 import NoMatch from 'components/base/error/NoMatch';
 import {TBoardDetail, TCreateBoardDetail, TUpdateBoardDetail} from 'modules/board';
 import {TSelectList} from 'modules/types';
@@ -45,26 +46,27 @@ export const BoardDetail = ({
   hasThumbnail=false,
   record
 }: TBoardDetailProps) => {
-  const history = useHistory();
   const {boardManagementPermission} = usePermission();
   const BoardTitle = () => {
     return (
       <>
-        <Row justify="space-between" align="middle" className="box-title">
-          <Col>
+        <Row justify="space-between" align="top" className="box-title" gutter={[3, 3]}>
+          <Col xs={24} sm={24} md={12} lg={12} xl={12}>
             <div className="title-item">
-              <div className="label">제목</div>
-              <div className="value">{get(record, 'title')}</div>
+              <span className="label">제목</span>
+              <span className="value">{get(record, 'title')}</span>
             </div>
           </Col>
-          <Col>
+          <Col xs={24} sm={24} md={5} lg={5} xl={5}>
             <div className="title-item">
-              <div className="label">작성자</div>
-              <div className="value">{get(record, 'created_by.fullname')}</div>
+              <span className="label">작성자</span>
+              <span className="value">{get(record, 'created_by.fullname')}</span>
             </div>
+          </Col>
+          <Col xs={24} sm={24} md={7} lg={7} xl={7}>
             <div className="title-item">
-              <div className="label">작성일자</div>
-              <div className="value">
+              <span className="label">작성일자</span>
+              <span className="value">
                 <FormattedDate
                   value={get(record, 'created_at')}
                   year="numeric"
@@ -75,23 +77,23 @@ export const BoardDetail = ({
                   minute="numeric"
                   second="numeric"
                 />
-              </div>
+              </span>
             </div>
           </Col>
         </Row>
-        <Row className= "box-sub-title" justify="end">
+        <Row className= "box-sub-title" justify="start">
           {get(record, 'category') && (
             <Col>
               <div className="title-item">
-                <div className="label">카테고리</div>
-                <div className="value">{get(record, 'category.name')}</div>
+                <span className="label">카테고리</span>
+                <span className="value">{get(record, 'category.name')}</span>
               </div>
             </Col>
           )}
           <Col>
             <div className="title-item">
-              <div className="label">조회수</div>
-              <div className="value">{get(record, 'hit_count')}</div>
+              <span className="label">조회수</span>
+              <span className="value">{get(record, 'hit_count')}</span>
             </div>
           </Col>
         </Row>
@@ -100,16 +102,13 @@ export const BoardDetail = ({
   };
 
   const BoardView = () => {
+    const {boardManagementPermission} = usePermission();
+
     async function onClickDelete() {
       try {
         await promiseDelete(get(record, 'id'));
 
-        history.push({
-          pathname: pathName,
-          state: {
-            notification: {type: ENotificationType.Success, content: '성공적으로 글을 삭제했습니다' }
-          },
-        });
+        window.location.href = `${pathName}?messageID=${EMessageID.BoardDelete}`;
       } catch (e) {
         throw e;
       }
@@ -117,6 +116,19 @@ export const BoardDetail = ({
 
     return (
       <>
+        {boardManagementPermission &&
+          <div style={{textAlign: 'right', marginBottom: '10px'}}>
+            <Link to={`${pathName}/${EBoardOperation.Create}`}>
+              <Button
+                type="primary"
+                size="large"
+                icon={<PlusOutlined/>}
+              >
+                글쓰기
+              </Button>
+            </Link>
+          </div>
+        }
         <BoardTitle/>
         <div className="body-view">
           <div dangerouslySetInnerHTML={{ __html: `${get(record, 'body', '')}`}}/>
@@ -191,12 +203,7 @@ export const BoardDetail = ({
             thumbnail_source: thumbnailSource,
           });
 
-          history.push({
-            pathname: pathName,
-            state: {
-              notification: {type: ENotificationType.Success, content: '성공적으로 글을 수정했습니다' }
-            },
-          });
+          window.location.href = `${pathName}?messageID=${EMessageID.BoardEdit}`;
         } catch (e) {
           handleFieldError(e, form);
           throw e;
@@ -295,12 +302,7 @@ export const BoardDetail = ({
             thumbnail_source: thumbnailSource,
           });
 
-          history.push({
-            pathname: pathName,
-            state: {
-              notification: {type: ENotificationType.Success, content: '성공적으로 글을 등록했습니다' }
-            },
-          });
+          window.location.href = `${pathName}?messageID=${EMessageID.BoardCreate}`;
         } catch (e) {
           handleFieldError(e, form);
           throw e;

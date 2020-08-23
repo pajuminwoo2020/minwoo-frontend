@@ -3,21 +3,21 @@ import {Button, Checkbox, Form, Input} from 'antd';
 import {get} from 'lodash';
 import queryString from 'query-string';
 import React, {useState} from 'react';
+import {shallowEqual, useSelector} from 'react-redux';
+import {RootState} from 'modules';
 import {Link, useLocation} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import {handleFieldError} from 'libs/api/errorHandle';
 import {userLogin} from 'libs/api/user';
 import {TUserLogin, TUser, setUserInfo} from 'modules/user';
 import {Title, FormWrapper} from 'components/user/styles';
-import {CPhone} from 'constants/base.const';
-import {useHistory} from 'react-router-dom';
 
 const Login = () => {
+  const information = useSelector((state: RootState) => state.information.info, shallowEqual);
   const [form] = Form.useForm();
   const next = queryString.parse(useLocation().search)?.next?.toString();
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
   const dispatch = useDispatch();
-  const history = useHistory();
   const onClickLogin = () => {
     form.validateFields().then(value => {
       handleLogin(value as TUserLogin);
@@ -32,7 +32,6 @@ const Login = () => {
         is_remember: value.is_remember
       });
 
-      //history.push({pathname: next ? next : '/'}); TODO csrf에러 해결 후 없애기
       window.location.href = next ? next : '/';
     } catch (e) {
       handleFieldError(e, form);
@@ -89,7 +88,7 @@ const Login = () => {
               htmlType="submit"
               size="large"
               onClick={onClickLogin}
-              disabled={submitButtonDisabled}
+              loading={submitButtonDisabled}
             >
 			  로그인
 			</Button>
@@ -107,7 +106,7 @@ const Login = () => {
       <Form className="form">
         가입 시 등록한 이메일 주소를 잊으신 경우, 관리자에게 연락주시기 바랍니다.
         <br/>
-        (<PhoneOutlined/>) {CPhone}
+        (<PhoneOutlined/>) {get(information, 'membership_management_phone')}
 	  </Form>
 	</FormWrapper>
   );

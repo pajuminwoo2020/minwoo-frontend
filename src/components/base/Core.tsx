@@ -1,8 +1,8 @@
-import {get, isEmpty} from 'lodash';
+import {get, isEmpty, isNil} from 'lodash';
 import * as React from 'react';
 import {useEffect} from 'react';
 import {Helmet} from 'react-helmet-async';
-import {shallowEqual, useSelector} from 'react-redux';
+import {shallowEqual, useSelector, useDispatch} from 'react-redux';
 import GlobalStyles from 'GlobalStyles';
 import {useDidMount} from 'libs/hooks';
 import useModal from 'libs/hooks/useModal';
@@ -11,13 +11,16 @@ import NotificationMessage from 'components/modal/NotificationMessage';
 
 const Core: React.FC = () => {
   const [modal, setModal] = useModal();
-
   const didMount = useDidMount();
+  const dispatch = useDispatch();
+  const currentUser = useSelector((state: RootState) => state.user.current_user, shallowEqual);
 
   useEffect(() => {
-    (window as any).Beacon && (window as any).Beacon('identify', {
-      name: 'Big Step',
-    });
+    if (isNil(currentUser) === false) {
+      (window as any).Beacon && (window as any).Beacon('identify', {
+        name: 'Minwoo',
+      });
+    }
   }, [didMount]);
 
   return (

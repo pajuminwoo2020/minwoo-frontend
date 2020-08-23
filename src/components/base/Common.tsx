@@ -5,7 +5,7 @@ import {notification} from 'antd';
 export const showNotification = (type: IconType, message: string | React.ReactNode) => {
   notification[type]({
     top: 5,
-    duration: 2,
+    duration: 4,
     message: message,
   });
 };

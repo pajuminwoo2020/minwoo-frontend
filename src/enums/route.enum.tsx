@@ -31,3 +31,14 @@ export enum ERoute {
   Privacy = '/privacy',
   Agreement = '/agreement',
 }
+
+export enum EMessageID {
+  SignupSuccess = 'signup_success',
+  ActivateSuccess = 'activate_success',
+  PasswordUpdate = 'password_update',
+  PasswordReset = 'password_reset',
+  BoardDelete = 'board_delete',
+  BoardCreate = 'board_create',
+  BoardEdit = 'board_edit',
+}
+

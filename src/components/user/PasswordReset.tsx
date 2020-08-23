@@ -1,34 +1,29 @@
 import {LockOutlined, UserOutlined, PhoneOutlined} from '@ant-design/icons';
 import {Button, Checkbox, Form, Input} from 'antd';
 import {get} from 'lodash';
-import queryString from 'query-string';
 import React, {useState} from 'react';
-import {Link, useLocation, useHistory} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
+import {shallowEqual, useSelector} from 'react-redux';
+import {RootState} from 'modules';
 import {handleFieldError} from 'libs/api/errorHandle';
 import {userLogin} from 'libs/api/user';
 import {TUserLogin} from 'modules/user';
 import {TPasswordReset} from 'modules/user';
 import {Title, FormWrapper} from 'components/user/styles';
-import {ERoute} from 'enums/route.enum';
+import {ERoute, EMessageID} from 'enums/route.enum';
 import {ENotificationType} from 'enums/base.enum';
 import {passwordReset} from 'libs/api/user';
-import {CPhone} from 'constants/base.const';
 
 const PasswordReset = () => {
+  const information = useSelector((state: RootState) => state.information.info, shallowEqual);
   const [form] = Form.useForm();
-  const history = useHistory();
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
   const handleSubmit = async (value: TPasswordReset) => {
     try {
       setSubmitButtonDisabled(true);
       await passwordReset({userid: value.userid});
 
-      history.push({
-        pathname: ERoute.UserLogin,
-        state: {
-          notification: {type: ENotificationType.Success, content: `비밀번호 재설정 메일을 보냈습니다. 이메일[${value.userid}]을 확인하세요`},
-        },
-      });
+      window.location.href = `${ERoute.UserLogin}?messageID=${EMessageID.PasswordReset}&messageParam=${value.userid}`;
     } catch (e) {
       handleFieldError(e, form);
       throw e;
@@ -74,7 +69,7 @@ const PasswordReset = () => {
               htmlType="submit"
               size="large"
               onClick={onClickSubmit}
-              disabled={submitButtonDisabled}
+              loading={submitButtonDisabled}
             >
               {'이메일 보내기'}
             </Button>
@@ -86,7 +81,7 @@ const PasswordReset = () => {
         <br/>
         가입 시 등록한 이메일 주소를 잊으신 경우, 관리자에게 연락주시기 바랍니다.
         <br/>
-        (<PhoneOutlined/>) {CPhone}
+        (<PhoneOutlined/>) {get(information, 'membership_management_phone')}
 	  </Form>
     </FormWrapper>
   );

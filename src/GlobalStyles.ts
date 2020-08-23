@@ -31,7 +31,7 @@ const GlobalStyles = createGlobalStyle`
   }
 
   .ant-layout {
-	height: 100vh;
+	min-height: 100vh !important;
   }
 
   .ant-layout-header {
@@ -387,6 +387,14 @@ export const CardWrapper = styled(Link)`
     font-weight: normal;
     color: ${PrimaryColor};
   }
+`;
+
+export const SignatureWrapper = styled.div`
+  border-radius: 4px;
+  border: solid 1px #dedfe1;
+  background-color: #f8f8f8;
+  max-width: 400px;
+  height: 220px;
 `;
 
 export default GlobalStyles;

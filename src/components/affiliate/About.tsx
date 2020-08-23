@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import {Tabs, Timeline, Row, Col, Typography, Divider, BackTop} from 'antd';
+import {shallowEqual, useSelector} from 'react-redux';
+import {RootState} from 'modules';
 import styled from 'styled-components';
 import Image1 from 'assets/affiliate_about1.png';
 import Image2_1 from 'assets/affiliate_about2_1.jpg';
@@ -15,7 +17,6 @@ import {get, map} from 'lodash';
 import {getAffiliateHistories} from 'libs/api/information';
 import {useDataApi} from 'libs/hooks';
 import {TInformationHistory} from 'modules/information/types'
-import {CPhoneCounseling, CWebHostCounseling} from 'constants/base.const';
 import {PrimaryColor} from 'GlobalStyles';
 import {HistoryWrapper} from 'components/base/styles';
 
@@ -55,6 +56,7 @@ const AffiliateAboutWrapper = styled.div`
   }
 `;
 const About = () => {
+  const information = useSelector((state: RootState) => state.information.info, shallowEqual);
   const [{data, loading}] = useDataApi<TInformationHistory>(getAffiliateHistories.bind(null));
 
   function handleTabClick(key: string) {
@@ -110,8 +112,8 @@ const About = () => {
               <p>성폭력상담소 ∙ 피해자보호시설 하담데이트 성폭력</p>
             </div>
             <div style={{marginTop: '20px'}}>
-              <p style={{marginBottom: '5px'}}><strong>상담전화</strong>&nbsp;&nbsp;{CPhoneCounseling}</p>
-              <p><strong>웹사이트</strong>&nbsp;&nbsp;<a href={CWebHostCounseling}>{CWebHostCounseling}</a></p>
+              <p style={{marginBottom: '5px'}}><strong>상담전화</strong>&nbsp;&nbsp;{get(information, 'phone_counseling')}</p>
+              <p><strong>웹사이트</strong>&nbsp;&nbsp;<a href={get(information, 'webhost_counseling')}>{get(information, 'webhost_counseling')}</a></p>
             </div>
           </Col>
         </Row>
@@ -168,7 +170,7 @@ const About = () => {
         </Paragraph>
         <Title level={3}>&#9673;&nbsp;상담을 받고 싶은데 어떻게 하면 될까요?</Title>
         <Paragraph className="box-paragraph">
-          애인과 성평등한 관계를 맺고 싶은데 잘 되지 않고, 성(Sexuality)에 대해 궁금 하고 알고 싶은 게 정말 많은데 어디에 물어봐야 할지 모르겠고, 내가 성폭력 피해를 겪었을 때 어떻게 대응하면 좋을지 이야기 나누고 싶을 때 혹은 내 주 변에서 성폭력 피해가 발생했을 때 피해자의 조력자로서 어떻게 함께 할 수 있 을지가 고민된다면, 민우회 상담소로 전화주세요. 성에 대한 고민이나 성폭력 피해 경험을 이야기하기 어렵게 만드는 사회 분위기가 고민과 피해를 혼자만 의 경험으로 내 안에 가둬두게 하지만, 상담소와 함께 이야기함으로써 변화의 원동력을 만들고 이후를 계획할 수 있는 대응의 힘을 주고받으면 좋겠지요. 성 폭력상담이 필요할 때 전화주세요. 방문하셔서 상담하길 원하시는 경우에도 전화 상담을 통한 예약 후에 가능하답니다. 자, 이제 전화기를 들고 <strong style={{color: `${PrimaryColor}`}}>{CPhoneCounseling}</strong> 민우회 상담소로 전화하세요!
+          애인과 성평등한 관계를 맺고 싶은데 잘 되지 않고, 성(Sexuality)에 대해 궁금 하고 알고 싶은 게 정말 많은데 어디에 물어봐야 할지 모르겠고, 내가 성폭력 피해를 겪었을 때 어떻게 대응하면 좋을지 이야기 나누고 싶을 때 혹은 내 주 변에서 성폭력 피해가 발생했을 때 피해자의 조력자로서 어떻게 함께 할 수 있 을지가 고민된다면, 민우회 상담소로 전화주세요. 성에 대한 고민이나 성폭력 피해 경험을 이야기하기 어렵게 만드는 사회 분위기가 고민과 피해를 혼자만 의 경험으로 내 안에 가둬두게 하지만, 상담소와 함께 이야기함으로써 변화의 원동력을 만들고 이후를 계획할 수 있는 대응의 힘을 주고받으면 좋겠지요. 성 폭력상담이 필요할 때 전화주세요. 방문하셔서 상담하길 원하시는 경우에도 전화 상담을 통한 예약 후에 가능하답니다. 자, 이제 전화기를 들고 <strong style={{color: `${PrimaryColor}`}}>{get(information, 'phone_counseling')}</strong> 민우회 상담소로 전화하세요!
         </Paragraph>
       </div>
       <BackTop></BackTop>

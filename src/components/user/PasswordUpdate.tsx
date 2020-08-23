@@ -2,18 +2,17 @@ import {LockOutlined, UserOutlined, PhoneOutlined} from '@ant-design/icons';
 import {Button, Checkbox, Form, Input} from 'antd';
 import {get} from 'lodash';
 import React, {useState} from 'react';
-import {Link, useLocation, useHistory, useParams} from 'react-router-dom';
+import {Link, useLocation, useParams} from 'react-router-dom';
 import {handleFieldError} from 'libs/api/errorHandle';
 import {TUserLogin} from 'modules/user';
 import {TPasswordUpdate} from 'modules/user';
 import {Title, FormWrapper} from 'components/user/styles';
-import {ERoute} from 'enums/route.enum';
+import {ERoute, EMessageID} from 'enums/route.enum';
 import {ENotificationType} from 'enums/base.enum';
 import {passwordUpdate} from 'libs/api/user';
 
 const PasswordUpdate = () => {
   const [form] = Form.useForm();
-  const history = useHistory();
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
   const {uidb64 = '', token = ''} = useParams();
   const handleSubmit = async (value: TPasswordUpdate) => {
@@ -21,12 +20,7 @@ const PasswordUpdate = () => {
       setSubmitButtonDisabled(true);
       await passwordUpdate(uidb64, token, {password_new: value.password_new});
 
-      history.push({
-        pathname: ERoute.UserLogin,
-        state: {
-          notification: {type: ENotificationType.Success, content: '비밀번호 재설정이 완료되었습니다. 새로운 비밀번호로 로그인해주세요'},
-        },
-      });
+	  window.location.href = `${ERoute.UserLogin}?messageID=${EMessageID.PasswordUpdate}`;
     } catch (e) {
       handleFieldError(e, form);
       throw e;
@@ -95,7 +89,7 @@ const PasswordUpdate = () => {
               htmlType="submit"
               size="large"
               onClick={onClickSubmit}
-              disabled={submitButtonDisabled}
+              loading={submitButtonDisabled}
             >
               {'비밀번호 변경'}
             </Button>

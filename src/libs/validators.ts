@@ -4,7 +4,7 @@ import {first, isEmpty, isFinite, isNaN, replace} from 'lodash';
  * Formatter
  */
 
-export const dateRegExp = /^[0-9]{4}[-]*[0-9]{2}[-]*[0-9]{2}$/;
+export const dateRegExp = /^[0-9]{2}[-]*[0-9]{2}[-]*[0-9]{2}$/;
 export const commifyFormatter = (value: string | number | undefined) => {
   if (isNaN(Number(value)) === true || isFinite(Number(value)) === false) {
     return '0';
