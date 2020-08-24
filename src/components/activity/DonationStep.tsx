@@ -628,7 +628,7 @@ const DonationStep = () => {
             formData.append(key, get(data, key));
           });
           formData.append('image_signature', imageDataBlob, 'signature.png');
-          formData.append('memo', form.getFieldValue('memo'));
+          formData.append('memo', form.getFieldValue('memo') ? form.getFieldValue('memo') : '후원합니다~!');
 
           await createDonation(formData);
           showNotification('success', '후원신청이 완료되었습니다');
