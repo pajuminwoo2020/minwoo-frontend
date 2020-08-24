@@ -72,9 +72,9 @@ const Donation = () => {
     },
     {
       title: '후원',
-      dataIndex: 'user_name',
+      dataIndex: 'applicant_name',
       className: 'column-created-by',
-      render: (user_name: string) => <Text>{user_name}</Text>,
+      render: (applicant_name: string) => <Text>{applicant_name}</Text>,
     },
   ];
   return (
