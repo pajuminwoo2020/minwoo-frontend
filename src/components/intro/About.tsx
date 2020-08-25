@@ -5,6 +5,10 @@ import MinwooIntro from 'assets/minwoo-intro.png'
 import MinwooIntroLogo from 'assets/minwoo-intro-logo.jpg'
 import MinwooFoundingStatement from 'assets/minwoo-founding-statement.png'
 import {PrimaryColor} from 'GlobalStyles';
+import {TAbout} from 'modules/information';
+import {getAbout} from 'libs/api/information';
+import {useDataApi} from 'libs/hooks';
+import {get} from 'lodash';
 
 const {TabPane} = Tabs;
 const {Text, Title} = Typography;
@@ -65,6 +69,7 @@ const AboutWrapper = styled.div`
 `;
 
 const About = () => {
+  const [{data}] = useDataApi<TAbout>(getAbout.bind(null));
   return (
     <AboutWrapper>
       <Tabs defaultActiveKey="1" type="card">
@@ -72,27 +77,7 @@ const About = () => {
           <div className="tabs-content">
             <Row justify="center" gutter={[32, 16]}>
               <Col xs={24} sm={24} md={14} lg={14} xl={14}>
-                <p>
-                  <strong>
-                    민우회는 당신의 목소리가, 삶이 곧 운동이 되는 곳<br />
-                    지금보다 좀 더 나은, 다른 세상을 꿈꾸는 당신과 함께 합니다.
-                  </strong>
-                </p>
-                <p>
-                  파주여성민우회는<br />
-                  차별 없이 평등하게 공존하는 세상을 향해 각자의 존엄성을 지키며
-                </p>
-                <p>
-                  <div className="about-emphasize">
-                    성평등한 노동권, 일과 생활의 균형을 위한 활동<br />
-                    여성이 자신의 몸과 건강의 주체가 되는 활동<br />
-                    성인지적 관점으로 미디어감시 활동<br />
-                    성평등 관점으로 복지국가를 기획하는 활동<br />
-                    성폭력 없는 세상을 만드는 반성폭력 활동<br />
-                    더불어 사는 민주사회를 위한 사회개혁 활동<br />
-                  </div>
-                </p>
-                풀뿌리로부터의 변화를 만드는 신나는 지역여성운동을 만들어 갑니다.
+                <div dangerouslySetInnerHTML={{ __html: `${get(data, 'introduction', '')}`}}/>
               </Col>
               <Col xs={24} sm={24} md={10} lg={10} xl={10}>
                 <img src={MinwooIntro} style={{width: '100%', height: 'auto'}}/>
@@ -114,21 +99,7 @@ const About = () => {
                 <img src={MinwooFoundingStatement} style={{width: '100%'}}/>
               </Col>
               <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                <strong>
-                  우리는
-                </strong>
-                <br/>
-                <strong style={{ color: '#f86e6b' }}>
-                  하나, 성평등과 사회정의가 실현되는 사회를 만듭니다.
-                </strong>
-                <br/>
-                <strong style={{ color: '#00b5ad' }}>
-                  하나, 자연과 인간이 조화로운 세상을 만듭니다.
-                </strong>
-                <br/>
-                <strong style={{ color: '#d7a52a' }}>
-                  하나, 생활 속의 여성운동을 만듭니다.
-                </strong>
+                <div dangerouslySetInnerHTML={{ __html: `${get(data, 'watchword', '')}`}}/>
               </Col>
             </Row>
             <div className='about-subtitle' style={{marginTop: '50px'}}>

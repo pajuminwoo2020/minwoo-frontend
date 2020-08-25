@@ -8,6 +8,8 @@ import {
   TSocietyAboutDetail,
   TPeople,
   TInformation,
+  TAbout,
+  TClinicAbout,
 } from 'modules/information';
 import apiClient from 'libs/api/apiClient';
 
@@ -96,6 +98,24 @@ export const getSocietyAbouts = ({params}: TListRequestParams, cancel?: CancelTo
  */
 export const getPeople = (cancel?: CancelTokenSource) => {
   return apiClient.get<TPeople>(`/intro/people`, {
+    cancelToken: cancel?.token,
+  });
+};
+
+/**
+ * 민우회 소개
+ */
+export const getAbout = (cancel?: CancelTokenSource) => {
+  return apiClient.get<TAbout>(`/intro/about`, {
+    cancelToken: cancel?.token,
+  });
+};
+
+/**
+ * 상담소 소개
+ */
+export const getClinicAbout = (cancel?: CancelTokenSource) => {
+  return apiClient.get<TClinicAbout>(`/affiliate/clinic/about`, {
     cancelToken: cancel?.token,
   });
 };
