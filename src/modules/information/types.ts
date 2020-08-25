@@ -99,3 +99,13 @@ export type TPeople = Array<{
     job: string;
   }>;
 }>;
+
+export type TAbout = {
+  introduction: string;
+  watchword: string;
+};
+
+export type TClinicAbout = {
+  purpose: string;
+  activity: string;
+};
