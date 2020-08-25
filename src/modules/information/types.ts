@@ -100,11 +100,17 @@ export type TPeople = Array<{
   }>;
 }>;
 
+/**
+ * 민우회 소개
+ */
 export type TAbout = {
   introduction: string;
   watchword: string;
 };
 
+/**
+ * 상담소 소개
+ */
 export type TClinicAbout = {
   purpose: string;
   activity: string;

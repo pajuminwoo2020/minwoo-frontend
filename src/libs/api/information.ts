@@ -103,7 +103,7 @@ export const getPeople = (cancel?: CancelTokenSource) => {
 };
 
 /**
- * 민우회소개
+ * 민우회 소개
  */
 export const getAbout = (cancel?: CancelTokenSource) => {
   return apiClient.get<TAbout>(`/intro/about`, {
@@ -112,7 +112,7 @@ export const getAbout = (cancel?: CancelTokenSource) => {
 };
 
 /**
- * 상담소소개
+ * 상담소 소개
  */
 export const getClinicAbout = (cancel?: CancelTokenSource) => {
   return apiClient.get<TClinicAbout>(`/affiliate/clinic/about`, {
