@@ -52,6 +52,12 @@ export const getDonations = ({params}: TListRequestParams, cancel?: CancelTokenS
  * 일정표
  */
 
+export const createSchedule = (params: TCalendar, cancel?: CancelTokenSource) => {
+  return apiClient.post(`/information/calendars/create`, params, {
+    cancelToken: cancel?.token,
+  });
+};
+
 export const getCalendarsAll = ({params}: TListRequestParams, cancel?: CancelTokenSource) => {
   return apiClient.get<TListResponse<TCalendar>>(`/information/calendars/all`, {
     params: params,

@@ -26,6 +26,7 @@ import Donation from 'components/activity/Donation';
 import DonationStep from 'components/activity/DonationStep';
 import ActivityMember, {ActivityMemberDetail} from 'components/activity/ActivityMember';
 import Calendar from 'components/activity/Calendar';
+import CalendarEdit from 'components/activity/CalendarEdit';
 import Press, {PressDetail} from 'components/activity/Press';
 import AffiliateAbout from 'components/affiliate/About';
 import AffiliateActivity, {AffiliateActivityDetail} from 'components/affiliate/Activity';
@@ -153,6 +154,9 @@ const App = () => {
             </Route>
             <Route exact path={ERoute.ActivityCalendar}>
               <BaseTemplate><Calendar/></BaseTemplate>
+            </Route>
+            <Route exact path={ERoute.CalendarEdit}>
+              <BaseTemplate><CalendarEdit/></BaseTemplate>
             </Route>
             <Route exact path={ERoute.AffiliateAbout}>
               <BaseTemplate><AffiliateAbout/></BaseTemplate>

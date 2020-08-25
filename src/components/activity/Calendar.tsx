@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
-import {Calendar, Badge, Alert, Modal, Descriptions, Skeleton} from 'antd';
+import {Calendar, Badge, Alert, Modal, Descriptions, Skeleton, Button} from 'antd';
+import {useRouteMatch, Link} from 'react-router-dom';
 import {filter, get, map} from 'lodash';
 import moment from 'moment';
 import {useDataApi} from 'libs/hooks';
@@ -11,6 +12,9 @@ import {TListResponse, TListRequestParams, TModalState, TModalProps} from 'modul
 import {getCalendars, getCalendarsAll} from 'libs/api/information';
 import {CDateFormat} from 'constants/base.const';
 import {getLocalDate} from 'libs/utils';
+import {ERoute} from 'enums/route.enum';
+import {usePermission} from 'libs/hooks';
+import {PlusOutlined} from '@ant-design/icons/lib';
 
 const CalendarWrapper = styled.div`
   .events {
@@ -40,12 +44,24 @@ const CalendarWrapper = styled.div`
   .ant-picker-calendar-date-content::-webkit-scrollbar {
     display: none;
   }
+  .search-input {
+    display: flex;
+    flex: 1;
+  }
+  .add-button {
+    display: inline-block;
+    flex: 1;
+    float: right;
+  }
 `;
 const CalendarPage = () => {
   const today = getLocalDate();
   const [calendarViewModal, setCalendarViewModal] = useState<TModalState>({record: '', visible: false});
   const [selectedDate, setSelectedDate] = useState<string>(today);
   const [pannelDate, setPannelDate] = useState<string>(today);
+  const {boardManagementPermission} = usePermission();
+
+  
   const getPromise = getCalendarsAll.bind(null, {
     params: {
       current: 1,
@@ -104,15 +120,31 @@ const CalendarPage = () => {
 
   return (
     <CalendarWrapper>
-      <Alert message={`[선택된 날짜]  ${selectedDate && moment(selectedDate).format(CDateFormat)}`}/>
+      {boardManagementPermission &&
+        <Link to={`${ERoute.CalendarEdit}`}>
+          <Button
+            className="add-button"
+            type="primary"
+            size="large"
+            icon={<PlusOutlined />}
+          >
+            일정추가
+            </Button>
+        </Link>
+      } 
+      <Alert
+        message={`[선택된 날짜]  ${selectedDate && moment(selectedDate).format(CDateFormat)}`}
+        className="search-input"
+      >
+      </Alert> 
       <Calendar
         dateFullCellRender={dateCellRender}
         headerRender={CalendarHeader}
         onSelect={handleSelect}
         onPanelChange={handlePanelChange}
       />
-      <CalendarViewModal modalState={calendarViewModal} setModalState={setCalendarViewModal}/>
-	</CalendarWrapper>
+      <CalendarViewModal modalState={calendarViewModal} setModalState={setCalendarViewModal} />
+    </CalendarWrapper>
   );
 }
 
