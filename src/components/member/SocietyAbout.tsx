@@ -1,6 +1,6 @@
 import {List, Typography, Button, Spin} from 'antd';
 import {get, map, filter} from 'lodash';
-import React from 'react';
+import React, {useState} from 'react';
 import {getSocietyAbouts} from 'libs/api/information';
 import {useDataApi} from 'libs/hooks';
 import {TSocietyAboutDetail} from 'modules/information';
@@ -30,11 +30,17 @@ const SocietyAbout = () => {
     last: false,
   });
 
+  const [detailsIndex, setDetailsIndex] = useState(1);
+
+  function showDetails(param :number) {
+    setDetailsIndex(param);
+  }
+
   return (
     <SocietyAboutWrapper>
       <Spin tip="로딩중..." spinning={loading}>
         {map(
-          filter(get(data, 'contents', []), v => get(v, 'is_default', false) == true),
+          filter(get(data, 'contents', []), v => get(v, 'id') == detailsIndex),
           item => (
             <div className="default-content">
               <Title level={2}><Text className="blue">{get(item, 'name')}</Text></Title>
@@ -63,11 +69,11 @@ const SocietyAbout = () => {
         )}
         <List
           itemLayout='horizontal'
-          dataSource={filter(get(data, 'contents', []), v => get(v, 'is_default', false) == false)}
+          dataSource={filter(get(data, 'contents', []), v => get(v, 'id') != detailsIndex)}
           renderItem={item => (
           <List.Item>
             <List.Item.Meta
-              title={<Title level={4} className="red">{get(item, 'name')}</Title>}
+              title={<a onClick={(e) => {showDetails(get(item,'id'))}}><Title level={4} className="red">{get(item, 'name')}</Title></a>}
               description={
                 <div style={{margin: '10px'}}>
                   {get(item, 'description')}

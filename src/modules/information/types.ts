@@ -86,7 +86,6 @@ export type TSocietyAboutDetail = {
   schedule: Array<string>;
   main_activity: Array<string>;
   website: string;
-  is_default: boolean;
 };
 
 /**
