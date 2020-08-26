@@ -178,40 +178,6 @@ export const getBoardPresses = ({params}: TListRequestParams, cancel?: CancelTok
 };
 
 /**
- * 회원공간 게시판
- */
-
-export const getBoardMemberSpace = (id: number, cancel?: CancelTokenSource) => {
-  return apiClient.get<TBoardDetail>(`/board/member_space/${id}`, {
-    cancelToken: cancel?.token,
-  });
-};
-export const createBoardMemberSpace = (params: TCreateBoardDetail, cancel?: CancelTokenSource) => {
-  return apiClient.post('/board/member_space', params, {
-    cancelToken: cancel?.token,
-  });
-};
-
-export const updateBoardMemberSpace = (id?: number, params?: TUpdateBoardDetail, cancel?: CancelTokenSource) => {
-  return apiClient.put(`/board/member_space/${id}`, params, {
-    cancelToken: cancel?.token,
-  });
-};
-
-export const deleteBoardMemberSpace = (id: number, cancel?: CancelTokenSource) => {
-  return apiClient.delete(`/board/member_space/${id}`, {
-    cancelToken: cancel?.token,
-  });
-};
-
-export const getBoardMemberSpaces = ({params}: TListRequestParams, cancel?: CancelTokenSource) => {
-  return apiClient.get<TListResponse<TBoardDetail>>(`/board/member_spaces`, {
-    params: params,
-    cancelToken: cancel?.token,
-  });
-};
-
-/**
  * 소모임활동 게시판
  */
 

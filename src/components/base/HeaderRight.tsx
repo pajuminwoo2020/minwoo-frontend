@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useLocation, Link} from 'react-router-dom';
 import {ClickParam,} from 'antd/lib/menu';
-import {DownOutlined, UserOutlined} from '@ant-design/icons';
+import {DownOutlined, UserOutlined, SettingOutlined} from '@ant-design/icons';
 import {shallowEqual, useSelector} from 'react-redux';
 import {ERoute} from 'enums/route.enum';
 import {Avatar, Menu, Col, Row, Typography, Button, Drawer, Breadcrumb, Dropdown} from 'antd';
@@ -11,6 +11,7 @@ import {userLogout} from 'libs/api/user';
 import {usePermission} from 'libs/hooks/usePermission';
 import {cookies, CCSRFToken} from 'libs/api/apiClient';
 import Configs from 'config';
+import {getMenuTitle} from 'components/base/HeaderLeft';
 
 const {Text} = Typography;
 
@@ -20,7 +21,7 @@ type TRightMenuProps = {
 export const HeaderRight = ({onClick}: TRightMenuProps) => {
   const currentUser = useSelector((state: RootState) => state.user.current_user, shallowEqual);
   const [visible, setVisible] = useState(false);
-  const {adminPagePermission} = usePermission();
+  const {adminPagePermission, boardManagementPermission} = usePermission();
   const rightMenu = (
     <Menu onClick={onClickMenu}>
       {adminPagePermission && (
@@ -32,6 +33,19 @@ export const HeaderRight = ({onClick}: TRightMenuProps) => {
         </Link>
       </Menu.Item>
       <Menu.Item key="logout">로그아웃</Menu.Item>
+    </Menu>
+  );
+  const intranetMenu = (
+    <Menu>
+      <Menu.Item key={ERoute.IntranetShare}>
+        <Link to={ERoute.IntranetShare}>{getMenuTitle(ERoute.IntranetShare)[1]}</Link>
+      </Menu.Item>
+      <Menu.Item key={ERoute.IntranetDrive}>
+        <Link to={ERoute.IntranetDrive}>{getMenuTitle(ERoute.IntranetDrive)[1]}</Link>
+      </Menu.Item>
+      <Menu.Item key={ERoute.IntranetGeneral}>
+        <Link to={ERoute.IntranetGeneral}>{getMenuTitle(ERoute.IntranetGeneral)[1]}</Link>
+      </Menu.Item>
     </Menu>
   );
 
@@ -68,29 +82,40 @@ export const HeaderRight = ({onClick}: TRightMenuProps) => {
   return (
     <Row align="middle" justify="space-around">
       {currentUser ? (
-        <Dropdown
-          trigger={['click']}
-          overlay={rightMenu}
-          placement="bottomLeft"
-          onVisibleChange={() => {setVisible(!visible);}}
-          visible={visible}
-        >
-          <div
-            style={{
-              display: 'inline-block',
-              cursor: 'pointer',
-            }}
+        <>
+          <Dropdown
+            trigger={['click']}
+            overlay={rightMenu}
+            placement="bottomLeft"
+            onVisibleChange={() => {setVisible(!visible);}}
+            visible={visible}
           >
-            <div style={{display: 'inline-block'}}>
-              <Avatar shape="circle" style={{marginRight: '5px'}} size="small" icon={<UserOutlined />}/>
-              <Text strong={true}>{currentUser.fullname}</Text>
+            <div
+              style={{
+                display: 'inline-block',
+                cursor: 'pointer',
+              }}
+            >
+              <div style={{display: 'inline-block'}}>
+                <Avatar shape="circle" style={{marginRight: '5px'}} size="small" icon={<UserOutlined />}/>
+                <Text strong={true}>{currentUser.fullname}</Text>
+              </div>
+              <div style={{display: 'inline-block'}}>
+                <Text>&nbsp;&nbsp;{currentUser.userid}</Text>
+                <DownOutlined style={{marginLeft: 10}}/>
+              </div>
             </div>
-            <div style={{display: 'inline-block'}}>
-              <Text>&nbsp;&nbsp;{currentUser.userid}</Text>
-              <DownOutlined style={{marginLeft: 10}}/>
-            </div>
-          </div>
-        </Dropdown>
+          </Dropdown>
+          {boardManagementPermission && (
+            <Dropdown
+              trigger={['click']}
+              overlay={intranetMenu}
+              placement="bottomLeft"
+            >
+              <SettingOutlined style={{marginLeft: '10px'}}/>
+            </Dropdown>
+          )}
+        </>
       ) : (
         <>
           <Link to={ERoute.UserLogin}>
