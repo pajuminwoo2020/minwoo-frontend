@@ -66,6 +66,10 @@ export type TDonation = {
   agree_offer: boolean;
 };
 
+export type TDonationPage = {
+  introduction: string;
+};
+
 /**
  * 일정표
  */

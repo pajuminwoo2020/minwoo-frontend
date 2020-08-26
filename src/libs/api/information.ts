@@ -10,6 +10,7 @@ import {
   TInformation,
   TAbout,
   TClinicAbout,
+  TDonationPage,
 } from 'modules/information';
 import apiClient from 'libs/api/apiClient';
 
@@ -46,6 +47,13 @@ export const createDonation = (params: FormData, cancel?: CancelTokenSource) => 
 export const getDonations = ({params}: TListRequestParams, cancel?: CancelTokenSource) => {
   return apiClient.get<TListResponse<TDonation>>(`/information/donations`, {
     params: params,
+    cancelToken: cancel?.token,
+  });
+};
+
+// 후원하기 소개글
+export const getDonationPage = (cancel?: CancelTokenSource) => {
+  return apiClient.get<TDonationPage>(`/donation/page`, {
     cancelToken: cancel?.token,
   });
 };

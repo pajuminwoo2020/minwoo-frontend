@@ -8,9 +8,9 @@ import {Link} from 'react-router-dom';
 import {useDataApi, usePagination} from 'libs/hooks';
 import {TListResponse, TPagination} from 'modules/types';
 import {ERoute} from 'enums/route.enum';
-import {TDonation} from 'modules/information/types';
+import {TDonation, TDonationPage} from 'modules/information/types';
 import {TableWrapper} from 'GlobalStyles';
-import {getDonations} from 'libs/api/information';
+import {getDonations, getDonationPage} from 'libs/api/information';
 
 const {Text} = Typography;
 const DonationStepWrapper = styled.div`
@@ -54,6 +54,7 @@ const Donation = () => {
     contents: [],
     last: false,
   });
+  const [{data: donationPage}] = useDataApi<TDonationPage>(getDonationPage.bind(null));
 
   useEffect(() => {
     setCallback(() => getPromise);
@@ -82,17 +83,7 @@ const Donation = () => {
 	  <Row gutter={[16, 16]} align="middle">
         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
 		  <div style={{padding: '0px 25px'}}>
-			<p>
-              <Text style={{fontWeight: 'bold', fontSize: '16px'}}>
-                여성이 웃는 세상, 평등한 사회를 위한 발걸음,<br></br>
-                민우회와 함께해 주세요!
-              </Text>
-			</p>
-			<p>
-              <Text style={{fontSize: '14px'}}>
-                민우회는 사회적 약자와 함께 하는 사회를 만들어내기 위해 실천 활동을 힘써 펼쳐나가고 있습니다.
-              </Text>
-			</p>
+            <div dangerouslySetInnerHTML={{ __html: `${get(donationPage, 'introduction', '')}`}}/>
 			<Link to={ERoute.ActivityDonationStep}>
 			  <Button type="primary"  className="large-btn">후원신청하기<RightOutlined/></Button>
 			</Link>
