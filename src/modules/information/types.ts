@@ -12,6 +12,9 @@ export type TInformation = {
   chief_executive: string;
   address_street: string;
   address_jibun: string;
+  location_subway : string;
+  location_bus : string;
+  location_car : string;
   registration_number: string;
   email: string;
   phone: string;
@@ -63,6 +66,10 @@ export type TDonation = {
   agree_offer: boolean;
 };
 
+export type TDonationPage = {
+  introduction: string;
+};
+
 /**
  * 일정표
  */
@@ -95,7 +102,6 @@ export type TSocietyAboutDetail = {
   schedule: Array<string>;
   main_activity: Array<string>;
   website: string;
-  is_default: boolean;
 };
 
 /**
@@ -108,3 +114,19 @@ export type TPeople = Array<{
     job: string;
   }>;
 }>;
+
+/**
+ * 민우회 소개
+ */
+export type TAbout = {
+  introduction: string;
+  watchword: string;
+};
+
+/**
+ * 상담소 소개
+ */
+export type TClinicAbout = {
+  purpose: string;
+  activity: string;
+};

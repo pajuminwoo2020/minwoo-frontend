@@ -517,7 +517,7 @@ const DonationStep = () => {
         labelCol={{span: 3}}
         layout="horizontal"
       >
-        <Descriptions column={2} bordered>
+        <Descriptions column={{xs:1, sm:1, md:2, lg:2, xl:2}}  bordered>
           <Descriptions.Item label="후원종류">{get(data, 'donation_type')}</Descriptions.Item>
           <Descriptions.Item label="후원금액">{get(data, 'price', '')}</Descriptions.Item>
           <Descriptions.Item label="신청인 성명">{get(data, 'applicant_name')}</Descriptions.Item>
