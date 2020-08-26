@@ -32,7 +32,6 @@ import AffiliateAbout from 'components/affiliate/About';
 import AffiliateActivity, {AffiliateActivityDetail} from 'components/affiliate/Activity';
 import SocietyAbout from 'components/member/SocietyAbout';
 import SocietyActivity, {SocietyActivityDetail} from 'components/member/SocietyActivity';
-import MemberSpace, {MemberSpaceDetail} from 'components/member/Space';
 import NewsLetter, {NewsLetterDetail} from 'components/bulletin/NewsLetter';
 import Gallery, {GalleryDetail} from 'components/bulletin/Gallery';
 import Drive, {DriveDetail} from 'components/bulletin/Drive';
@@ -178,12 +177,6 @@ const App = () => {
             </Route>
             <Route path={`${ERoute.MemberSocietyActivity}/:operation`}>
               <BaseTemplate><SocietyActivityDetail/></BaseTemplate>
-            </Route>
-            <Route exact path={ERoute.MemberSpace}>
-              <BaseTemplate><MemberSpace/></BaseTemplate>
-            </Route>
-            <Route path={`${ERoute.MemberSpace}/:operation`}>
-              <BaseTemplate><MemberSpaceDetail/></BaseTemplate>
             </Route>
             <Route exact path={ERoute.BulletinNewsletter}>
               <BaseTemplate><NewsLetter/></BaseTemplate>

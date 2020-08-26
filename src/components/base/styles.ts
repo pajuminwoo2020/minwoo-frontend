@@ -63,6 +63,16 @@ export const HeaderWrapper = styled.div`
       display: inline-block;
     }
   }
+  .no-cursor {
+    cursor: default !important;
+  }
+  .vertical-bar {
+    border-left: 3px solid ${PrimaryColor};
+    height: 17px;
+    width: 0px;
+    display: inline-block;
+    margin: 0px 7px;
+  }
 `;
 
 export const ContentTitle = styled.div`
@@ -152,11 +162,10 @@ export const MainWrapper = styled.div`
 
   .ant-carousel .slick-slide {
     text-align: center;
-    line-height: 160px;
     background: transparent;
     overflow: hidden;
     margin-bottom: 20px;
-    max-height: 320px;
+    max-height: 400px;
   }
   .ant-carousel .slick-dots-top {
     top: 0px;
@@ -168,8 +177,14 @@ export const MainWrapper = styled.div`
     padding-top: 12px;
     padding-left: 5%;
     padding-right: 5%;
+    z-index: 0;
     li button {
       height: 10px;
+	  background-color: #6e6e6e !important;
+    }
+    li.slick-active button {
+	  background-color: #fff !important;
+	  box-shadow: 1px 1px #e3e3e3;
     }
   }
   .ant-carousel img {
@@ -198,10 +213,10 @@ export const MainWrapper = styled.div`
   }
 
   .area-right-top {
-    padding: 0px 20px;
+    padding: 10px 20px;
     width: 100%;
     max-width: 300px;
-	height: 150px;
+	height: 160px;
     margin: auto;
     border-radius: 5px;
     box-shadow: 0 2px 5px #000;
@@ -212,7 +227,7 @@ export const MainWrapper = styled.div`
       font-size: 20px;
       font-weight: bold;
       color: ${PrimaryColor};
-      margin: 10px 0px;
+      margin: 0px;
     }
 
     p {
@@ -240,15 +255,6 @@ export const MainWrapper = styled.div`
 	margin-right: 5px;
 	color: ${PrimaryColor};
 	font-weight: bold;
-  }
-
-  .red mark {
-    color: #fff;
-	background-color: ${PrimaryColor} !important;
-  }
-  .blue mark {
-    color: #fff;
-	background-color: #0dbeb5 !important;
   }
 
   .title {

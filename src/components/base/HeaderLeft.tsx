@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import {filter, get, map} from 'lodash';
 import {ERoute} from 'enums/route.enum';
 import {usePermission} from 'libs/hooks/usePermission';
+import {PrimaryColor} from 'GlobalStyles';
 
 type TMenuProps = {
   mode: "horizontal" | "inline";
@@ -50,11 +51,11 @@ const menuNames = [{
     name: '후원하기',
     path: 'donation',
   }, {
-    name: '일정표',
+    name: '활동 일정',
     path: 'calendar',
   }],
 }, {
-  name: '부설기구',
+  name: '파주성폭력상담소',
   path: 'affiliate',
   children: [{
     group: '성폭력상담소',
@@ -66,7 +67,7 @@ const menuNames = [{
     path: 'activity',
   }],
 }, {
-  name: '회원공간',
+  name: '소모임',
   path: 'member',
   children: [{
     name: '소모임소개',
@@ -74,9 +75,6 @@ const menuNames = [{
   }, {
     name: '소모임활동',
     path: 'society_activity',
-  }, {
-    name: '회원공간',
-    path: 'space',
   }],
 }, {
   name: '자료실',
@@ -125,7 +123,6 @@ export function getMenuTitle(route: string) {
 
 export const HeaderLeft = ({mode, onClick}: TMenuProps) => {
   const location = useLocation();
-  const {boardManagementPermission} = usePermission();
 
   return (
     <Menu selectedKeys={[location.pathname]} mode={mode} onClick={onClick}>
@@ -166,25 +163,12 @@ export const HeaderLeft = ({mode, onClick}: TMenuProps) => {
           <Link to={ERoute.ActivityCalendar}>{getMenuTitle(ERoute.ActivityCalendar)[1]}</Link>
         </Menu.Item>
       </SubMenu>
-      <SubMenu title={getMenuTitle('/affiliate')[0]}>
-        <Menu.ItemGroup title="성폭력상담소">
-          <Menu.Item key={ERoute.AffiliateAbout}>
-            <Link to={ERoute.AffiliateAbout}>{getMenuTitle(ERoute.AffiliateAbout)[2]}</Link>
-          </Menu.Item>
-          <Menu.Item key={ERoute.AffiliateActivity}>
-            <Link to={ERoute.AffiliateActivity}>{getMenuTitle(ERoute.AffiliateActivity)[2]}</Link>
-          </Menu.Item>
-        </Menu.ItemGroup>
-      </SubMenu>
       <SubMenu title={getMenuTitle('/member')[0]}>
         <Menu.Item key={ERoute.MemberSocietyAbout}>
           <Link to={ERoute.MemberSocietyAbout}>{getMenuTitle(ERoute.MemberSocietyAbout)[1]}</Link>
         </Menu.Item>
         <Menu.Item key={ERoute.MemberSocietyActivity}>
           <Link to={ERoute.MemberSocietyActivity}>{getMenuTitle(ERoute.MemberSocietyActivity)[1]}</Link>
-        </Menu.Item>
-        <Menu.Item key={ERoute.MemberSpace}>
-          <Link to={ERoute.MemberSpace}>{getMenuTitle(ERoute.MemberSpace)[1]}</Link>
         </Menu.Item>
       </SubMenu>
       <SubMenu title={getMenuTitle('/bulletin')[0]}>
@@ -198,19 +182,17 @@ export const HeaderLeft = ({mode, onClick}: TMenuProps) => {
           <Link to={ERoute.BulletinDrive}>{getMenuTitle(ERoute.BulletinDrive)[1]}</Link>
         </Menu.Item>
       </SubMenu>
-      {boardManagementPermission && (
-        <SubMenu title={getMenuTitle('/intranet')[0]}>
-          <Menu.Item key={ERoute.IntranetShare}>
-            <Link to={ERoute.IntranetShare}>{getMenuTitle(ERoute.IntranetShare)[1]}</Link>
+      <span className="vertical-bar"></span>
+      <SubMenu title={getMenuTitle('/affiliate')[0]}>
+        <Menu.ItemGroup title="성폭력상담소">
+          <Menu.Item key={ERoute.AffiliateAbout}>
+            <Link to={ERoute.AffiliateAbout}>{getMenuTitle(ERoute.AffiliateAbout)[2]}</Link>
           </Menu.Item>
-          <Menu.Item key={ERoute.IntranetDrive}>
-            <Link to={ERoute.IntranetDrive}>{getMenuTitle(ERoute.IntranetDrive)[1]}</Link>
+          <Menu.Item key={ERoute.AffiliateActivity}>
+            <Link to={ERoute.AffiliateActivity}>{getMenuTitle(ERoute.AffiliateActivity)[2]}</Link>
           </Menu.Item>
-          <Menu.Item key={ERoute.IntranetGeneral}>
-            <Link to={ERoute.IntranetGeneral}>{getMenuTitle(ERoute.IntranetGeneral)[1]}</Link>
-          </Menu.Item>
-        </SubMenu>
-      )}
+        </Menu.ItemGroup>
+      </SubMenu>
     </Menu>
   );
 };

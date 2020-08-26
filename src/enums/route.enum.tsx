@@ -23,7 +23,6 @@ export enum ERoute {
   AffiliateActivity = '/affiliate/activity',
   MemberSocietyAbout = '/member/society_about',
   MemberSocietyActivity = '/member/society_activity',
-  MemberSpace = '/member/space',
   BulletinNewsletter = '/bulletin/newsletter',
   BulletinGallery = '/bulletin/gallery',
   BulletinDrive = '/bulletin/drive',

@@ -22,6 +22,7 @@ export type TInformation = {
   bank_account: string;
   phone_counseling: string;
   webhost_counseling: string;
+  instagram_feed: string;
 };
 
 export type InformationAction = ActionType<typeof actions>;
