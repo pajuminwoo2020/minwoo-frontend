@@ -31,7 +31,7 @@ export const CDefaultEditorPlugins = [
   'emoticons paste textcolor colorpicker textpattern'
 ];
 export const CDefaultEditorToolbars = 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | forecolor backcolor | link image preview';
-
+export const CDefaultDateTimeFormat = 'YYYY-MM-DD HH:mm';
 export const CMaxFileSize = '50MB';
 export const CUploadProps = {
   withCredentials: true,

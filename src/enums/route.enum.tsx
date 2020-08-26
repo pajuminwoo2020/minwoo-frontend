@@ -18,6 +18,7 @@ export enum ERoute {
   ActivityDonationStep = '/activity/donation/step',
   ActivityCalendar = '/activity/calendar',
   CalendarEdit = '/activity/calendar/edit',
+  CalendarCreate = '/activity/calendar/create',
   AffiliateAbout = '/affiliate/about',
   AffiliateActivity = '/affiliate/activity',
   MemberSocietyAbout = '/member/society_about',

@@ -55,7 +55,23 @@ export const getDonations = ({params}: TListRequestParams, cancel?: CancelTokenS
  */
 
 export const createSchedule = (params: TCalendar, cancel?: CancelTokenSource) => {
-  return apiClient.post(`/information/calendars/create`, params, {
+  return apiClient.post(`/information/calendar/create`, params, {
+    cancelToken: cancel?.token,
+  });
+};
+
+export const updateSchedule = (id: number, params?: TCalendar, cancel?: CancelTokenSource) => {
+  return apiClient.put(`/information/calendar/${id}`, params, {
+    cancelToken: cancel?.token,
+  });
+};
+export const getSchedule = (id: number, cancel?: CancelTokenSource) => {
+  return apiClient.get<TCalendar>(`/information/calendar/${id}`, {
+    cancelToken: cancel?.token,
+  });
+};
+export const deleteSchedule = (id: number, cancel?: CancelTokenSource) => {
+  return apiClient.delete(`/information/calendar/${id}`, {
     cancelToken: cancel?.token,
   });
 };

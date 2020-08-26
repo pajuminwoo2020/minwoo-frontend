@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
-import {Calendar, Badge, Alert, Modal, Descriptions, Skeleton, Button} from 'antd';
+import {Calendar, Badge, Alert, Modal, Descriptions, Skeleton, Button, Row, Col} from 'antd';
 import {useRouteMatch, Link} from 'react-router-dom';
 import {filter, get, map} from 'lodash';
 import moment from 'moment';
@@ -9,8 +9,9 @@ import CalendarHeader from'components/base/CalendarHeader';
 import AddressModal from 'components/modal/AddressModal';
 import {TCalendar} from 'modules/information';
 import {TListResponse, TListRequestParams, TModalState, TModalProps} from 'modules/types';
-import {getCalendars, getCalendarsAll} from 'libs/api/information';
+import {getCalendars, getCalendarsAll, deleteSchedule} from 'libs/api/information';
 import {CDateFormat} from 'constants/base.const';
+import {showConfirm} from 'components/modal/showConfirm';
 import {getLocalDate} from 'libs/utils';
 import {ERoute} from 'enums/route.enum';
 import {usePermission} from 'libs/hooks';
@@ -61,7 +62,6 @@ const CalendarPage = () => {
   const [pannelDate, setPannelDate] = useState<string>(today);
   const {boardManagementPermission} = usePermission();
 
-  
   const getPromise = getCalendarsAll.bind(null, {
     params: {
       current: 1,
@@ -121,7 +121,7 @@ const CalendarPage = () => {
   return (
     <CalendarWrapper>
       {boardManagementPermission &&
-        <Link to={`${ERoute.CalendarEdit}`}>
+        <Link to={`${ERoute.CalendarCreate}`}>
           <Button
             className="add-button"
             type="primary"
@@ -129,14 +129,14 @@ const CalendarPage = () => {
             icon={<PlusOutlined />}
           >
             일정추가
-            </Button>
+          </Button>
         </Link>
-      } 
+      }
       <Alert
         message={`[선택된 날짜]  ${selectedDate && moment(selectedDate).format(CDateFormat)}`}
         className="search-input"
       >
-      </Alert> 
+      </Alert>
       <Calendar
         dateFullCellRender={dateCellRender}
         headerRender={CalendarHeader}
@@ -150,6 +150,7 @@ const CalendarPage = () => {
 
 const CalendarViewModal = ({modalState, setModalState}: TModalProps) => {
   const [visible, setVisible] = useState(false);
+  const {boardManagementPermission} = usePermission();
   const getPromise = getCalendars.bind(null, {
     params: {
       current: 1,
@@ -173,6 +174,16 @@ const CalendarViewModal = ({modalState, setModalState}: TModalProps) => {
     setModalState({visible: false, record: ''});
   }
 
+  async function onClickDelete(id: number) {
+    try {
+      await deleteSchedule(id);
+
+      window.location.href = `${ERoute.ActivityCalendar}`;
+    } catch (e) {
+      throw e;
+    }
+  }
+
   return (
     <Modal
       title={`${get(modalState, 'record')} 일정`}
@@ -188,14 +199,36 @@ const CalendarViewModal = ({modalState, setModalState}: TModalProps) => {
       ) : (
         <>
           {map(get(data, 'contents', []), v => (
-            <Descriptions column={2} style={{marginBottom: '10px'}} bordered>
-              <Descriptions.Item span={2} label="일정">{get(v, 'schedule_name')}</Descriptions.Item>
-              <Descriptions.Item label="시작">{get(v, 'schedule_from')}</Descriptions.Item>
-              <Descriptions.Item label="종료">{get(v, 'schedule_to')}</Descriptions.Item>
-              <Descriptions.Item label="메모">
-                <span style={{whiteSpace: 'pre-wrap'}}>{get(v, 'memo')}</span>
-              </Descriptions.Item>
-            </Descriptions>
+            <>
+              <Descriptions column={{xs:1, sm:1, md:2, lg:2, xl:2}} style={{marginBottom: '10px'}} bordered>
+                <Descriptions.Item span={2} label="일정">{get(v, 'schedule_name')}</Descriptions.Item>
+                <Descriptions.Item label="시작">{get(v, 'schedule_from')}</Descriptions.Item>
+                <Descriptions.Item label="종료">{get(v, 'schedule_to')}</Descriptions.Item>
+                <Descriptions.Item label="메모">
+                  <span style={{whiteSpace: 'pre-wrap'}}>{get(v, 'memo')}</span>
+                </Descriptions.Item>
+              </Descriptions>
+              {boardManagementPermission &&
+                <Row justify="end" gutter={[16, 0]} style={{margin: '0px 0px 10px 0px'}}>
+                  <Col>
+                  <Button
+                    type="primary"
+                    size="small"
+                    onClick={() => showConfirm(() => onClickDelete(get(v, 'id')), '일정을 삭제하시겠습니까?')}
+                  >
+                    삭제
+                  </Button>
+                </Col>
+                <Col>
+                  <Link to={`${ERoute.CalendarEdit}/${get(v, 'id')}`}>
+                    <Button type="primary" size="small">
+                      수정
+                    </Button>
+                  </Link>
+                </Col>
+                </Row>
+              }
+            </>
           ))}
         </>
       )}

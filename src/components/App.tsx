@@ -155,8 +155,11 @@ const App = () => {
             <Route exact path={ERoute.ActivityCalendar}>
               <BaseTemplate><Calendar/></BaseTemplate>
             </Route>
-            <Route exact path={ERoute.CalendarEdit}>
-              <BaseTemplate><CalendarEdit/></BaseTemplate>
+            <Route path={`${ERoute.CalendarEdit}/:record_id`}>
+              <BaseTemplate><CalendarEdit isEdit={true}/></BaseTemplate>
+            </Route>
+            <Route exact path={ERoute.CalendarCreate}>
+              <BaseTemplate><CalendarEdit isEdit={false}/></BaseTemplate>
             </Route>
             <Route exact path={ERoute.AffiliateAbout}>
               <BaseTemplate><AffiliateAbout/></BaseTemplate>
