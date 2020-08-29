@@ -14,7 +14,7 @@ import Image3_2 from 'assets/affiliate_about3_2.png';
 import Image3_3 from 'assets/affiliate_about3_3.jpg';
 import DotImage from 'assets/dot.png';
 import {get, map} from 'lodash';
-import {getAffiliateHistories, getClinicAbout} from 'libs/api/information';
+import {getClinicAbout} from 'libs/api/information';
 import {useDataApi} from 'libs/hooks';
 import {TInformationHistory, TClinicAbout} from 'modules/information/types'
 import {PrimaryColor} from 'GlobalStyles';
@@ -45,7 +45,8 @@ const AffiliateAboutWrapper = styled.div`
 
     p {
       margin-bottom: 0px;
-    } }
+    }
+  }
   .box-paragraph {
     padding-left: 20px;
   }
@@ -57,7 +58,6 @@ const AffiliateAboutWrapper = styled.div`
 `;
 const About = () => {
   const information = useSelector((state: RootState) => state.information.info, shallowEqual);
-  const [{data, loading}] = useDataApi<TInformationHistory>(getAffiliateHistories.bind(null));
   const [{data: clinicAbout}] = useDataApi<TClinicAbout>(getClinicAbout.bind(null));
 
   function handleTabClick(key: string) {
@@ -68,12 +68,12 @@ const About = () => {
   return (
     <AffiliateAboutWrapper>
       <Tabs activeKey="purpose" onTabClick={handleTabClick}>
-        <TabPane key="purpose" tab="설립취지"></TabPane>
-        <TabPane key="history" tab="연혁"></TabPane>
-        <TabPane key="activity" tab="활동내용"></TabPane>
+        <TabPane key="purpose" tab="상담"></TabPane>
+        <TabPane key="history" tab="교육"></TabPane>
+        <TabPane key="activity" tab="성폭력 예방활동"></TabPane>
       </Tabs>
       <div className="tabs-content" id="purpose">
-        <Title className="content-title">설립취지</Title>
+        <Title className="content-title">상담</Title>
         <Row justify="center" gutter={[32, 16]}>
           <Col xs={24} sm={24} md={14} lg={14} xl={14}>
             <div style={{margin: 'auto'}}>
@@ -118,25 +118,12 @@ const About = () => {
       </div>
       <div className="tabs-content" id="history">
         <Divider/>
-        <Title className="content-title">연혁</Title>
-        <HistoryWrapper>
-          {map(data, (yearData, index) =>
-            <>
-              <Title className={`year row${index%3}`}>{get(yearData, 'year')}</Title>
-              <Timeline mode="alternate">
-                {map(get(yearData, 'children', []), v =>
-                  <Timeline.Item>
-                    <div className='memo-wrapper'>{get(v, 'memo')}</div>
-                  </Timeline.Item>
-                )}
-              </Timeline>
-            </>
-          )}
-        </HistoryWrapper>
+        <Title className="content-title">교육</Title>
+        교육
       </div>
       <div className="tabs-content" id="activity">
         <Divider/>
-        <Title className="content-title">활동내용</Title>
+        <Title className="content-title">성폭력 예방활동</Title>
         <Row justify="center" style={{marginBottom: '40px'}}>
           <img src={Image3_title} style={{width: 'auto', height: '80px'}}/>
         </Row>

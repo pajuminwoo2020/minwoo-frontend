@@ -96,6 +96,7 @@ const CalendarEdit = ({isEdit}: {isEdit: boolean;}) => {
                   name={'schedule_from'}
                   className="form-item"
                   style={{verticalAlign: 'middle'}}
+                  rules={[{required: true, message: '시작 시각을 입력해주세요' }]}
                 >
                   <DatePicker
                     showTime
@@ -114,6 +115,7 @@ const CalendarEdit = ({isEdit}: {isEdit: boolean;}) => {
                   name={'schedule_to'}
                   className="form-item"
                   style={{verticalAlign: 'middle'}}
+                  rules={[{required: true, message: '종료 시각을 입력해주세요' }]}
                 >
                   <DatePicker
                     showTime

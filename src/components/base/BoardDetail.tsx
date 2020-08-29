@@ -57,13 +57,13 @@ export const BoardDetail = ({
               <span className="value">{get(record, 'title')}</span>
             </div>
           </Col>
-          <Col xs={24} sm={24} md={5} lg={5} xl={5}>
+          <Col xs={24} sm={24} md={4} lg={4} xl={4}>
             <div className="title-item">
               <span className="label">작성자</span>
               <span className="value">{get(record, 'created_by.fullname')}</span>
             </div>
           </Col>
-          <Col xs={24} sm={24} md={7} lg={7} xl={7}>
+          <Col xs={24} sm={24} md={8} lg={8} xl={8}>
             <div className="title-item">
               <span className="label">작성일자</span>
               <span className="value">

@@ -36,15 +36,12 @@ export const HeaderRight = ({onClick}: TRightMenuProps) => {
     </Menu>
   );
   const intranetMenu = (
-    <Menu>
+    <Menu style={{minWidth: '100px'}}>
       <Menu.Item key={ERoute.IntranetShare}>
         <Link to={ERoute.IntranetShare}>{getMenuTitle(ERoute.IntranetShare)[1]}</Link>
       </Menu.Item>
       <Menu.Item key={ERoute.IntranetDrive}>
         <Link to={ERoute.IntranetDrive}>{getMenuTitle(ERoute.IntranetDrive)[1]}</Link>
-      </Menu.Item>
-      <Menu.Item key={ERoute.IntranetGeneral}>
-        <Link to={ERoute.IntranetGeneral}>{getMenuTitle(ERoute.IntranetGeneral)[1]}</Link>
       </Menu.Item>
     </Menu>
   );

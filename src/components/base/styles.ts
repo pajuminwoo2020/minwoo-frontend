@@ -203,8 +203,8 @@ export const MainWrapper = styled.div`
   .background-heart {
     background-image: url(${HeartSource});
     background-repeat: no-repeat;
-    background-size: 30px;
-    background-position: 80% 70%;
+    background-size: 20px;
+    background-position: 80% 75%;
     position: relative;
   }
   .background-heart::before {
@@ -216,8 +216,9 @@ export const MainWrapper = styled.div`
     padding: 10px 20px;
     width: 100%;
     max-width: 300px;
-	height: 160px;
+	height: 130px;
     margin: auto;
+    margin-top: 30px;
     border-radius: 5px;
     box-shadow: 0 2px 5px #000;
     display: block;

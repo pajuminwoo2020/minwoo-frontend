@@ -12539,6 +12539,14 @@ react-draggable@^4.0.3:
     classnames "^2.2.5"
     prop-types "^15.6.0"
 
+react-dropdown-date@^0.0.18:
+  version "0.0.18"
+  resolved "https://registry.yarnpkg.com/react-dropdown-date/-/react-dropdown-date-0.0.18.tgz#5db366ccb127bd6ff00b4dea84844677d628fc51"
+  integrity sha512-X6t6hIRVwbmvhsFH+Wafm/nyMBo58xAJgIM6hyYveG98ipaQdSgAQP+pvzr8xcGZfLkkhRAI9Wt2HVjkbZjFzw==
+  dependencies:
+    prop-types "^15.6.1"
+    react "^16.3.1"
+
 react-element-to-jsx-string@^14.1.0:
   version "14.3.1"
   resolved "https://registry.yarnpkg.com/react-element-to-jsx-string/-/react-element-to-jsx-string-14.3.1.tgz#a08fa6e46eb76061aca7eabc2e70f433583cb203"
@@ -12784,7 +12792,7 @@ react-transition-group@^4.3.0:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react@^16.13.0, react@^16.4.2, react@^16.8.3:
+react@^16.13.0, react@^16.3.1, react@^16.4.2, react@^16.8.3:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react/-/react-16.13.1.tgz#2e818822f1a9743122c063d6410d85c1e3afe48e"
   integrity sha512-YMZQQq32xHLX0bz5Mnibv1/LHb3Sqzngu7xstSM+vrkE5Kzr9xE0yMByK5kMoTK30YVJE61WfbxIFFvfeDKT1w==

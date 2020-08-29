@@ -226,6 +226,19 @@ const GlobalStyles = createGlobalStyle`
       display: none;
     }
   }
+
+  .date-picker-dropdown {
+    height: 32px;
+    width: 70px;
+    font-size: 14px;
+    padding: 0px 5px;
+    background: #fff;
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+  }
+  .date-picker-dropdown:hover {
+    cursor: pointer;
+  }
 `;
 
 export const TableWrapper = styled.div`
@@ -262,7 +275,7 @@ export const TableWrapper = styled.div`
     }
   }
   .column-created-at {
-    width: 100px;
+    width: 120px;
 
     @media screen and ${device.small_tablet} {
       display: none;
