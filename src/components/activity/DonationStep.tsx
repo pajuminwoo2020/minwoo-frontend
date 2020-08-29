@@ -496,7 +496,7 @@ const DonationStep = () => {
             </Input.Group>
           </Form.Item>
         )}
-        {form.getFieldValue('donation_type') == EDonationType.Regular && (
+        {get(data, 'donation_type') == EDonationType.Regular && (
           <Form.Item name="motivation"
             label={<Text>가입동기</Text>}
             wrapperCol={{span: 16}}
@@ -520,7 +520,7 @@ const DonationStep = () => {
         <Divider/>
         <br></br>
         <Title level={4} style={{marginBottom: '20px'}}>후원금 납입 방법</Title>
-        {form.getFieldValue('donation_type') == EDonationType.Regular && (
+        {get(data, 'donation_type') == EDonationType.Regular && (
           <Form.Item
             name="payment_method"
             label={<Text>납부방법</Text>}
@@ -611,7 +611,7 @@ const DonationStep = () => {
             </Row>
           </Input.Group>
         </Form.Item>
-        {form.getFieldValue('donation_type') == EDonationType.Regular && (
+        {get(data, 'donation_type') == EDonationType.Regular && (
           <Form.Item
             name="withdrawl_date"
             label={<Text>출금일</Text>}
@@ -620,7 +620,7 @@ const DonationStep = () => {
             <Checkbox defaultChecked disabled>21일</Checkbox>
           </Form.Item>
         )}
-        {form.getFieldValue('donation_type') == EDonationType.Regular && (
+        {get(data, 'donation_type') == EDonationType.Regular && (
           <Form.Item
             label={<Text>CMS 약관</Text>}
             name="agree_cms"
