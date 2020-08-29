@@ -37,7 +37,6 @@ import Gallery, {GalleryDetail} from 'components/bulletin/Gallery';
 import Drive, {DriveDetail} from 'components/bulletin/Drive';
 import IntranetShare, {IntranetShareDetail} from 'components/intranet/IntranetShare';
 import IntranetDrive, {IntranetDriveDetail} from 'components/intranet/IntranetDrive';
-import IntranetGeneral, {IntranetGeneralDetail} from 'components/intranet/IntranetGeneral';
 import Activate from 'components/user/Activate';
 import PasswordUpdate from 'components/user/PasswordUpdate';
 import Core from 'components/base/Core';
@@ -207,12 +206,6 @@ const App = () => {
             </Route>
             <Route path={`${ERoute.IntranetDrive}/:operation`}>
               <BaseTemplate><IntranetDriveDetail/></BaseTemplate>
-            </Route>
-            <Route exact path={ERoute.IntranetGeneral}>
-              <BaseTemplate><IntranetGeneral/></BaseTemplate>
-            </Route>
-            <Route path={`${ERoute.IntranetGeneral}/:operation`}>
-              <BaseTemplate><IntranetGeneralDetail/></BaseTemplate>
             </Route>
             <Route exact path={ERoute.Privacy}>
               <BaseTemplate><Privacy/></BaseTemplate>

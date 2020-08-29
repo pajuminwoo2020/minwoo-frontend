@@ -2,23 +2,31 @@ import React, {useState, useRef} from 'react';
 import {FormattedNumber} from 'react-intl';
 import {Link} from 'react-router-dom';
 import {FormInstance} from 'rc-field-form';
-import {PhoneOutlined, EditOutlined} from '@ant-design/icons';
-import {Divider, Steps, Button, Form, Select, Radio, Typography, Input, Row, Col, Descriptions, Checkbox} from 'antd';
+import {PhoneOutlined, EditOutlined, DownloadOutlined} from '@ant-design/icons';
+import {Divider, Steps, Button, Form, Select, Radio, Typography, Input, Row, Col, Descriptions, Checkbox, InputNumber} from 'antd';
+import {RadioChangeEvent} from 'antd/lib/radio'
 import {shallowEqual, useSelector} from 'react-redux';
 import {RootState} from 'modules';
 import {get} from 'lodash';
 import styled from 'styled-components';
 import SignatureCanvas from 'react-signature-canvas';
 import {ERoute} from 'enums/route.enum';
-import {EDonationPrice, EDonationType} from 'enums/information.enum';
+import {EDonationPrice, EDonationType, EMotivation} from 'enums/information.enum';
 import {PrimaryColor, SignatureWrapper} from 'GlobalStyles';
 import {FormFinishInfo} from 'rc-field-form/lib/FormContext';
-import {dateRegExp} from 'libs/validators';
 import {dataURItoBlob} from 'libs/utils';
 import AddressModal from 'components/modal/AddressModal';
+import AgreeCMSModal from 'components/modal/AgreeCMSModal';
+import AgreeUniqueModal from 'components/modal/AgreeUniqueModal';
+import AgreePersonalModal from 'components/modal/AgreePersonalModal';
+import AgreeOfferModal from 'components/modal/AgreeOfferModal';
 import {TDonation} from 'modules/information/types';
 import {createDonation} from 'libs/api/information';
 import {showNotification} from 'components/base/Common';
+import {commifyFormatter, commifyParser} from 'libs/validators';
+import DropdownDatePicker from 'components/base/DropdownDatePicker';
+import PhoneInput from 'components/base/PhoneInput';
+import Configs from 'config';
 
 const {Step} = Steps;
 const {Text, Title} = Typography;
@@ -89,9 +97,15 @@ const StepWrapper = styled.div`
 const DonationStep = () => {
   const [current, setCurrent] = useState(0);
   const [addressModal, setAddressModal] = useState(false);
+  const [agreeCMSModal, setAgreeCMSModal] = useState(false);
+  const [agreeUniqueModal, setAgreeUniqueModal] = useState(false);
+  const [agreePersonalModal, setAgreePersonalModal] = useState(false);
+  const [agreeOfferModal, setAgreeOfferModal] = useState(false);
   const [form] = Form.useForm();
   const [data, setData] = useState<TDonation>();
+  const [downloadUrl, setDownloadUrl] = useState('');
   const signaturePad = useRef<any>();
+  const information = useSelector((state: RootState) => state.information.info, shallowEqual);
   const steps = [
     {
       title: '후원 종류 선택',
@@ -136,20 +150,36 @@ const DonationStep = () => {
 
   function SelectType() {
     const [showInput, setShowInput] = useState(false);
+    const donationRegular = '정기후원';
+    const donationTemp = '일시후원';
+    const [donationType, setDonationType] = useState(donationRegular);
+    const [price, setPrice] = useState('0');
 
-    function handleChangePrice(value: string) {
-      if (value === 'ETC') {
+    function handleChangePrice(value: number) {
+      if (value === 0) {
         setShowInput(true);
-        form.setFields([
-          {name: 'price', value: ''}
-        ]);
+        form.setFields([{name: 'price', value: ''}]);
+        setPrice('0');
       }
       else {
         setShowInput(false);
-        form.setFields([
-          {name: 'price', value: value}
-        ]);
+        form.setFields([{name: 'price', value: value}]);
+        setPrice(commifyFormatter(String(value)));
       }
+    }
+
+    function handleDonationType(e: RadioChangeEvent) {
+      if (e.target.value === donationRegular) {
+        setDonationType(donationRegular);
+      } else if (e.target.value === donationTemp) {
+        setDonationType(donationTemp);
+      }
+      form.setFields([{name: 'select_price', value: ''}, {name: 'price', value: ''}]);
+      setPrice('0');
+    }
+
+    function handleChangeInput(value: string | number | undefined) {
+      setPrice(commifyFormatter(String(value)));
     }
 
     return (
@@ -166,7 +196,7 @@ const DonationStep = () => {
           extra="원하시는 후원 종류를 선택해주세요"
           rules={[{required: true, message: '후원종류를 선택해주세요'}]}
         >
-          <Radio.Group>
+          <Radio.Group onChange={handleDonationType}>
             <Radio.Button value={EDonationType.Regular}>정기후원</Radio.Button>
             <Radio.Button value={EDonationType.Temporary}>일시후원</Radio.Button>
           </Radio.Group>
@@ -178,13 +208,30 @@ const DonationStep = () => {
           <Input.Group>
             <Row gutter={[16, 0]}>
               <Col span={12}>
-                <Select onChange={handleChangePrice} style={{width: '100%'}}>
-                  <Select.Option value={EDonationPrice.Month12000}>(월) 1만2천원</Select.Option>
-                  <Select.Option value={EDonationPrice.Month20000}>(월) 2만원</Select.Option>
-                  <Select.Option value={EDonationPrice.Month30000}>(월) 3만원</Select.Option>
-                  <Select.Option value={EDonationPrice.Year120000}>(년) 12만원</Select.Option>
-                  <Select.Option value="ETC">직접입력</Select.Option>
-                </Select>
+                <Form.Item
+                  name={'select_price'}
+                  noStyle
+                >
+                  {donationType == donationRegular ? (
+                    <Select onChange={handleChangePrice} style={{width: '100%'}}>
+                      <Select.Option value={EDonationPrice.KRW12000}>1만2천원</Select.Option>
+                      <Select.Option value={EDonationPrice.KRW20000}>2만원</Select.Option>
+                      <Select.Option value={EDonationPrice.KRW30000}>3만원</Select.Option>
+                      <Select.Option value={EDonationPrice.KRW120000}>12만원(연회비)</Select.Option>
+                      <Select.Option value={EDonationPrice.KRW1000000}>100만원(평생회원)</Select.Option>
+                      <Select.Option value={0}>직접입력</Select.Option>
+                    </Select>
+                  ) : (
+                    <Select onChange={handleChangePrice} style={{width: '100%'}}>
+                      <Select.Option value={10000}>1만원</Select.Option>
+                      <Select.Option value={30000}>3만원</Select.Option>
+                      <Select.Option value={50000}>5만원</Select.Option>
+                      <Select.Option value={100000}>10만원</Select.Option>
+                      <Select.Option value={300000}>30만원</Select.Option>
+                      <Select.Option value={0}>직접입력</Select.Option>
+                    </Select>
+                  )}
+                </Form.Item>
               </Col>
               <Col span={12}>
                 <Form.Item
@@ -192,12 +239,23 @@ const DonationStep = () => {
                   noStyle
                   rules={[{required: true, message: '후원금액을 입력해주세요'}]}
                 >
-                  {showInput && <Input placeholder="예시: (월) 2만3천원" style={{width: '100%'}}/>}
+                  {showInput && <InputNumber
+                    onChange={handleChangeInput}
+                    style={{width: '100%'}}
+                    formatter={commifyFormatter}
+                    parser={commifyParser}
+                  />}
                 </Form.Item>
               </Col>
             </Row>
           </Input.Group>
         </Form.Item>
+        <Divider/>
+        <div style={{float: 'right', marginBottom: '16px'}}>
+          <Text style={{fontSize: '25px'}}>
+            후원금액 합계 <strong>{price}</strong>원
+          </Text>
+        </div>
         <Form.Item shouldUpdate={true} noStyle={true}>
           <Divider/>
           <div className="steps-action">
@@ -210,6 +268,7 @@ const DonationStep = () => {
 
   function UserInformation() {
     const [showRegistrationInput, setShowRegistrationInput] = useState(false);
+    const [showBirthdayInput, setShowBirthdayInput] = useState(true);
 
     function handleChangeEmail(val: string) {
       form.setFields([{name: ['email', 'domain'], value: val}]);
@@ -231,9 +290,9 @@ const DonationStep = () => {
     function handleCheckAll(e: any) {
       if (e.target.checked) {
         form.setFields([
-          {name: 'agree_unique', value: 'true'},
-          {name: 'agree_personal', value: 'true'},
-          {name: 'agree_offer', value: 'true'},
+          {name: 'agree_unique', value: 'true', validating: true, errors: []},
+          {name: 'agree_personal', value: 'true', validating: true, errors: []},
+          {name: 'agree_offer', value: 'true', validating: true, errors: []},
         ]);
       }
     }
@@ -247,6 +306,15 @@ const DonationStep = () => {
       }
     }
 
+    function handleCheckHolderType(e: any) {
+      if (e.target.value === "개인") {
+        setShowBirthdayInput(true);
+      }
+      else {
+        setShowBirthdayInput(false);
+      }
+    }
+
     return (
       <Form
         name="2"
@@ -255,39 +323,30 @@ const DonationStep = () => {
         wrapperCol={{span: 12}}
         layout="horizontal"
       >
-        <Title level={4} style={{marginBottom: '20px'}}>신청인 정보</Title>
+        <Title level={4} style={{marginBottom: '20px'}}>후원자 정보</Title>
         <Form.Item
           name="applicant_name"
           label={<Text>성명</Text>}
           rules={[{required: true, message: '성명을 입력해주세요'}]}
-          extra="신청인 성명"
+          extra="후원자 성명"
         >
           <Input style={{maxWidth:'200px'}}/>
         </Form.Item>
         <Form.Item
-          name="applicant_birthday"
           label={<Text>생년월일</Text>}
-          rules={[
-            {
-              required: true,
-              message: '생년월일을 입력해주세요'
-            },
-            {
-              pattern: dateRegExp,
-              message: '생년월일을 정확히 입력해주세요'
-            }
-          ]}
-          extra="신청인 생년월일"
+          extra="후원자 생년월일"
+          name="applicant_birthday"
+          rules={[{required: true, message: '생년월일을 선택해주세요'}]}
         >
-          <Input style={{maxWidth:'200px'}} placeholder="생년월일 앞 6자리"/>
+          <DropdownDatePicker form={form} name="applicant_birthday"/>
         </Form.Item>
         <Form.Item
           name="applicant_phone"
-          extra="연락 가능한 정확한 전화번호를 입력해주세요."
-          label={<Text>전화번호</Text>}
+          extra="연락 가능한 정확한 번호를 입력해주세요."
+          label={<Text>휴대전화번호</Text>}
           rules={[{required: true, message: '전화번호를 입력해주세요'}]}
         >
-          <Input style={{maxWidth:'200px'}} placeholder="010-1234-5678"/>
+          <PhoneInput form={form} name="applicant_phone"/>
         </Form.Item>
         <Form.Item
           name="email"
@@ -371,8 +430,159 @@ const DonationStep = () => {
             </Form.Item>
           </Input.Group>
         </Form.Item>
+        <br/>
+        <Form.Item
+          name="agree_newsletter"
+          label={<Text>소식지 수령여부</Text>}
+          rules={[{required: true, message: '소식지 수령여부를 선택해주세요'}]}
+          labelCol={{span: 4}}
+        >
+          <Radio.Group>
+            <Radio value={true}>수령</Radio>
+            <Radio value={false}>미 수령</Radio>
+          </Radio.Group>
+        </Form.Item>
+        <Form.Item
+          name="agree_email"
+          label={<Text>이메일 수신여부</Text>}
+          rules={[{required: true, message: '이메일 수신여부를 선택해주세요'}]}
+          labelCol={{span: 4}}
+        >
+          <Radio.Group>
+            <Radio value={true}>수신</Radio>
+            <Radio value={false}>거부</Radio>
+          </Radio.Group>
+        </Form.Item>
+        <Form.Item
+          name="agree_receipt"
+          label={<Text>기부금영수증신청</Text>}
+          rules={[{required: true, message: '영수증 신청여부를 선택해주세요'}]}
+          labelCol={{span: 4}}
+        >
+          <Radio.Group onChange={handleCheckAgreeReceipt}>
+            <Radio value={true}>발급</Radio>
+            <Radio value={false}>미 발급</Radio>
+          </Radio.Group>
+        </Form.Item>
+        {showRegistrationInput && (
+          <Form.Item
+            name={'resident_registration_number'}
+            label={<Text>주민등록번호</Text>}
+            extra="소득세법 제160조에 따라 영수증 발급을 위해 주민등록번호를 수집하고 있습니다"
+            labelCol={{span: 4}}
+          >
+            <Input.Group>
+              <Row gutter={[16, 0]}>
+                <Col span={8}>
+                  <Form.Item
+                    name={['resident_registration_number', 'first']}
+                    noStyle
+                    rules={[{required: true, message: '주민등록번호 앞자리를 입력해주세요'}]}
+                  >
+                    <Input maxLength={6} style={{width: '100%'}}/>
+                  </Form.Item>
+                </Col>
+                <span style={{fontWeight: 'bold', fontSize: '16px'}}>-</span>
+                <Col span={8}>
+                  <Form.Item
+                    name={['resident_registration_number', 'second']}
+                    noStyle
+                    rules={[{required: true, message: '주민등록번호 뒷자리를 입력해주세요'}]}
+                  >
+                    <Input.Password maxLength={7} type="password" style={{width: '100%'}}/>
+                  </Form.Item>
+                </Col>
+              </Row>
+            </Input.Group>
+          </Form.Item>
+        )}
+        {form.getFieldValue('donation_type') == EDonationType.Regular && (
+          <Form.Item name="motivation"
+            label={<Text>가입동기</Text>}
+            wrapperCol={{span: 16}}
+            labelCol={{span: 4}}
+          >
+            <Radio.Group>
+              <Row>
+                <Col xs={24} sm={24} md={24} lg={8} xl={8}><Radio value={EMotivation.SNS}>{EMotivation.SNS}</Radio></Col>
+                <Col xs={24} sm={24} md={24} lg={8} xl={8}><Radio value={EMotivation.Suggestion}>{EMotivation.Suggestion}</Radio></Col>
+                <Col xs={24} sm={24} md={24} lg={8} xl={8}><Radio value={EMotivation.Press}>{EMotivation.Press}</Radio></Col>
+                <Col xs={24} sm={24} md={24} lg={8} xl={8}><Radio value={EMotivation.Activity}>{EMotivation.Activity}</Radio></Col>
+                <Col xs={24} sm={24} md={24} lg={8} xl={8}><Radio value={EMotivation.Campaign}>{EMotivation.Campaign}</Radio></Col>
+                <Col xs={24} sm={24} md={24} lg={8} xl={8}><Radio value={EMotivation.Plan}>{EMotivation.Plan}</Radio></Col>
+                <Col xs={24} sm={24} md={24} lg={8} xl={8}><Radio value={EMotivation.Consulting}>{EMotivation.Consulting}</Radio></Col>
+                <Col xs={24} sm={24} md={24} lg={8} xl={8}><Radio value={EMotivation.Education}>{EMotivation.Education}</Radio></Col>
+                <Col xs={24} sm={24} md={24} lg={8} xl={8}><Radio value={EMotivation.ETC}>{EMotivation.ETC}</Radio></Col>
+              </Row>
+            </Radio.Group>
+          </Form.Item>
+        )}
         <Divider/>
-        <Title level={4} style={{marginBottom: '20px'}}>기부 정보</Title>
+        <br></br>
+        <Title level={4} style={{marginBottom: '20px'}}>후원금 납입 방법</Title>
+        {form.getFieldValue('donation_type') == EDonationType.Regular && (
+          <Form.Item
+            name="payment_method"
+            label={<Text>납부방법</Text>}
+            extra="CMS(Cash Management Service)는 금융결제원을 통해 후원금 자동이체를 의뢰하는 방법으로, 약정하신 금액을 송금 수수료 없이 편리하게 후원하실 수 있습니다."
+          >
+            <Checkbox defaultChecked disabled>자동이체(CMS)</Checkbox>
+          </Form.Item>
+        )}
+        <Form.Item label={<Text>금액</Text>}>
+          <Input style={{maxWidth:'200px'}} value={commifyFormatter(String(get(data, 'price', 0)))} disabled/>
+          <Text>&nbsp;원</Text>
+        </Form.Item>
+        <Form.Item
+          name="account_holder_type"
+          label={<Text>예금주구분</Text>}
+        >
+          <Radio.Group defaultValue="개인" onChange={handleCheckHolderType}>
+            <Radio value="개인">개인</Radio>
+            <Radio value="기업">기업/단체</Radio>
+          </Radio.Group>
+        </Form.Item>
+        <Form.Item label={<Text className="item-required">예금주</Text>} style={{marginBottom: '0px'}}>
+          <Input.Group>
+            <Row>
+              <Form.Item
+                name="account_holder_name"
+                rules={[{required: true, message: '성명을 입력해주세요'}]}
+                extra="예금주 성명"
+              >
+                <Input style={{maxWidth:'200px'}}/>
+              </Form.Item>
+              <Checkbox onChange={handleCheckSame} style={{ marginLeft: '10px'}}>후원자와 동일</Checkbox>
+            </Row>
+          </Input.Group>
+        </Form.Item>
+        {showBirthdayInput ? (
+          <Form.Item
+            name="account_holder_birthday"
+            label={<Text>생년월일</Text>}
+            rules={[{required: true, message: '생년월일을 선택해주세요'}]}
+            extra="개인사업자는 대표자 생년월일, 법인사업자는 사업자등록번호 10자리"
+          >
+            <DropdownDatePicker form={form} name="account_holder_birthday"/>
+          </Form.Item>
+        ) : (
+          <Form.Item
+            name="account_holder_birthday"
+            label={<Text>사업자등록번호</Text>}
+            rules={[{required: true, message: '사업자등록번호를 입력해주세요'}]}
+            extra="개인사업자는 대표자 생년월일, 법인사업자는 사업자등록번호 10자리"
+          >
+            <Input style={{maxWidth:'200px'}}/>
+          </Form.Item>
+        )}
+        <Form.Item
+          name="account_holder_phone"
+          label={<Text>예금주<br/>휴대전화번호</Text>}
+          rules={[{required: true, message: '전화번호를 입력해주세요'}]}
+          extra="연락 가능한 정확한 번호를 입력해주세요."
+        >
+          <PhoneInput form={form} name="account_holder_phone"/>
+        </Form.Item>
         <Form.Item
           label={<Text className="item-required">출금계좌</Text>}
           name="bank"
@@ -401,102 +611,68 @@ const DonationStep = () => {
             </Row>
           </Input.Group>
         </Form.Item>
-        <Form.Item label={<Text className="item-required">예금주</Text>} style={{marginBottom: '0px'}}>
-          <Input.Group>
-            <Row>
-              <Form.Item
-                name="account_holder_name"
-                rules={[{required: true, message: '성명을 입력해주세요'}]}
-                extra="예금주 성명"
-              >
-                <Input style={{maxWidth:'200px'}}/>
-              </Form.Item>
-              <Checkbox onChange={handleCheckSame} style={{ marginLeft: '10px'}}>신청인과 동일</Checkbox>
-            </Row>
-          </Input.Group>
-        </Form.Item>
-        <Form.Item
-          name="account_holder_birthday"
-          label={<Text>생년월일</Text>}
-          rules={[
-            {
-              required: true,
-              message: '생년월일을 입력해주세요'
-            },
-            {
-              pattern: dateRegExp,
-              message: '생년월일을 정확히 입력해주세요'
-            }
-          ]}
-          extra="개인사업자는 대표자 생년월일, 법인사업자는 사업자등록번호 10자리"
-        >
-          <Input style={{maxWidth:'200px'}} placeholder="예금주 생년월일 앞 6자리"/>
-        </Form.Item>
-        <Form.Item
-          name="account_holder_phone"
-          label={<Text>전화번호</Text>}
-          rules={[{required: true, message: '전화번호를 입력해주세요'}]}
-        >
-          <Input style={{maxWidth:'200px'}} placeholder="010-1234-5678"/>
-        </Form.Item>
-        <Form.Item
-          name="withdrawl_date"
-          label={<Text>출금일</Text>}
-          rules={[{required: true, message: '출금일을 선택해주세요'}]}
-          extra="미 출금 시 28일에 2차 출금 됩니다"
-        >
-          <Checkbox.Group>
-            <Checkbox value="21">21일</Checkbox>
-          </Checkbox.Group>
-        </Form.Item>
-        <Divider/>
-        <Title level={4} style={{marginBottom: '20px'}}>기부금 영수증</Title>
-        <Form.Item
-          name="agree_receipt"
-          label={<Text>신청</Text>}
-          rules={[{required: true, message: '영수증 신청여부를 선택해주세요'}]}
-          labelCol={{span: 4}}
-        >
-          <Radio.Group onChange={handleCheckAgreeReceipt}>
-            <Radio value={true}>발급</Radio>
-            <Radio value={false}>미 발급</Radio>
-          </Radio.Group>
-        </Form.Item>
-        {showRegistrationInput && (
+        {form.getFieldValue('donation_type') == EDonationType.Regular && (
           <Form.Item
-            name={'resident_registration_number'}
-            label={<Text>주민등록번호</Text>}
-            labelCol={{span: 4}}
-            rules={[{required: true, message: '주민등록번호를 입력해주세요'}]}
-            extra="소득세법 제160조에 따라 영수증 발급을 위해 주민등록번호를 수집하고 있습니다"
+            name="withdrawl_date"
+            label={<Text>출금일</Text>}
+            extra="미 출금 시 28일에 2차 출금 됩니다"
           >
-            <Input placeholder="주민등록번호 13자리" style={{width: '100%'}}/>
+            <Checkbox defaultChecked disabled>21일</Checkbox>
           </Form.Item>
         )}
+        {form.getFieldValue('donation_type') == EDonationType.Regular && (
+          <Form.Item
+            label={<Text>CMS 약관</Text>}
+            name="agree_cms"
+            rules={[{required: true, message: '동의사항에 체크해주세요'}]}
+            extra={<span>휴대전화번호 형식의 평생계좌는 CMS자동이체신청이 불가합니다.<br/>회비와 후원금은 소득공제를 받을 수 있습니다.<br/>매월 21일 출금됩니다. (2차출금: 28일, 3차 출금: 다음달 11일) 미납된 회비는 다음 출금일에 인출되며 최대 3달치까지 인출됩니다.<br/>만 14세 미만인 경우 온라인 회원가입이 불가합니다. {get(information, 'membership_management_phone')}(회원팀), {get(information, 'membership_management_email')}로 별도의 연락을 주시길 바랍니다.</span>}
+          >
+            <Checkbox.Group>
+              <Checkbox value="true">CMS 약관에 동의합니다</Checkbox>
+              <Button size="small" onClick={()=>{setAgreeCMSModal(true);}}>내용보기</Button>
+            </Checkbox.Group>
+          </Form.Item>
+        )}
+        <Divider/>
         <br></br>
-        <Form.Item label={<Text>동의사항</Text>} labelCol={{span: 4}}>
-          <Input.Group>
-            <Form.Item name="agree_all">
-              <Checkbox.Group>
-                <Checkbox onChange={handleCheckAll} value="true"><strong>전체 동의하기</strong></Checkbox>
-              </Checkbox.Group>
-            </Form.Item>
-            <Form.Item name="agree_unique">
-              <Checkbox.Group>
-                <Checkbox value="true">고유 식별 정보수집 및 이용 동의</Checkbox>
-              </Checkbox.Group>
-            </Form.Item>
-            <Form.Item name="agree_personal">
-              <Checkbox.Group>
-                <Checkbox value="true">개인정보 수집 및 이용 약관 동의</Checkbox>
-              </Checkbox.Group>
-            </Form.Item>
-            <Form.Item name="agree_offer">
-              <Checkbox.Group>
-                <Checkbox value="true">개인정보 제3자 제공 동의</Checkbox>
-              </Checkbox.Group>
-            </Form.Item>
-          </Input.Group>
+        <Title level={4} style={{marginBottom: '20px'}}>약관동의</Title>
+        <Form.Item
+          name="agree_unique"
+          rules={[{required: true, message: '동의사항에 체크해주세요'}]}
+          labelCol={{span: 6}}
+          label={<Text>파주여성민우회 이용 약관</Text>}
+        >
+          <Checkbox.Group>
+            <Checkbox value="true">이용 약관에 동의합니다.</Checkbox>
+            <Button size="small" onClick={()=>{setAgreeUniqueModal(true);}}>내용보기</Button>
+          </Checkbox.Group>
+        </Form.Item>
+        <Form.Item
+          name="agree_personal"
+          rules={[{required: true, message: '동의사항에 체크해주세요'}]}
+          label={<Text>개인정보 수집 및 이용 약관</Text>}
+          labelCol={{span: 6}}
+        >
+          <Checkbox.Group>
+            <Checkbox value="true">개인정보 수집 및 이용 약관에 동의합니다.</Checkbox>
+            <Button size="small" onClick={()=>{setAgreePersonalModal(true);}}>내용보기</Button>
+          </Checkbox.Group>
+        </Form.Item>
+        <Form.Item
+          name="agree_offer"
+          rules={[{required: true, message: '동의사항에 체크해주세요'}]}
+          label={<Text>개인정보 제3자 제공 동의 약관</Text>}
+          labelCol={{span: 6}}
+        >
+          <Checkbox.Group>
+            <Checkbox value="true">개인정보 제3자 제공에 동의합니다.</Checkbox>
+            <Button size="small" onClick={()=>{setAgreeOfferModal(true);}}>내용보기</Button>
+          </Checkbox.Group>
+        </Form.Item>
+        <Form.Item label=" " name="agree_all" labelCol={{span: 6}}>
+          <Checkbox.Group>
+            <Checkbox onChange={handleCheckAll} value="true"><strong>전체 동의하기</strong></Checkbox>
+          </Checkbox.Group>
         </Form.Item>
         <Form.Item shouldUpdate={true} noStyle={true}>
           <Divider/>
@@ -519,15 +695,15 @@ const DonationStep = () => {
       >
         <Descriptions column={{xs:1, sm:1, md:2, lg:2, xl:2}}  bordered>
           <Descriptions.Item label="후원종류">{get(data, 'donation_type')}</Descriptions.Item>
-          <Descriptions.Item label="후원금액">{get(data, 'price', '')}</Descriptions.Item>
-          <Descriptions.Item label="신청인 성명">{get(data, 'applicant_name')}</Descriptions.Item>
-          <Descriptions.Item label="신청인 생년월일">{get(data, 'applicant_birthday')}</Descriptions.Item>
-          <Descriptions.Item label="신청인 전화번호">{get(data, 'applicant_phone')}</Descriptions.Item>
+          <Descriptions.Item label="후원금액">{commifyFormatter(String(get(data, 'price', '')))}원</Descriptions.Item>
+          <Descriptions.Item label="후원자 성명">{get(data, 'applicant_name')}</Descriptions.Item>
+          <Descriptions.Item label="후원자 생년월일">{get(data, 'applicant_birthday')}</Descriptions.Item>
+          <Descriptions.Item label="후원자 휴대전화번호">{get(data, 'applicant_phone')}</Descriptions.Item>
           <Descriptions.Item label="주민등록번호">{get(data, 'resident_registration_number', '')}</Descriptions.Item>
           <Descriptions.Item label="이메일">{get(data, 'email')}</Descriptions.Item>
           <Descriptions.Item label="예금주">{get(data, 'account_holder_name')}</Descriptions.Item>
           <Descriptions.Item label="예금주 생년월일">{get(data, 'account_holder_birthday')}</Descriptions.Item>
-          <Descriptions.Item label="예금주 전화번호">{get(data, 'account_holder_phone')}</Descriptions.Item>
+          <Descriptions.Item label="예금주 휴대전화번호">{get(data, 'account_holder_phone')}</Descriptions.Item>
           <Descriptions.Item span={2} label="계좌번호">{`${get(data, 'bank_name', '')} ${get(data, 'account_number', '')}`}</Descriptions.Item>
           <Descriptions.Item span={2} label="주소">{get(data, 'address')}</Descriptions.Item>
         </Descriptions>
@@ -570,11 +746,14 @@ const DonationStep = () => {
   }
 
   function Completed() {
-    const information = useSelector((state: RootState) => state.information.info, shallowEqual);
-
     return (
-      <div style={{textAlign: 'center', marginTop: '70px'}}>
-        <p><Text style={{fontSize: '30px'}}>후원신청 감사합니다.</Text></p>
+      <div style={{textAlign: 'left', marginTop: '70px'}}>
+        <p>
+          <a href={`${Configs.API_HOST}${downloadUrl}`}>
+            <Text style={{fontSize: '25px'}}><strong>신청서 다운받기&nbsp;<DownloadOutlined/></strong></Text>
+          </a>
+        </p>
+        <p><Text style={{fontSize: '25px'}}>후원신청 감사합니다.</Text></p>
         <p><Text style={{fontSize: '25px'}}>빠른 시일 내에 연락드리도록 하겠습니다.</Text></p>
         <p><Text>(<PhoneOutlined/>)&nbsp;{get(information, 'phone')}</Text></p>
         <Divider/>
@@ -603,6 +782,7 @@ const DonationStep = () => {
           ...form.getFieldsValue(),
         } as TDonation);
         onClickNext();
+        form.resetFields();
         break;
       case '2':
         setData({
@@ -615,6 +795,9 @@ const DonationStep = () => {
           agree_unique: (form.getFieldValue('agree_unique') == "true" ? true : false),
           agree_personal: (form.getFieldValue('agree_personal') == "true" ? true : false),
           agree_offer: (form.getFieldValue('agree_offer') == "true" ? true : false),
+          resident_registration_number: form.getFieldValue(['resident_registration_number', 'first'])
+          ? `${form.getFieldValue(['resident_registration_number', 'first'])}-${form.getFieldValue(['resident_registration_number', 'second'])}`
+          : '',
         } as TDonation);
         onClickNext();
         break;
@@ -630,7 +813,8 @@ const DonationStep = () => {
           formData.append('image_signature', imageDataBlob, 'signature.png');
           formData.append('memo', form.getFieldValue('memo') ? form.getFieldValue('memo') : '후원합니다~!');
 
-          await createDonation(formData);
+          const response = await createDonation(formData);
+          setDownloadUrl(get(response, 'data.absolute_url', ''));
           showNotification('success', '후원신청이 완료되었습니다');
           onClickNext();
         } catch (e) {
@@ -657,6 +841,10 @@ const DonationStep = () => {
         ))}
       </Steps>
       <AddressModal visible={addressModal} setVisible={setAddressModal} onFinish={onFinish}/>
+      <AgreeCMSModal visible={agreeCMSModal} setVisible={setAgreeCMSModal}/>
+      <AgreeUniqueModal visible={agreeUniqueModal} setVisible={setAgreeUniqueModal}/>
+      <AgreePersonalModal visible={agreePersonalModal} setVisible={setAgreePersonalModal}/>
+      <AgreeOfferModal visible={agreeOfferModal} setVisible={setAgreeOfferModal}/>
       <Form.Provider onFormFinish={onFormFinish}>
         <div className="steps-content">{steps[current].content}</div>
       </Form.Provider>

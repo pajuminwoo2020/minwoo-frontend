@@ -101,12 +101,6 @@ export const getCalendars = ({params}: TListRequestParams, cancel?: CancelTokenS
 /**
  * 연혁
  */
-export const getAffiliateHistories = (cancel?: CancelTokenSource) => {
-  return apiClient.get<TInformationHistory>(`/information/affiliate/histories`, {
-    cancelToken: cancel?.token,
-  });
-};
-
 export const getMainHistories = (cancel?: CancelTokenSource) => {
   return apiClient.get<TInformationHistory>(`/information/main/histories`, {
     cancelToken: cancel?.token,

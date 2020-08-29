@@ -69,6 +69,8 @@ export type TDonation = {
 
 export type TDonationPage = {
   introduction: string;
+  benefits: string;
+  payment_method: string;
 };
 
 /**
@@ -108,13 +110,16 @@ export type TSocietyAboutDetail = {
 /**
  * 조직도
  */
-export type TPeople = Array<{
-  position: string;
-  children: Array<{
-    name: string;
-    job: string;
+export type TPeople = {
+  absolute_url: string;
+  contents: Array<{
+    position: string;
+    children: Array<{
+      name: string;
+      job: string;
+    }>;
   }>;
-}>;
+};
 
 /**
  * 민우회 소개

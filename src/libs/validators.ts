@@ -10,7 +10,7 @@ export const commifyFormatter = (value: string | number | undefined) => {
     return '0';
   }
 
-  return replace(`${Number(value)}원`, /\B(?=(\d{3})+(?!\d))/g, ',');
+  return replace(`${Number(value)}`, /\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
 /*
@@ -19,7 +19,7 @@ export const commifyFormatter = (value: string | number | undefined) => {
 export const commifyParser = (value: string | undefined) => {
   value = value ? value : '0';
 
-  return replace(value, /\원\s?|(,*)/g, '');
+  return replace(value, /\$\s?|(,*)/g, '');
 };
 export const dateParser = (value: string | undefined) => {
   if (!value) {

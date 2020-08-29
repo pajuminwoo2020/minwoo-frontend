@@ -30,7 +30,7 @@ const SocietyAbout = () => {
     last: false,
   });
 
-  const [detailsIndex, setDetailsIndex] = useState(1);
+  const [detailsIndex, setDetailsIndex] = useState(0);
 
   function showDetails(param :number) {
     setDetailsIndex(param);

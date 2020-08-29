@@ -1,20 +1,26 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Tabs, Col, Row, Typography} from 'antd';
+import {Tabs, Col, Row, Typography, Divider, Timeline, Skeleton} from 'antd';
 import MinwooIntro from 'assets/minwoo-intro.png'
 import MinwooIntroLogo from 'assets/minwoo-intro-logo.jpg'
 import MinwooFoundingStatement from 'assets/minwoo-founding-statement.png'
 import {PrimaryColor} from 'GlobalStyles';
 import {TAbout} from 'modules/information';
-import {getAbout} from 'libs/api/information';
+import {getAbout, getMainHistories} from 'libs/api/information';
 import {useDataApi} from 'libs/hooks';
-import {get} from 'lodash';
+import {get, map} from 'lodash';
+import History from 'components/intro/History';
+import People from 'components/intro/People';
+import Location from 'components/intro/Location';
 
 const {TabPane} = Tabs;
 const {Text, Title} = Typography;
 const AboutWrapper = styled.div`
-  margin-top: 37px;
-
+  .content-title {
+    font-size: 30px;
+    text-align: center;
+    margin: 30px;
+  }
   .tabs-content {
     padding: 40px;
     font-size: 16px;
@@ -69,27 +75,26 @@ const AboutWrapper = styled.div`
 `;
 
 const About = () => {
-  const [{data}] = useDataApi<TAbout>(getAbout.bind(null));
+  const [{data, loading}] = useDataApi<TAbout>(getAbout.bind(null));
+
   return (
     <AboutWrapper>
-      <Tabs defaultActiveKey="1" type="card">
+      <Tabs defaultActiveKey="1">
         <TabPane tab="소개" key="1">
           <div className="tabs-content">
             <Row justify="center" gutter={[32, 16]}>
               <Col xs={24} sm={24} md={14} lg={14} xl={14}>
-                <div dangerouslySetInnerHTML={{ __html: `${get(data, 'introduction', '')}`}}/>
+                {loading === true ? (
+                  <Skeleton active title={false} paragraph={{rows: 5}}/>
+                ) : (
+                  <div dangerouslySetInnerHTML={{ __html: `${get(data, 'introduction', '')}`}}/>
+                )}
               </Col>
               <Col xs={24} sm={24} md={10} lg={10} xl={10}>
                 <img src={MinwooIntro} style={{width: '100%', height: 'auto'}}/>
               </Col>
             </Row>
-            <div className="about-subtitle" style={{marginTop: '50px'}}>
-              민우회의 별칭 & 로고
-            </div>
-            <div style={{textAlign: 'center'}}><img src={MinwooIntroLogo} style={{width: '100%'}}/></div>
           </div>
-        </TabPane>
-        <TabPane tab="창립선언문 & 회원다짐" key="2">
           <div className='tabs-content'>
             <div className="about-subtitle">
               회원 다짐
@@ -141,8 +146,13 @@ const About = () => {
               </div>
             </div>
           </div>
+          <div className="tabs-content" id="history">
+            <Divider/>
+            <Title className="content-title">연혁</Title>
+            <History/>
+          </div>
         </TabPane>
-        <TabPane tab="정관 & 운영규정" key="3">
+        <TabPane tab="정관 & 운영규정" key="2">
           <div className='tabs-content'>
             <div className='about-subtitle'>
               정관 & 운영규정
@@ -601,6 +611,16 @@ const About = () => {
               [규정 5: 총회준비위원회 구성방안에 관한 규정] 총회준비위원회 위원은 이사회에서 중앙위원회에 위원 구성을 위임한다.<br />
             </div>
             <div ></div>
+          </div>
+        </TabPane>
+        <TabPane tab="조직도" key="3">
+          <div className="tabs-content">
+            <People/>
+          </div>
+        </TabPane>
+        <TabPane tab="찾아오시는길" key="4">
+          <div className="tabs-content">
+            <Location/>
           </div>
         </TabPane>
       </Tabs>

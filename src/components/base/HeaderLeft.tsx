@@ -51,7 +51,7 @@ const menuNames = [{
     name: '후원하기',
     path: 'donation',
   }, {
-    name: '활동 일정',
+    name: '활동일정',
     path: 'calendar',
   }],
 }, {

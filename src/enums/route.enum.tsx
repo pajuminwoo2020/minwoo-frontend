@@ -28,7 +28,6 @@ export enum ERoute {
   BulletinDrive = '/bulletin/drive',
   IntranetShare = '/intranet/share',
   IntranetDrive = '/intranet/drive',
-  IntranetGeneral = '/intranet/general',
   Privacy = '/privacy',
   Agreement = '/agreement',
 }
