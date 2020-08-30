@@ -1,5 +1,6 @@
 import 'animate.css/animate.min.css';
 import {List, Typography, Button, Spin} from 'antd';
+import {ExpandAltOutlined} from '@ant-design/icons';
 import {get, map, filter} from 'lodash';
 import React, {useState} from 'react';
 import {getSocietyAbouts} from 'libs/api/information';
@@ -11,10 +12,13 @@ import {PrimaryColor} from 'GlobalStyles';
 
 const {Title, Text} = Typography;
 const SocietyAboutWrapper = styled.div`
-  .red {
+  .row0 {
     color: ${PrimaryColor};
   }
-  .blue {
+  .row1 {
+    color: #ffe58f;
+  }
+  .row2 {
     color: #0dbeb5;
   }
   .default-content {
@@ -23,7 +27,7 @@ const SocietyAboutWrapper = styled.div`
     border-radius: 10px;
     padding: 30px 50px;
     margin: 20px 0px;
-    animation: fadeIn 2.5s;
+    animation: fadeIn 1.5s;
   }
 `;
 const SocietyAbout = () => {
@@ -44,11 +48,11 @@ const SocietyAbout = () => {
         <List
           itemLayout='horizontal'
           dataSource={get(data, 'contents', [])}
-          renderItem={item => (
+          renderItem={(item, index) => (
             <>
               {get(item, 'id') == detailsIndex ? (
                 <div className="default-content">
-                  <Title level={2}><Text className="blue">{get(item, 'name')}</Text></Title>
+                  <Title level={2}><Text className={`row${index%3}`}>{get(item, 'name')}</Text></Title>
                   {get(item, 'description')}
                   <Title level={4}><Text>주요활동</Text></Title>
                   <ul>
@@ -73,7 +77,14 @@ const SocietyAbout = () => {
               ) : (
                 <List.Item>
                   <List.Item.Meta
-                    title={<a onClick={(e) => {showDetails(get(item,'id'))}}><Title level={4} className="red">{get(item, 'name')}</Title></a>}
+                    title={
+                      <a onClick={(e) => {showDetails(get(item, 'id'))}}>
+                        <Title level={4} className={`row${index%3}`}>
+                          {get(item, 'name')}
+                          <Text><ExpandAltOutlined style={{marginLeft: '20px', float: 'right'}}/></Text>
+                        </Title>
+                      </a>
+                    }
                     description={
                       <div style={{margin: '10px'}}>
                         {get(item, 'description')}
