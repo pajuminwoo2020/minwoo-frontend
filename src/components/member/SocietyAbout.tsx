@@ -1,3 +1,4 @@
+import 'animate.css/animate.min.css';
 import {List, Typography, Button, Spin} from 'antd';
 import {get, map, filter} from 'lodash';
 import React, {useState} from 'react';
@@ -22,6 +23,7 @@ const SocietyAboutWrapper = styled.div`
     border-radius: 10px;
     padding: 30px 50px;
     margin: 20px 0px;
+    animation: fadeIn 2.5s;
   }
 `;
 const SocietyAbout = () => {
@@ -39,53 +41,53 @@ const SocietyAbout = () => {
   return (
     <SocietyAboutWrapper>
       <Spin tip="로딩중..." spinning={loading}>
-        {map(
-          filter(get(data, 'contents', []), v => get(v, 'id') == detailsIndex),
-          item => (
-            <div className="default-content">
-              <Title level={2}><Text className="blue">{get(item, 'name')}</Text></Title>
-              {get(item, 'description')}
-              <Title level={4}><Text>주요활동</Text></Title>
-              <ul>
-                {map(
-                  get(item, 'main_activity', []),
-                  activity => <li>{activity}</li>
-                )}
-              </ul>
-              <Title level={4}><Text>정기모임</Text></Title>
-              <ul>
-                {map(
-                  get(item, 'schedule', []),
-                  schedule => <li>{schedule}</li>
-                )}
-              </ul>
-              {get(item, 'website') &&
-                <div style={{marginTop: '10px'}}>
-                  <Button type="primary" href={get(item, 'website')}>홈페이지 바로가기</Button>
-                </div>
-              }
-            </div>
-          )
-        )}
         <List
           itemLayout='horizontal'
-          dataSource={filter(get(data, 'contents', []), v => get(v, 'id') != detailsIndex)}
+          dataSource={get(data, 'contents', [])}
           renderItem={item => (
-          <List.Item>
-            <List.Item.Meta
-              title={<a onClick={(e) => {showDetails(get(item,'id'))}}><Title level={4} className="red">{get(item, 'name')}</Title></a>}
-              description={
-                <div style={{margin: '10px'}}>
+            <>
+              {get(item, 'id') == detailsIndex ? (
+                <div className="default-content">
+                  <Title level={2}><Text className="blue">{get(item, 'name')}</Text></Title>
                   {get(item, 'description')}
+                  <Title level={4}><Text>주요활동</Text></Title>
+                  <ul>
+                    {map(
+                      get(item, 'main_activity', []),
+                      activity => <li>{activity}</li>
+                    )}
+                  </ul>
+                  <Title level={4}><Text>정기모임</Text></Title>
+                  <ul>
+                    {map(
+                      get(item, 'schedule', []),
+                      schedule => <li>{schedule}</li>
+                    )}
+                  </ul>
                   {get(item, 'website') &&
                     <div style={{marginTop: '10px'}}>
-                      <Button href={get(item, 'website')}>홈페이지 바로가기</Button>
+                      <Button type="primary" href={get(item, 'website')}>홈페이지 바로가기</Button>
                     </div>
                   }
                 </div>
-              }
-            />
-          </List.Item>
+              ) : (
+                <List.Item>
+                  <List.Item.Meta
+                    title={<a onClick={(e) => {showDetails(get(item,'id'))}}><Title level={4} className="red">{get(item, 'name')}</Title></a>}
+                    description={
+                      <div style={{margin: '10px'}}>
+                        {get(item, 'description')}
+                        {get(item, 'website') &&
+                          <div style={{marginTop: '10px'}}>
+                            <Button href={get(item, 'website')}>홈페이지 바로가기</Button>
+                          </div>
+                        }
+                      </div>
+                    }
+                  />
+                </List.Item>
+              )}
+            </>
           )}
         />
       </Spin>

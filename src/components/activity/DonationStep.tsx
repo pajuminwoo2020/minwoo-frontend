@@ -714,7 +714,7 @@ const DonationStep = () => {
               penColor='black'
               minWidth={2.5}
               maxWidth={4.5}
-              canvasProps={{width: 384, height: 204, className: 'sig-canvas'}}
+              canvasProps={{className: 'sig-canvas'}}
             />
             <Button
               style={{margin: '0px', position: 'absolute', bottom: '0', left: '0'}}
