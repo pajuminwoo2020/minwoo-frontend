@@ -750,7 +750,7 @@ const DonationStep = () => {
       <div style={{textAlign: 'left', marginTop: '70px'}}>
         <p>
           <a href={`${Configs.API_HOST}${downloadUrl}`}>
-            <Text style={{fontSize: '25px'}}><strong>신청서 다운받기&nbsp;<DownloadOutlined/></strong></Text>
+            <Text style={{fontSize: '25px', color: `${PrimaryColor}`}}><strong>신청서 확인 및 다운&nbsp;<DownloadOutlined/></strong></Text>
           </a>
         </p>
         <p><Text style={{fontSize: '25px'}}>후원신청 감사합니다.</Text></p>

@@ -1,4 +1,4 @@
-import {EBannerType} from 'enums/information.enum';
+import {EBannerType, EMotivation} from 'enums/information.enum';
 import {ActionType} from 'typesafe-actions';
 import * as actions from 'modules/information/actions';
 
@@ -65,6 +65,9 @@ export type TDonation = {
   agree_unique: boolean;
   agree_personal: boolean;
   agree_offer: boolean;
+  agree_newsletter: boolean;
+  agree_email: boolean;
+  motivation: EMotivation;
 };
 
 export type TDonationPage = {
