@@ -215,7 +215,6 @@ export const MainWrapper = styled.div`
   .area-right-top {
     padding: 10px 20px;
     width: 100%;
-    max-width: 300px;
 	height: 130px;
     margin: auto;
     margin-top: 30px;

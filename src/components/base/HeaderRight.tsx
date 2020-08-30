@@ -79,7 +79,7 @@ export const HeaderRight = ({onClick}: TRightMenuProps) => {
   return (
     <Row align="middle" justify="space-around">
       {currentUser ? (
-        <>
+        <div>
           <Dropdown
             trigger={['click']}
             overlay={rightMenu}
@@ -112,7 +112,7 @@ export const HeaderRight = ({onClick}: TRightMenuProps) => {
               <SettingOutlined style={{marginLeft: '10px'}}/>
             </Dropdown>
           )}
-        </>
+        </div>
       ) : (
         <>
           <Link to={ERoute.UserLogin}>

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Row, Col, Divider, List, Typography, Spin} from 'antd';
+import {Row, Col, Divider, List, Typography, Spin, Skeleton} from 'antd';
 import {useDataApi} from 'libs/hooks';
 import {get, map} from 'lodash';
 import GlobalStyles, {PrimaryColor} from 'GlobalStyles'
@@ -48,7 +48,11 @@ const People = () => {
     <PeopleWrapper>
       <Spin tip="로딩중..." spinning={loading}>
         <div style={{textAlign: 'center'}}>
-          <img style={{height: '900px', width: 'auto'}} src={`${Configs.API_HOST}${get(data, 'absolute_url')}`}/>
+          {loading === true ? (
+            <Skeleton active title={false} paragraph={{rows: 10}}/>
+          ) : (
+            <img style={{height: 'auto', width: '100%', maxWidth: '650px'}} src={`${Configs.API_HOST}${get(data, 'absolute_url')}`}/>
+          )}
         </div>
         <Title level={3}><Text>함께하는 사람들</Text></Title>
         <Divider/>
@@ -58,11 +62,11 @@ const People = () => {
               <div className={`circle row${index%3}`}>{get(positionData, 'position')}</div>
             </Col>
             <Col flex="auto">
-              {map(get(positionData, 'children', []), v =>
-              <p className="person">
-                <div style={{width: '120px', display: 'inline-block'}}>{`${get(v, 'name')}`}</div>
-                {get(v, 'job') && <span>|<span style={{marginLeft: '20px'}}>{`${get(v, 'job')}`}</span></span>}
-              </p>
+              {map(get(positionData, 'children', []), (v, idx) =>
+                <p className="person">
+                  <div style={{width: '120px', display: 'inline-block'}}>{`${get(v, 'name')}`}</div>
+                  {get(v, 'job') && <span>|<span style={{marginLeft: '20px'}}>{`${get(v, 'job')}`}</span></span>}
+                </p>
               )}
             </Col>
           </Row>

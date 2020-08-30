@@ -408,6 +408,10 @@ export const SignatureWrapper = styled.div`
   background-color: #f8f8f8;
   max-width: 400px;
   height: 220px;
+  .sig-canvas {
+    width: 98%;
+    height: 95%;
+  }
 `;
 
 export default GlobalStyles;

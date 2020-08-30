@@ -77,7 +77,7 @@ export const BaseTemplate = ({children}: {children: React.ReactNode;}) => {
             <>
               <Breadcrumb.Item><Link to="/"><HomeOutlined/></Link></Breadcrumb.Item>
               {map(getMenuTitle(location.pathname), v => (
-                <Breadcrumb.Item>{v}</Breadcrumb.Item>
+                <Breadcrumb.Item key={v}>{v}</Breadcrumb.Item>
               ))}
             </>
           )}
