@@ -141,6 +141,7 @@ export const PressDetail = () => {
 	  promiseDelete={deleteBoardPress}
 	  promiseUpdate={updateBoardPress}
 	  record={data}
+      loading={loading}
 	/>
   );
 };

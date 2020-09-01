@@ -4,7 +4,7 @@ import {get, isEmpty, map} from 'lodash';
 import {AxiosResponse} from 'axios';
 import {ExclamationCircleOutlined, InboxOutlined, PlusOutlined} from '@ant-design/icons';
 import {UploadChangeParam} from 'antd/lib/upload/interface';
-import {Row, Col, Form, Input, Button, Modal, Upload, Select} from 'antd';
+import {Row, Col, Form, Input, Button, Modal, Upload, Select, Spin} from 'antd';
 import {FormattedDate} from 'react-intl';
 import {Link} from 'react-router-dom';
 import {BoardDetailWrapper} from 'components/base/styles';
@@ -33,6 +33,7 @@ type TBoardDetailProps = {
   hasThumbnail?: boolean,
   categories?: TSelectList;
   record?: TBoardDetail;
+  loading?: boolean,
 };
 
 const {Option} = Select;
@@ -44,7 +45,8 @@ export const BoardDetail = ({
   promiseUpdate,
   categories,
   hasThumbnail=false,
-  record
+  record,
+  loading=false,
 }: TBoardDetailProps) => {
   const {boardManagementPermission} = usePermission();
   const BoardTitle = () => {
@@ -129,18 +131,20 @@ export const BoardDetail = ({
             </Link>
           </div>
         }
-        <BoardTitle/>
-        <div className="body-view">
-          <div dangerouslySetInnerHTML={{ __html: `${get(record, 'body', '')}`}}/>
-        </div>
-        {get(record, 'files', []).length > 0 && (
-          <div className="box-attachments">
-            첨부파일
-            {map(get(record, 'files', []), v => (
-              <a className="file-name" href={`${Configs.API_HOST}${get(v, 'absolute_url')}`}>{get(v, 'file_name')}</a>
-            ))}
+        <Spin tip="로딩중.." spinning={loading}>
+          <BoardTitle/>
+          <div className="body-view">
+            <div dangerouslySetInnerHTML={{ __html: `${get(record, 'body', '')}`}}/>
           </div>
-        )}
+          {get(record, 'files', []).length > 0 && (
+            <div className="box-attachments">
+              첨부파일
+              {map(get(record, 'files', []), v => (
+                <a className="file-name" href={`${Configs.API_HOST}${get(v, 'absolute_url')}`}>{get(v, 'file_name')}</a>
+              ))}
+            </div>
+          )}
+        </Spin>
         <Row justify="space-between" className="btn-bottom">
           <Col>
             <Link to={pathName}>

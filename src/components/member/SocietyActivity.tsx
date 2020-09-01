@@ -155,6 +155,7 @@ export const SocietyActivityDetail = () => {
 	  promiseUpdate={updateBoardSocietyActivity}
       categories={categories}
 	  record={data}
+      loading={loading}
 	/>
   );
 };

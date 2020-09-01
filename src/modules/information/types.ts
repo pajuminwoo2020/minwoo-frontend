@@ -23,6 +23,8 @@ export type TInformation = {
   phone_counseling: string;
   webhost_counseling: string;
   instagram_feed: string;
+  location_latitude: number;
+  location_longitude: number;
 };
 
 export type InformationAction = ActionType<typeof actions>;
@@ -108,6 +110,7 @@ export type TSocietyAboutDetail = {
   schedule: Array<string>;
   main_activity: Array<string>;
   website: string;
+  absolute_url: string;
 };
 
 /**
@@ -130,6 +133,7 @@ export type TPeople = {
 export type TAbout = {
   introduction: string;
   watchword: string;
+  purpose: string;
 };
 
 /**

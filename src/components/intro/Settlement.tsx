@@ -140,7 +140,8 @@ export const SettlementDetail = () => {
 	  promiseCreate={createBoardSettlement}
 	  promiseDelete={deleteBoardSettlement}
 	  promiseUpdate={updateBoardSettlement}
-	  record={data}
+      record={data}
+      loading={loading}
 	/>
   );
 };

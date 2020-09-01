@@ -141,6 +141,7 @@ export const DriveDetail = () => {
 	  promiseDelete={deleteBoardDrive}
 	  promiseUpdate={updateBoardDrive}
 	  record={data}
+      loading={loading}
 	/>
   );
 };

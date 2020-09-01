@@ -141,6 +141,7 @@ export const IntranetShareDetail = () => {
 	  promiseDelete={deleteBoardIntranetShare}
 	  promiseUpdate={updateBoardIntranetShare}
 	  record={data}
+      loading={loading}
 	/>
   );
 };
