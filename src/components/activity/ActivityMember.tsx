@@ -142,6 +142,7 @@ export const ActivityMemberDetail = () => {
 	  promiseUpdate={updateBoardActivityMember}
       hasThumbnail={true}
 	  record={data}
+      loading={loading}
 	/>
   );
 };

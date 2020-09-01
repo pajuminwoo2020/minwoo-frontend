@@ -9,6 +9,8 @@ import Map1 from 'assets/map1.png';
 import Map2 from 'assets/map2.png';
 import {shallowEqual, useSelector} from 'react-redux';
 import {RootState} from 'modules';
+import Configs from 'config';
+import GoogleMapReact from 'google-map-react';
 
 export const LocationWrapper = styled.div`
   .location_name_title {
@@ -57,6 +59,13 @@ export const LocationWrapper = styled.div`
 `;
 const Location = () => {
   const information = useSelector((state: RootState) => state.information.info, shallowEqual);
+  function renderMarkers(map: any, maps: any) {
+    let marker = new maps.Marker({
+      position: {lat: Number(get(information, 'location_latitude')), lng: Number(get(information, 'location_longitude'))},
+      map,
+      title: '파주여성민우회',
+    });
+  }
 
   return (
     <LocationWrapper>
@@ -73,6 +82,18 @@ const Location = () => {
           <div className="location_address_title"> 지번 주소</div>
           <span>{get(information, 'address_jibun')}</span>
         </p>
+      </div>
+      <div style={{height: '400px', maxWidth: '600px', marginBottom: '20px'}}>
+        {get(information, 'location_latitude', 0) && (
+        <GoogleMapReact
+          bootstrapURLKeys={{key: Configs.GOOGLE_API_KEY}}
+          defaultCenter={{lat: Number(get(information, 'location_latitude')), lng: Number(get(information, 'location_longitude'))}}
+          defaultZoom={17}
+          onGoogleApiLoaded={({map, maps}: any) => renderMarkers(map, maps)}
+          yesIWantToUseGoogleMapApiInternals
+        >
+        </GoogleMapReact>
+      )}
       </div>
       <ul className = "traffic_ul">
         <li className = "traffic_li" style={{backgroundImage: `url(${MapSubway})`}}>

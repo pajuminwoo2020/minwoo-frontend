@@ -138,6 +138,7 @@ export const ActionDetail = () => {
       categories={categories}
       hasThumbnail={true}
 	  record={data}
+      loading={loading}
 	/>
   );
 };

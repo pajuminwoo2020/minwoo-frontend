@@ -174,6 +174,7 @@ export const NewsLetterDetail = () => {
       promiseUpdate={updateBoardNewsLetter}
       hasThumbnail={true}
 	  record={data}
+      loading={loading}
 	/>
   );
 };

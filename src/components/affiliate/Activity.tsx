@@ -141,6 +141,7 @@ export const AffiliateActivityDetail = () => {
 	  promiseDelete={deleteBoardAffiliateActivity}
 	  promiseUpdate={updateBoardAffiliateActivity}
 	  record={data}
+      loading={loading}
 	/>
   );
 };

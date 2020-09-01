@@ -137,7 +137,8 @@ export const NoticeDetail = () => {
       promiseUpdate={updateBoardNotice}
       categories={categories}
       hasThumbnail={true}
-	  record={data}
+      record={data}
+      loading={loading}
 	/>
   );
 };

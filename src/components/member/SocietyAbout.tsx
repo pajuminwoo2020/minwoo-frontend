@@ -9,6 +9,7 @@ import {TSocietyAboutDetail} from 'modules/information';
 import {TListResponse} from 'modules/types';
 import styled from 'styled-components';
 import {PrimaryColor} from 'GlobalStyles';
+import Configs from 'config';
 
 const {Title, Text} = Typography;
 const SocietyAboutWrapper = styled.div`
@@ -53,21 +54,33 @@ const SocietyAbout = () => {
               {get(item, 'id') == detailsIndex ? (
                 <div className="default-content">
                   <Title level={2}><Text className={`row${index%3}`}>{get(item, 'name')}</Text></Title>
-                  {get(item, 'description')}
-                  <Title level={4}><Text>주요활동</Text></Title>
-                  <ul>
-                    {map(
-                      get(item, 'main_activity', []),
-                      activity => <li>{activity}</li>
-                    )}
-                  </ul>
-                  <Title level={4}><Text>정기모임</Text></Title>
-                  <ul>
-                    {map(
-                      get(item, 'schedule', []),
-                      schedule => <li>{schedule}</li>
-                    )}
-                  </ul>
+
+                  {get(item, 'absolute_url') && (
+                    <img style={{display: 'block', marginBottom: '10px', maxWidth: '600px', height: 'auto'}} src={`${Configs.API_HOST}${get(item, 'absolute_url')}`}/>
+                  )}
+                  {get(item, 'description')}<br/><br/>
+                  {get(item, 'main_activity', []).length > 0 && (
+                    <>
+                      <Title level={4}><Text>주요활동</Text></Title>
+                      <ul>
+                        {map(
+                          get(item, 'main_activity', []),
+                          activity => <li>{activity}</li>
+                        )}
+                      </ul>
+                    </>
+                  )}
+                  {get(item, 'schedule', []).length > 0 && (
+                    <>
+                      <Title level={4}><Text>정기모임</Text></Title>
+                      <ul>
+                        {map(
+                          get(item, 'schedule', []),
+                          schedule => <li>{schedule}</li>
+                        )}
+                      </ul>
+                    </>
+                  )}
                   {get(item, 'website') &&
                     <div style={{marginTop: '10px'}}>
                       <Button type="primary" href={get(item, 'website')}>홈페이지 바로가기</Button>

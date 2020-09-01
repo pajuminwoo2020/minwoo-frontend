@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Tabs, Timeline, Row, Col, Typography, Divider, BackTop} from 'antd';
+import {Tabs, Timeline, Row, Col, Typography, Divider, BackTop, Skeleton} from 'antd';
 import {shallowEqual, useSelector} from 'react-redux';
 import {RootState} from 'modules';
 import styled from 'styled-components';
@@ -58,7 +58,7 @@ const AffiliateAboutWrapper = styled.div`
 `;
 const About = () => {
   const information = useSelector((state: RootState) => state.information.info, shallowEqual);
-  const [{data: clinicAbout}] = useDataApi<TClinicAbout>(getClinicAbout.bind(null));
+  const [{data: clinicAbout, loading}] = useDataApi<TClinicAbout>(getClinicAbout.bind(null));
 
   function handleTabClick(key: string) {
     const elem = document.getElementById(key);
@@ -77,7 +77,11 @@ const About = () => {
         <Row justify="center" gutter={[32, 16]}>
           <Col xs={24} sm={24} md={14} lg={14} xl={14}>
             <div style={{margin: 'auto'}}>
-              <div dangerouslySetInnerHTML={{ __html: `${get(clinicAbout, 'purpose', '')}`}}/>
+              {loading === true ? (
+                <Skeleton active title={false} paragraph={{rows: 5}}/>
+              ) : (
+                <div dangerouslySetInnerHTML={{ __html: `${get(clinicAbout, 'purpose', '')}`}}/>
+              )}
             </div>
           </Col>
           <Col xs={24} sm={24} md={10} lg={10} xl={10}>

@@ -141,6 +141,7 @@ export const IntranetDriveDetail = () => {
 	  promiseDelete={deleteBoardIntranetDrive}
 	  promiseUpdate={updateBoardIntranetDrive}
 	  record={data}
+      loading={loading}
 	/>
   );
 };

@@ -155,6 +155,7 @@ export const GalleryDetail = () => {
       promiseUpdate={updateBoardGallery}
       hasThumbnail={true}
 	  record={data}
+      loading={loading}
 	/>
   );
 };
