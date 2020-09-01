@@ -15,13 +15,13 @@ const PeopleWrapper = styled.div`
   width: 100%;
 
   .circle {
-    width: 120px;
-    height: 120px;
+    width: 110px;
+    height: 110px;
     border-radius: 50%;
     text-align: center;
-    line-height: 120px;
+    line-height: 17px;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 15px;
     margin: auto;
   }
   .circle {
@@ -59,13 +59,19 @@ const People = () => {
         {map(get(data, 'contents', []), (positionData, index) =>
           <Row align="middle" gutter={[32, 32]}>
             <Col flex="130px">
-              <div className={`circle row${index%3}`}>{get(positionData, 'position')}</div>
+              <div className={`circle row${index%3}`}>
+                <div style={{top: '50%', display: 'inline-block', width: '60%', transform: 'translate(-50%, -50%)', position: 'absolute'}}>
+                  {get(positionData, 'position')}
+                </div>
+              </div>
             </Col>
             <Col flex="auto">
               {map(get(positionData, 'children', []), (v, idx) =>
                 <p className="person">
-                  <div style={{width: '120px', display: 'inline-block'}}>{`${get(v, 'name')}`}</div>
-                  {get(v, 'job') && <span>|<span style={{marginLeft: '20px'}}>{`${get(v, 'job')}`}</span></span>}
+                  <div style={{display: 'inline-block'}}>{`${get(v, 'name')}`}</div>
+                  {get(v, 'job') && <>
+                    <span style={{margin: '0px 10px'}}>|</span><span>{`${get(v, 'job')}`}</span>
+                  </>}
                 </p>
               )}
             </Col>
