@@ -56,9 +56,12 @@ const SocietyAbout = () => {
                   <Title level={2}><Text className={`row${index%3}`}>{get(item, 'name')}</Text></Title>
 
                   {get(item, 'absolute_url') && (
-                    <img style={{display: 'block', marginBottom: '10px', maxWidth: '600px', height: 'auto'}} src={`${Configs.API_HOST}${get(item, 'absolute_url')}`}/>
+                    <img
+                      style={{display: 'block', marginBottom: '10px', maxWidth: '600px', width: '100%', height: 'auto'}}
+                      src={`${Configs.API_HOST}${get(item, 'absolute_url')}`}
+                    />
                   )}
-                  {get(item, 'description')}<br/><br/>
+                  <span style={{whiteSpace: 'pre-wrap'}}>{get(item, 'description')}<br/><br/></span>
                   {get(item, 'main_activity', []).length > 0 && (
                     <>
                       <Title level={4}><Text>주요활동</Text></Title>
@@ -98,16 +101,7 @@ const SocietyAbout = () => {
                         </Title>
                       </a>
                     }
-                    description={
-                      <div style={{margin: '10px'}}>
-                        {get(item, 'description')}
-                        {get(item, 'website') &&
-                          <div style={{marginTop: '10px'}}>
-                            <Button href={get(item, 'website')}>홈페이지 바로가기</Button>
-                          </div>
-                        }
-                      </div>
-                    }
+                    description={<div style={{margin: '10px', whiteSpace: 'pre-wrap'}}>{get(item, 'description')}</div>}
                   />
                 </List.Item>
               )}

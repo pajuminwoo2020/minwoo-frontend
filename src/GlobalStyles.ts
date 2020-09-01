@@ -359,11 +359,12 @@ export const CardWrapper = styled(Link)`
 
   .ant-card-cover img {
     height: auto;
+    min-height: 240px;
   }
 
   .ant-card {
     width: 100%;
-    height: 300px;
+    height: 270px;
     overflow: hidden;
     margin: 0px auto;
   }

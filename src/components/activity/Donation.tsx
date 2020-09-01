@@ -60,7 +60,7 @@ const DonationStepWrapper = styled.div`
   }
 `;
 const Donation = () => {
-  const [pagination, setPagination] = usePagination(10);
+  const [pagination, setPagination] = usePagination(5);
   const information = useSelector((state: RootState) => state.information.info, shallowEqual);
   const reloadPage = (page?: Partial<TPagination>) => {
     setPagination({
@@ -108,7 +108,7 @@ const Donation = () => {
         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
           <div style={{padding: '0px 25px'}}>
             {pageLoading === true ? (
-              <Skeleton active title={false} paragraph={{rows: 10}}/>
+              <Skeleton active title={false} paragraph={{rows: 6}}/>
             ) : (
               <div dangerouslySetInnerHTML={{ __html: `${get(donationPage, 'introduction', '')}`}}/>
             )}
@@ -132,7 +132,7 @@ const Donation = () => {
 		  </TableWrapper>
 		</Col>
       </Row>
-	  <Row gutter={[16, 16]} align="top" style={{marginTop: '20px'}} justify="space-between">
+	  <Row gutter={[16, 16]} align="top" style={{marginTop: '40px'}} justify="space-between">
         <Col xs={24} sm={24} md={11} lg={11} xl={11}>
           <div className="box-with-border color-blue">
             <p>회원이 되면</p>
