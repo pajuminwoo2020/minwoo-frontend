@@ -54,7 +54,7 @@ const People = () => {
             <img style={{height: 'auto', width: '100%', maxWidth: '650px'}} src={`${Configs.API_HOST}${get(data, 'absolute_url')}`}/>
           )}
         </div>
-        <Title level={3}><Text>함께하는 사람들</Text></Title>
+        <Title level={3} style={{marginTop: '20px'}}><Text>함께하는 사람들</Text></Title>
         <Divider/>
         {map(get(data, 'contents', []), (positionData, index) =>
           <Row align="middle" gutter={[32, 32]}>
