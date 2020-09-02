@@ -83,7 +83,7 @@ const Main = () => {
                   <Card
                     bodyStyle={{padding: '10px 20px'}}
                     hoverable
-                    cover={<img alt={"Action"} src={getImageSource(item)}/>}
+                    cover={<img src={getImageSource(item)} alt='image'/>}
                   >
                     <Meta title={get(item, 'title')} description={
                       <FormattedDate
@@ -113,7 +113,7 @@ const Main = () => {
                   <Card
                     bodyStyle={{padding: '10px 20px'}}
                     hoverable
-                    cover={<img alt={"Action"} src={getImageSource(item)}/>}
+                    cover={<img src={getImageSource(item)} alt='image'/>}
                   >
                     <Meta title={get(item, 'title')} description={
                       <FormattedDate

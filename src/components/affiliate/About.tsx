@@ -68,12 +68,12 @@ const About = () => {
   return (
     <AffiliateAboutWrapper>
       <Tabs activeKey="purpose" onTabClick={handleTabClick}>
-        <TabPane key="purpose" tab="상담"></TabPane>
-        <TabPane key="history" tab="교육"></TabPane>
-        <TabPane key="activity" tab="성폭력 예방활동"></TabPane>
+        <TabPane key="purpose" tab="소개"></TabPane>
+        <TabPane key="history" tab="상담"></TabPane>
+        <TabPane key="activity" tab="교육"></TabPane>
       </Tabs>
       <div className="tabs-content" id="purpose">
-        <Title className="content-title">상담</Title>
+        <Title className="content-title">소개</Title>
         <Row justify="center" gutter={[32, 16]}>
           <Col xs={24} sm={24} md={14} lg={14} xl={14}>
             <div style={{margin: 'auto'}}>
@@ -122,12 +122,12 @@ const About = () => {
       </div>
       <div className="tabs-content" id="history">
         <Divider/>
-        <Title className="content-title">교육</Title>
-        교육
+        <Title className="content-title">상담</Title>
+        상담
       </div>
       <div className="tabs-content" id="activity">
         <Divider/>
-        <Title className="content-title">성폭력 예방활동</Title>
+        <Title className="content-title">교육</Title>
         <Row justify="center" style={{marginBottom: '40px'}}>
           <img src={Image3_title} style={{width: 'auto', height: '80px'}}/>
         </Row>

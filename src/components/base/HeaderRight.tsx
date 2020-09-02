@@ -14,7 +14,6 @@ import Configs from 'config';
 import {getMenuTitle} from 'components/base/HeaderLeft';
 
 const {Text} = Typography;
-
 type TRightMenuProps = {
   onClick?: () => void;
 };
@@ -25,7 +24,9 @@ export const HeaderRight = ({onClick}: TRightMenuProps) => {
   const rightMenu = (
     <Menu onClick={onClickMenu}>
       {adminPagePermission && (
-        <Menu.Item key="admin-page">관리자페이지</Menu.Item>
+        <Menu.Item key="admin-page">
+          <a href={`${Configs.API_HOST}/admin/main`} target="_blank">관리자페이지</a>
+        </Menu.Item>
       )}
       <Menu.Item key="user-setting">
         <Link to={ERoute.UserEdit}>
@@ -37,6 +38,9 @@ export const HeaderRight = ({onClick}: TRightMenuProps) => {
   );
   const intranetMenu = (
     <Menu style={{minWidth: '100px'}}>
+      <Menu.Item disabled style={{color: '#000', fontWeight: 'bold', cursor: 'default'}}>
+        인트라넷
+      </Menu.Item>
       <Menu.Item key={ERoute.IntranetShare}>
         <Link to={ERoute.IntranetShare}>{getMenuTitle(ERoute.IntranetShare)[1]}</Link>
       </Menu.Item>
@@ -65,7 +69,6 @@ export const HeaderRight = ({onClick}: TRightMenuProps) => {
         onClickLogout();
         break;
       case 'admin-page':
-        window.location.href = `${Configs.API_HOST}/admin/main`;
         break;
     }
     onClick && onClick();

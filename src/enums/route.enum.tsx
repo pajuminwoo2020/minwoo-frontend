@@ -20,7 +20,6 @@ export enum ERoute {
   CalendarEdit = '/activity/calendar/edit',
   CalendarCreate = '/activity/calendar/create',
   AffiliateAbout = '/affiliate/about',
-  AffiliateActivity = '/affiliate/activity',
   MemberSocietyAbout = '/member/society_about',
   MemberSocietyActivity = '/member/society_activity',
   BulletinNewsletter = '/bulletin/newsletter',
@@ -34,6 +33,7 @@ export enum ERoute {
 
 export enum EMessageID {
   SignupSuccess = 'signup_success',
+  UseridAlreadyExists = 'userid_already_exists',
   ActivateSuccess = 'activate_success',
   PasswordUpdate = 'password_update',
   PasswordReset = 'password_reset',

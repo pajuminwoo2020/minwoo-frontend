@@ -13,6 +13,7 @@ type TMenuProps = {
 };
 
 const {SubMenu} = Menu;
+const {Text} = Typography;
 const menuNames = [{
   name: '소개',
   path: 'intro',
@@ -58,13 +59,8 @@ const menuNames = [{
   name: '파주성폭력상담소',
   path: 'affiliate',
   children: [{
-    group: '성폭력상담소',
-    name: '상담소소개',
+    name: '파주성폭력상담소 \'함께\'',
     path: 'about',
-  }, {
-    group: '성폭력상담소',
-    name: '활동자료',
-    path: 'activity',
   }],
 }, {
   name: '소모임',
@@ -80,14 +76,14 @@ const menuNames = [{
   name: '자료실',
   path: 'bulletin',
   children: [{
+    name: '자료실',
+    path: 'drive',
+  }, {
     name: '소식지',
     path: 'newsletter',
   }, {
     name: '갤러리',
     path: 'gallery',
-  }, {
-    name: '자료실',
-    path: 'drive',
   }],
 }, {
   name: '인트라넷',
@@ -98,9 +94,6 @@ const menuNames = [{
   }, {
     name: '자료실',
     path: 'drive',
-  }, {
-    name: '자유게시판',
-    path: 'general',
   }],
 }];
 
@@ -113,10 +106,6 @@ export function getMenuTitle(route: string) {
   }
 
   const menu = filter(get(subMenu[0], 'children'), x => x.path == path[2]);
-  const group = get(menu[0], 'group');
-
-  if (group)
-    return [get(subMenu[0], 'name'), group, get(menu[0], 'name')];
 
   return [get(subMenu[0], 'name'), get(menu[0], 'name')];
 }
@@ -126,7 +115,7 @@ export const HeaderLeft = ({mode, onClick}: TMenuProps) => {
 
   return (
     <Menu selectedKeys={[location.pathname]} mode={mode} onClick={onClick}>
-      <SubMenu title={getMenuTitle('/intro')[0]}>
+      <SubMenu title={<Link to={ERoute.IntroAbout}><div style={{height: '100%'}}>{getMenuTitle('/intro')[0]}</div></Link>}>
         <Menu.Item key={ERoute.IntroAbout}>
           <Link to={ERoute.IntroAbout}>{getMenuTitle(ERoute.IntroAbout)[1]}</Link>
         </Menu.Item>
@@ -143,7 +132,7 @@ export const HeaderLeft = ({mode, onClick}: TMenuProps) => {
           <Link to={ERoute.IntroLocation}>{getMenuTitle(ERoute.IntroLocation)[1]}</Link>
         </Menu.Item>
       </SubMenu>
-      <SubMenu title={getMenuTitle('/activity')[0]}>
+      <SubMenu title={<Link to={ERoute.ActivityNotice}><div style={{height: '100%'}}>{getMenuTitle('/activity')[0]}</div></Link>}>
         <Menu.Item key={ERoute.ActivityNotice}>
           <Link to={ERoute.ActivityNotice}>{getMenuTitle(ERoute.ActivityNotice)[1]}</Link>
         </Menu.Item>
@@ -163,7 +152,7 @@ export const HeaderLeft = ({mode, onClick}: TMenuProps) => {
           <Link to={ERoute.ActivityCalendar}>{getMenuTitle(ERoute.ActivityCalendar)[1]}</Link>
         </Menu.Item>
       </SubMenu>
-      <SubMenu title={getMenuTitle('/member')[0]}>
+      <SubMenu title={<Link to={ERoute.MemberSocietyAbout}><div style={{height: '100%'}}>{getMenuTitle('/member')[0]}</div></Link>}>
         <Menu.Item key={ERoute.MemberSocietyAbout}>
           <Link to={ERoute.MemberSocietyAbout}>{getMenuTitle(ERoute.MemberSocietyAbout)[1]}</Link>
         </Menu.Item>
@@ -171,27 +160,19 @@ export const HeaderLeft = ({mode, onClick}: TMenuProps) => {
           <Link to={ERoute.MemberSocietyActivity}>{getMenuTitle(ERoute.MemberSocietyActivity)[1]}</Link>
         </Menu.Item>
       </SubMenu>
-      <SubMenu title={getMenuTitle('/bulletin')[0]}>
+      <SubMenu title={<Link to={ERoute.BulletinDrive}><div style={{height: '100%'}}>{getMenuTitle('/bulletin')[0]}</div></Link>}>
+        <Menu.Item key={ERoute.BulletinDrive}>
+          <Link to={ERoute.BulletinDrive}>{getMenuTitle(ERoute.BulletinDrive)[1]}</Link>
+        </Menu.Item>
         <Menu.Item key={ERoute.BulletinNewsletter}>
           <Link to={ERoute.BulletinNewsletter}>{getMenuTitle(ERoute.BulletinNewsletter)[1]}</Link>
         </Menu.Item>
         <Menu.Item key={ERoute.BulletinGallery}>
           <Link to={ERoute.BulletinGallery}>{getMenuTitle(ERoute.BulletinGallery)[1]}</Link>
         </Menu.Item>
-        <Menu.Item key={ERoute.BulletinDrive}>
-          <Link to={ERoute.BulletinDrive}>{getMenuTitle(ERoute.BulletinDrive)[1]}</Link>
-        </Menu.Item>
       </SubMenu>
       <span className="vertical-bar"></span>
-      <SubMenu title={getMenuTitle('/affiliate')[0]}>
-        <Menu.ItemGroup title="성폭력상담소">
-          <Menu.Item key={ERoute.AffiliateAbout}>
-            <Link to={ERoute.AffiliateAbout}>{getMenuTitle(ERoute.AffiliateAbout)[2]}</Link>
-          </Menu.Item>
-          <Menu.Item key={ERoute.AffiliateActivity}>
-            <Link to={ERoute.AffiliateActivity}>{getMenuTitle(ERoute.AffiliateActivity)[2]}</Link>
-          </Menu.Item>
-        </Menu.ItemGroup>
+      <SubMenu title={<Link to={ERoute.AffiliateAbout}><div style={{height: '100%'}}>{getMenuTitle('/affiliate')[0]}</div></Link>}>
       </SubMenu>
     </Menu>
   );

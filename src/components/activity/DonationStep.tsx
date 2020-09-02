@@ -467,7 +467,7 @@ const DonationStep = () => {
         {showRegistrationInput && (
           <Form.Item
             name={'resident_registration_number'}
-            label={<Text>주민등록번호</Text>}
+            label={<Text className="item-required">주민등록번호</Text>}
             extra="소득세법 제160조에 따라 영수증 발급을 위해 주민등록번호를 수집하고 있습니다"
             labelCol={{span: 4}}
           >

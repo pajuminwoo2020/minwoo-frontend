@@ -90,7 +90,7 @@ const Notice = () => {
         renderItem={item => (
           <List.Item>
             <CardWrapper to={`${ERoute.ActivityNotice}/${EBoardOperation.View}/${get(item, 'id')}`}>
-              <Card hoverable cover={<img alt={"Notice"} src={getImageSource(item)}/>}>
+              <Card className="large" hoverable cover={<img alt={"Notice"} src={getImageSource(item)}/>}>
                 <Meta
                   title={
                     <>
