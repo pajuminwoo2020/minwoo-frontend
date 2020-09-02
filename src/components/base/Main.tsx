@@ -24,7 +24,7 @@ import InstagramSource from 'assets/logo_instagram.png';
 import HumanSource from 'assets/logo_human.png';
 import NTSSource from 'assets/logo_nts.png';
 // @ts-ignore
-import ReactImageAppear from 'react-image-appear';
+import ProgressiveImage from 'react-progressive-graceful-image';
 
 const {Text} = Typography;
 const {Meta} = Card;
@@ -85,10 +85,13 @@ const Main = () => {
                   <Card
                     bodyStyle={{padding: '10px 20px'}}
                     hoverable
-                    cover={<ReactImageAppear
-                      alt='image'
-                      src={getImageSource(item)}
-                    />}
+                    cover={<ProgressiveImage
+                        src={getImageSource(item)}
+                        placeholder='image'
+                      >
+                        {(src: string) => <img src={src} alt="image"/>}
+                      </ProgressiveImage>
+                    }
                   >
                     <Meta title={get(item, 'title')} description={
                       <FormattedDate

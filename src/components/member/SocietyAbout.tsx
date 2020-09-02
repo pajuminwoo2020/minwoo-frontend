@@ -1,5 +1,5 @@
 import 'animate.css/animate.min.css';
-import {List, Typography, Button, Spin} from 'antd';
+import {List, Typography, Button, Spin, Row, Col} from 'antd';
 import {ExpandAltOutlined} from '@ant-design/icons';
 import {get, map, filter} from 'lodash';
 import React, {useState} from 'react';
@@ -55,40 +55,46 @@ const SocietyAbout = () => {
                 <div className="default-content">
                   <Title level={2}><Text className={`row${index%3}`}>{get(item, 'name')}</Text></Title>
 
-                  {get(item, 'absolute_url') && (
-                    <img
-                      style={{display: 'block', marginBottom: '10px', maxWidth: '600px', width: '100%', height: 'auto'}}
-                      src={`${Configs.API_HOST}${get(item, 'absolute_url')}`}
-                    />
-                  )}
-                  <span style={{whiteSpace: 'pre-wrap'}}>{get(item, 'description')}<br/><br/></span>
-                  {get(item, 'main_activity', []).length > 0 && (
-                    <>
-                      <Title level={4}><Text>주요활동</Text></Title>
-                      <ul>
-                        {map(
-                          get(item, 'main_activity', []),
-                          activity => <li>{activity}</li>
-                        )}
-                      </ul>
-                    </>
-                  )}
-                  {get(item, 'schedule', []).length > 0 && (
-                    <>
-                      <Title level={4}><Text>정기모임</Text></Title>
-                      <ul>
-                        {map(
-                          get(item, 'schedule', []),
-                          schedule => <li>{schedule}</li>
-                        )}
-                      </ul>
-                    </>
-                  )}
-                  {get(item, 'website') &&
-                    <div style={{marginTop: '10px'}}>
-                      <Button type="primary" href={get(item, 'website')}>홈페이지 바로가기</Button>
-                    </div>
-                  }
+                  <Row justify="space-between" gutter={[32, 16]}>
+                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                      {get(item, 'absolute_url') && (
+                        <img
+                          style={{display: 'block', marginBottom: '10px', width: '100%', height: 'auto'}}
+                          src={`${Configs.API_HOST}${get(item, 'absolute_url')}`}
+                        />
+                      )}
+                    </Col>
+                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                      <span style={{whiteSpace: 'pre-wrap'}}>{get(item, 'description')}<br/><br/></span>
+                      {get(item, 'main_activity', []).length > 0 && (
+                        <>
+                          <Title level={4}><Text>주요활동</Text></Title>
+                          <ul>
+                            {map(
+                              get(item, 'main_activity', []),
+                              activity => <li>{activity}</li>
+                            )}
+                          </ul>
+                        </>
+                      )}
+                      {get(item, 'schedule', []).length > 0 && (
+                        <>
+                          <Title level={4}><Text>정기모임</Text></Title>
+                          <ul>
+                            {map(
+                              get(item, 'schedule', []),
+                              schedule => <li>{schedule}</li>
+                            )}
+                          </ul>
+                        </>
+                      )}
+                      {get(item, 'website') &&
+                        <div style={{marginTop: '10px'}}>
+                          <Button type="primary" href={get(item, 'website')}>홈페이지 바로가기</Button>
+                        </div>
+                      }
+                    </Col>
+                  </Row>
                 </div>
               ) : (
                 <List.Item>
