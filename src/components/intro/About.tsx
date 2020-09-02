@@ -104,7 +104,6 @@ const About = () => {
             <div className="about-content" dangerouslySetInnerHTML={{ __html: `${get(data, 'purpose', '')}`}}/>
           </div>
           <div className="tabs-content" id="history">
-            <Divider/>
             <Title className="content-title">연혁</Title>
             <History/>
           </div>

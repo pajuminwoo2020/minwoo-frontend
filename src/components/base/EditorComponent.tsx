@@ -42,6 +42,8 @@ const EditorComponent: React.FC<TEditorComponentProps> = ({
             });
           },
           content_style: 'img {max-width: 100%; height: auto;}',
+          language: 'ko_KR',
+          language_url: "/langs/ko_KR.js",
           height: CDefaultEditorHeight,
           statusbar: false,
           plugins: CDefaultEditorPlugins,

@@ -1,5 +1,6 @@
 export enum EerrorCode {
   VALIDATION_ERROR = -400001, // 유효성 검사 실패
+  USERID_ALREADY_EXISTS = -400011, // Userid already exists
   PARSE_ERROR = -400002, // Malformed request
   UNHANDLED_EXCEPTION = -400003, // Unhandled exception
   AUTHENTICATION_FAILED = -401001, // Incorrect authentication credentials

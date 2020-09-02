@@ -4,6 +4,7 @@ import {get, map, set} from 'lodash';
 import {FormInstance} from 'rc-field-form';
 import {EerrorCode} from 'enums/errorCode.enum';
 import {TError, TFieldError} from 'modules/error';
+import {ERoute, EMessageID} from 'enums/route.enum';
 
 function handleHTTP400BadRequestError(error: AxiosError, data: TError) {
   switch (data?.error_code) {
@@ -15,6 +16,9 @@ function handleHTTP400BadRequestError(error: AxiosError, data: TError) {
       } else {
         message.error('Invalid_fields');
       }
+      break;
+    case EerrorCode.USERID_ALREADY_EXISTS:
+      window.location.href = `${ERoute.UserLogin}?messageID=${EMessageID.UseridAlreadyExists}`;
       break;
     case EerrorCode.PARSE_ERROR:
     default:
