@@ -190,7 +190,10 @@ export const MainWrapper = styled.div`
   .ant-carousel img {
     margin: auto;
 	width: 99%;
-	height: auto;
+	height: 415px;
+    @media screen and ${device.mobile} {
+      height: 195px;
+    }
   }
   .ant-carousel {
     overflow: hidden;

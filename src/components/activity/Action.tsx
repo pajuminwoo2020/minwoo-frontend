@@ -90,7 +90,7 @@ const Action = () => {
         renderItem={item => (
           <List.Item>
             <CardWrapper to={`${ERoute.ActivityAction}/${EBoardOperation.View}/${get(item, 'id')}`}>
-              <Card hoverable cover={<img alt={"Action"} src={getImageSource(item)}/>}>
+              <Card className="large" hoverable cover={<img alt={"Action"} src={getImageSource(item)}/>}>
                 <Meta
                   title={
                     <>

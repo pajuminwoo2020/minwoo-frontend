@@ -358,8 +358,7 @@ export const CardWrapper = styled(Link)`
   }
 
   .ant-card-cover img {
-    height: auto;
-    min-height: 240px;
+    height: 190px;
   }
 
   .ant-card {
@@ -367,6 +366,9 @@ export const CardWrapper = styled(Link)`
     height: 270px;
     overflow: hidden;
     margin: 0px auto;
+  }
+  .ant-card.large {
+    height: 314px;
   }
 
   .ant-card-body {
