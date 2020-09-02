@@ -8,8 +8,6 @@ import Red from 'assets/Ellipse-red.png'
 import Configs from 'config';
 import {TPeople} from 'modules/information';
 import {getPeople} from 'libs/api/information';
-// @ts-ignore
-import ReactImageAppear from 'react-image-appear';
 
 const {Title, Text} = Typography;
 const PeopleWrapper = styled.div`
@@ -53,7 +51,7 @@ const People = () => {
           {loading === true ? (
             <Skeleton active title={false} paragraph={{rows: 10}}/>
           ) : (
-            <ReactImageAppear
+            <img
               alt='image'
               style={{height: 'auto', width: '100%', maxWidth: '650px'}}
               src={`${Configs.API_HOST}${get(data, 'absolute_url')}`}
