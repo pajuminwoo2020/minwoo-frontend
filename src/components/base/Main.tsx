@@ -23,6 +23,8 @@ import FacebookSource from 'assets/logo_facebook.png';
 import InstagramSource from 'assets/logo_instagram.png';
 import HumanSource from 'assets/logo_human.png';
 import NTSSource from 'assets/logo_nts.png';
+// @ts-ignore
+import ReactImageAppear from 'react-image-appear';
 
 const {Text} = Typography;
 const {Meta} = Card;
@@ -83,7 +85,10 @@ const Main = () => {
                   <Card
                     bodyStyle={{padding: '10px 20px'}}
                     hoverable
-                    cover={<img alt={"Action"} src={getImageSource(item)}/>}
+                    cover={<ReactImageAppear
+                      alt='image'
+                      src={getImageSource(item)}
+                    />}
                   >
                     <Meta title={get(item, 'title')} description={
                       <FormattedDate
