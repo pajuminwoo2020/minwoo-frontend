@@ -9,12 +9,12 @@ import {TUserCreate} from 'modules/user';
 import {Title, FormWrapper} from 'components/user/styles';
 import {ERoute, EMessageID} from 'enums/route.enum';
 import {ENotificationType} from 'enums/base.enum';
-import AgreePrivacyModal from 'components/modal/AgreePrivacyModal';
+import AgreeUniqueModal from 'components/modal/AgreeUniqueModal';
 
 const Signup = () => {
   const [form] = Form.useForm();
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
-  const [agreePrivacyModal, setAgreePrivacyModal] = useState(false);
+  const [agreeUniqueModal, setAgreeUniqueModal] = useState(false);
   const onClickSignup = () => {
     form.validateFields().then(value => {
       handleSignup(value as TUserCreate);
@@ -115,7 +115,7 @@ const Signup = () => {
 		</Form.Item>
         <Form.Item name={'agreement'} className="form-bottom" valuePropName={'checked'}>
           <Checkbox style={{fontSize: '13px'}}>개인정보 수집 및 이용과 서비스 약관에 동의합니다.
-            <Button style={{marginLeft: '20px'}} size="small" onClick={()=>{setAgreePrivacyModal(true);}}>내용보기</Button>
+            <Button style={{marginLeft: '20px'}} size="small" onClick={()=>{setAgreeUniqueModal(true);}}>내용보기</Button>
           </Checkbox>
         </Form.Item>
 		<Form.Item shouldUpdate={true} className="form-button">
@@ -136,7 +136,7 @@ const Signup = () => {
 		  )}
 		</Form.Item>
 	  </Form>
-      <AgreePrivacyModal visible={agreePrivacyModal} setVisible={setAgreePrivacyModal}/>
+      <AgreeUniqueModal visible={agreeUniqueModal} setVisible={setAgreeUniqueModal}/>
 	</FormWrapper>
   );
 }
