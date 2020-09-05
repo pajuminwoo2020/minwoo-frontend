@@ -195,6 +195,12 @@ export const BoardDetail = ({
     function onClickUpdate() {
       form.validateFields().then(value => {
         handleUpdate(value as TUpdateBoardDetail);
+      }).catch(errorInfo => {
+        const errorField = errorInfo.errorFields ? get(errorInfo.errorFields[0], 'name', '') : '';
+        form.scrollToField(errorField, {
+          block: 'center',
+          behavior: 'smooth',
+        });
       });
       async function handleUpdate(value: TUpdateBoardDetail) {
         try {
@@ -294,6 +300,12 @@ export const BoardDetail = ({
     function onClickCreate() {
       form.validateFields().then(value => {
         handleCreate(value as TCreateBoardDetail);
+      }).catch(errorInfo => {
+        const errorField = errorInfo.errorFields ? get(errorInfo.errorFields[0], 'name', '') : '';
+        form.scrollToField(errorField, {
+          block: 'center',
+          behavior: 'smooth',
+        });
       });
       async function handleCreate (value: TCreateBoardDetail) {
         try {

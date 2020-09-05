@@ -338,7 +338,7 @@ const DonationStep = () => {
           name="applicant_birthday"
           rules={[{required: true, message: '생년월일을 선택해주세요'}]}
         >
-          <DropdownDatePicker form={form} name="applicant_birthday"/>
+          <DropdownDatePicker form={form} formName="2" name="applicant_birthday"/>
         </Form.Item>
         <Form.Item
           name="applicant_phone"
@@ -346,7 +346,7 @@ const DonationStep = () => {
           label={<Text>휴대전화번호</Text>}
           rules={[{required: true, message: '전화번호를 입력해주세요'}]}
         >
-          <PhoneInput form={form} name="applicant_phone"/>
+          <PhoneInput form={form} formName="2" name="applicant_phone"/>
         </Form.Item>
         <Form.Item
           name="email"
@@ -563,7 +563,7 @@ const DonationStep = () => {
             rules={[{required: true, message: '생년월일을 선택해주세요'}]}
             extra="개인사업자는 대표자 생년월일, 법인사업자는 사업자등록번호 10자리"
           >
-            <DropdownDatePicker form={form} name="account_holder_birthday"/>
+            <DropdownDatePicker form={form} formName="2" name="account_holder_birthday"/>
           </Form.Item>
         ) : (
           <Form.Item
@@ -581,7 +581,7 @@ const DonationStep = () => {
           rules={[{required: true, message: '전화번호를 입력해주세요'}]}
           extra="연락 가능한 정확한 번호를 입력해주세요."
         >
-          <PhoneInput form={form} name="account_holder_phone"/>
+          <PhoneInput form={form} formName="2" name="account_holder_phone"/>
         </Form.Item>
         <Form.Item
           label={<Text className="item-required">출금계좌</Text>}
@@ -678,7 +678,15 @@ const DonationStep = () => {
           <Divider/>
           <div className="steps-action">
             <Button style={{margin: '0 8px'}} onClick={onClickPrev}>이전</Button>
-            <Button htmlType="submit"type="primary">다음</Button>
+            <Button htmlType="submit" type="primary" onClick={() => {
+              form.validateFields().catch(errorInfo => {
+                const errorField = errorInfo.errorFields ? get(errorInfo.errorFields[0], 'name', '') : '';
+                form.scrollToField(errorField, {
+                  block: 'center',
+                  behavior: 'smooth',
+                });
+              });
+            }}>다음</Button>
           </div>
         </Form.Item>
       </Form>
@@ -798,6 +806,7 @@ const DonationStep = () => {
           resident_registration_number: form.getFieldValue(['resident_registration_number', 'first'])
           ? `${form.getFieldValue(['resident_registration_number', 'first'])}-${form.getFieldValue(['resident_registration_number', 'second'])}`
           : '',
+          motivation: (form.getFieldValue('motivation') ? form.getFieldValue('motivation') : ''),
         } as TDonation);
         onClickNext();
         break;
