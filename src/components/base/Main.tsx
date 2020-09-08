@@ -61,6 +61,7 @@ const Main = () => {
 
   return (
     <MainWrapper>
+      HELLO
       <Carousel autoplay dotPosition="top">
         {map(filter(get(dataBanner, 'contents', []), v => v.banner_type === EBannerType.Large), v => (
           <a href={get(v, 'href')}>
