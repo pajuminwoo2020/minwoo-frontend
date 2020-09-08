@@ -24,9 +24,10 @@ function formatDate(date: Date) {
 const {Title, Paragraph, Text} = Typography;
 type TDropdownDatePicker = {
   form: FormInstance;
+  formName: string;
   name: string;
 };
-const DropdownDatePicker = ({form, name}: TDropdownDatePicker) => {
+const DropdownDatePicker = ({form, formName, name}: TDropdownDatePicker) => {
   const [Year, setYear] = useState<number>();
   const [Month, setMonth] = useState<number>();
   const [Day, setDay] = useState<number>();
@@ -84,6 +85,7 @@ const DropdownDatePicker = ({form, name}: TDropdownDatePicker) => {
 	    />
         <Text style={{margin: '0px 10px 0px 5px'}}>일</Text>
       </Form.Item>
+      <Input id={`${formName}_${name}`} style={{visibility: 'hidden', height: '0px', width: '0px', padding: '0px', margin: '0px'}}/>
     </Input.Group>
   );
 }
