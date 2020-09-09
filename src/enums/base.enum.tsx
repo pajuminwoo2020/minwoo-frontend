@@ -34,5 +34,5 @@ export enum ECountryType {
 
 export enum EGroup {
   Admin = '관리자',
-  Staff = '스태프',
+  Staff = '활동가',
 }
