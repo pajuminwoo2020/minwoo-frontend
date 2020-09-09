@@ -221,9 +221,15 @@ const GlobalStyles = createGlobalStyle`
     }
   }
 
+  .hide-on-desktop {
+    display: none;
+  }
   @media screen and ${device.mobile} {
     .hide-on-mobile {
       display: none;
+    }
+    .hide-on-desktop {
+      display: block;
     }
   }
 

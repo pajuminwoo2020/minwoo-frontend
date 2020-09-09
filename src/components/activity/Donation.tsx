@@ -11,11 +11,11 @@ import {useDataApi, usePagination} from 'libs/hooks';
 import {TListResponse, TPagination} from 'modules/types';
 import {ERoute} from 'enums/route.enum';
 import {TDonation, TDonationPage} from 'modules/information/types';
-import {TableWrapper} from 'GlobalStyles';
+import {TableWrapper, PrimaryColor} from 'GlobalStyles';
 import {getDonations, getDonationPage} from 'libs/api/information';
 
 const {Text} = Typography;
-const DonationStepWrapper = styled.div`
+export const DonationStepWrapper = styled.div`
   .large-btn {
 	width: 200px;
 	height: 50px;
@@ -86,6 +86,12 @@ const Donation = () => {
 
   const columns: ColumnsType<TDonation> = [
     {
+      title: '후원종류',
+      dataIndex: 'donation_type',
+      className: 'column-created-by',
+      render: (donation_type: string) => <Text>{donation_type}</Text>,
+    },
+    {
       title: '메모',
       dataIndex: 'memo',
       className: 'column-title',
@@ -96,7 +102,7 @@ const Donation = () => {
       ),
     },
     {
-      title: '후원',
+      title: '신청인',
       dataIndex: 'applicant_name',
       className: 'column-created-by',
       render: (applicant_name: string) => <Text>{applicant_name}</Text>,
@@ -149,7 +155,7 @@ const Donation = () => {
             <div dangerouslySetInnerHTML={{ __html: `${get(donationPage, 'payment_method', '')}`}}/>
           </div>
           <div style={{color: '#999999', padding: '0px 10px'}}>
-            <p>{get(information, 'bank_account')} (예금주: 파주여성민우회)</p>
+            <p><strong style={{color: `${PrimaryColor}`}}>{get(information, 'bank_account')}</strong> (예금주: 파주여성민우회)</p>
           </div>
 		</Col>
 	  </Row>

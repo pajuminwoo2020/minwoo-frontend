@@ -7,6 +7,7 @@ import {Divider, Steps, Button, Form, Select, Radio, Typography, Input, Row, Col
 import {RadioChangeEvent} from 'antd/lib/radio'
 import {shallowEqual, useSelector} from 'react-redux';
 import {RootState} from 'modules';
+import {useDataApi} from 'libs/hooks';
 import {get} from 'lodash';
 import styled from 'styled-components';
 import SignatureCanvas from 'react-signature-canvas';
@@ -20,13 +21,14 @@ import AgreeCMSModal from 'components/modal/AgreeCMSModal';
 import AgreeUniqueModal from 'components/modal/AgreeUniqueModal';
 import AgreePersonalModal from 'components/modal/AgreePersonalModal';
 import AgreeOfferModal from 'components/modal/AgreeOfferModal';
-import {TDonation} from 'modules/information/types';
-import {createDonation} from 'libs/api/information';
+import {TDonation, TDonationPage} from 'modules/information/types';
+import {createDonation, getDonationPage} from 'libs/api/information';
 import {showNotification} from 'components/base/Common';
 import {commifyFormatter, commifyParser} from 'libs/validators';
 import DropdownDatePicker from 'components/base/DropdownDatePicker';
 import PhoneInput from 'components/base/PhoneInput';
 import Configs from 'config';
+import {DonationStepWrapper} from 'components/activity/Donation';
 
 const {Step} = Steps;
 const {Text, Title} = Typography;
@@ -102,6 +104,7 @@ const DonationStep = () => {
   const [agreePersonalModal, setAgreePersonalModal] = useState(false);
   const [agreeOfferModal, setAgreeOfferModal] = useState(false);
   const [form] = Form.useForm();
+  const [{data: donationPage, loading: pageLoading}] = useDataApi<TDonationPage>(getDonationPage.bind(null));
   const [data, setData] = useState<TDonation>();
   const [downloadUrl, setDownloadUrl] = useState('');
   const signaturePad = useRef<any>();
@@ -857,6 +860,30 @@ const DonationStep = () => {
       <Form.Provider onFormFinish={onFormFinish}>
         <div className="steps-content">{steps[current].content}</div>
       </Form.Provider>
+      {current === 0 && (
+	  <DonationStepWrapper>
+        <Row gutter={[16, 16]} align="top" style={{marginTop: '40px'}} justify="space-between">
+          <Col xs={24} sm={24} md={11} lg={11} xl={11}>
+            <div className="box-with-border color-blue">
+              <p>정기후원</p>
+            </div>
+            <div style={{color: '#999999', padding: '20px 10px 0px 10px'}}>
+              <div dangerouslySetInnerHTML={{ __html: `${get(donationPage, 'regular', '')}`}}/>
+            </div>
+          </Col>
+          <Col xs={24} sm={24} md={11} lg={11} xl={11}>
+            <div className="box-with-border color-yellow">
+              <p>일시후원</p>
+            </div>
+            <div style={{color: '#999999', padding: '20px 10px 0px 10px'}}>
+              <div dangerouslySetInnerHTML={{ __html: `${get(donationPage, 'temporary', '')}`}}/>
+            </div>
+            <div style={{color: '#999999', padding: '0px 10px'}}>
+            </div>
+          </Col>
+        </Row>
+	  </DonationStepWrapper>
+      )}
     </StepWrapper>
   );
 }

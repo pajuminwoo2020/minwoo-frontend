@@ -13,7 +13,7 @@ type TSearchInputProps = {
   disabled?: boolean;
 };
 
-const SearchInput = ({pagination, reloadPage, placeHolder='제목/작성자', style, disabled = false}: TSearchInputProps) => {
+const SearchInput = ({pagination, reloadPage, placeHolder='제목/내용', style, disabled = false}: TSearchInputProps) => {
   const [searchInputText, setSearchInputText] = useState(pagination.q);
 
   return (

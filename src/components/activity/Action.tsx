@@ -16,7 +16,7 @@ import {
 } from 'libs/api/board';
 import {useDataApi, usePagination} from 'libs/hooks';
 import {TBoardDetail} from 'modules/board';
-import {EBoardOperation, EBoardType} from 'enums/board.enum';
+import {EBoardOperation, EBoardType, EBoardClassType} from 'enums/board.enum';
 import {ERoute} from 'enums/route.enum';
 import {TListResponse, TPagination, RouteMatch, TSelectList} from 'modules/types';
 import {TUser} from 'modules/user';
@@ -89,7 +89,7 @@ const Action = () => {
         dataSource={get(data, 'contents')}
         renderItem={item => (
           <List.Item>
-            <CardWrapper to={`${ERoute.ActivityAction}/${EBoardOperation.View}/${get(item, 'id')}`}>
+            <CardWrapper to={`${get(item, 'board_type') === EBoardClassType.Action ? ERoute.ActivityAction : ERoute.AffiliateActivity}/${EBoardOperation.View}/${get(item, 'id')}`}>
               <Card className="large" hoverable cover={<img alt={"Action"} src={getImageSource(item)}/>}>
                 <Meta
                   title={

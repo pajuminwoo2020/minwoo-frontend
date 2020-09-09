@@ -204,7 +204,7 @@ export const deleteBoardSocietyActivity = (id: number, cancel?: CancelTokenSourc
   });
 };
 
-export const getBoardSocietyActivitys = ({params}: TListRequestParams, cancel?: CancelTokenSource) => {
+export const getBoardSocietyActivities = ({params}: TListRequestParams, cancel?: CancelTokenSource) => {
   return apiClient.get<TListResponse<TBoardDetail>>(`/board/society_activities`, {
     params: params,
     cancelToken: cancel?.token,
@@ -420,6 +420,51 @@ export const deleteBoardIntranetGeneral = (id: number, cancel?: CancelTokenSourc
 
 export const getBoardIntranetGenerals = ({params}: TListRequestParams, cancel?: CancelTokenSource) => {
   return apiClient.get<TListResponse<TBoardDetail>>(`/board/intranetgenerals`, {
+    params: params,
+    cancelToken: cancel?.token,
+  });
+};
+
+
+/**
+ * 반성폭력활동 게시판
+ */
+
+export const getBoardAffiliateActivity = (id: number, cancel?: CancelTokenSource) => {
+  return apiClient.get<TBoardDetail>(`/board/affiliate_activity/${id}`, {
+    cancelToken: cancel?.token,
+  });
+};
+export const createBoardAffiliateActivity = (params: TCreateBoardDetail, cancel?: CancelTokenSource) => {
+  return apiClient.post('/board/affiliate_activity', params, {
+    cancelToken: cancel?.token,
+  });
+};
+
+export const updateBoardAffiliateActivity = (id?: number, params?: TUpdateBoardDetail, cancel?: CancelTokenSource) => {
+  return apiClient.put(`/board/affiliate_activity/${id}`, params, {
+    cancelToken: cancel?.token,
+  });
+};
+
+export const deleteBoardAffiliateActivity = (id: number, cancel?: CancelTokenSource) => {
+  return apiClient.delete(`/board/affiliate_activity/${id}`, {
+    cancelToken: cancel?.token,
+  });
+};
+
+export const getBoardAffiliateActivities = ({params}: TListRequestParams, cancel?: CancelTokenSource) => {
+  return apiClient.get<TListResponse<TBoardDetail>>(`/board/affiliate_activities`, {
+    params: params,
+    cancelToken: cancel?.token,
+  });
+};
+
+/*
+ * 전체검색
+ * */
+export const getBoardAll = ({params}: TListRequestParams, cancel?: CancelTokenSource) => {
+  return apiClient.get<TListResponse<TBoardDetail>>(`/board/global`, {
     params: params,
     cancelToken: cancel?.token,
   });

@@ -50,13 +50,16 @@ export const passwordUpdate = (uidb64: string, token: string, params: TPasswordU
   return apiClient.post(`/password/update/${uidb64}/${token}`, params);
 };
 
-export const main = () => {
-  return axios.all([getUser()]).then(
-    axios.spread(function(user) {
-      return user;
-    }),
-  );
-};
+export const main = () => wrapPromise(
+  apiClient.get<TUser>('/user').then(
+    async response => {
+      return response.data;
+    },
+    e => {
+      return e;
+    },
+  ),
+);
 
 export function wrapPromise(promise: any) {
   let status = 'pending';
@@ -64,7 +67,7 @@ export function wrapPromise(promise: any) {
   let suspender = promise.then(
     (r: any) => {
       status = 'success';
-      result = r.data;
+      result = r;
     },
     (e: any) => {
       status = 'error';

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Tabs, Timeline, Row, Col, Typography, Divider, BackTop, Skeleton} from 'antd';
+import {Tabs, Timeline, Row, Col, Typography, Divider, BackTop, Skeleton, Spin} from 'antd';
 import {shallowEqual, useSelector} from 'react-redux';
 import {RootState} from 'modules';
 import styled from 'styled-components';
@@ -14,7 +14,7 @@ import Image3_2 from 'assets/affiliate_about3_2.png';
 import Image3_3 from 'assets/affiliate_about3_3.jpg';
 import DotImage from 'assets/dot.png';
 import {get, map} from 'lodash';
-import {getClinicAbout} from 'libs/api/information';
+import {getClinicAbout, getAffiliateHistories} from 'libs/api/information';
 import {useDataApi} from 'libs/hooks';
 import {TInformationHistory, TClinicAbout} from 'modules/information/types'
 import {PrimaryColor} from 'GlobalStyles';
@@ -35,6 +35,7 @@ const AffiliateAboutWrapper = styled.div`
     margin: 50px 0px 30px 0px;
   }
   .box-with-border{
+    margin-bottom: 20px;
     max-width: 400px;
     border-radius: 15px;
     border: 3px solid #0dbeb5;
@@ -51,105 +52,81 @@ const AffiliateAboutWrapper = styled.div`
     padding-left: 20px;
   }
   .content-title {
-    font-size: 30px;
-    text-align: center;
-    margin: 30px;
+    font-size: 18px;
+  }
+  .content-title:before {
+    content: '\u25c9';
+    margin-right: 5px;
+  }
+  .content-body {
+    margin: 10px 0px 30px 0px;
+    max-width: 700px;
   }
 `;
 const About = () => {
   const information = useSelector((state: RootState) => state.information.info, shallowEqual);
   const [{data: clinicAbout, loading}] = useDataApi<TClinicAbout>(getClinicAbout.bind(null));
-
-  function handleTabClick(key: string) {
-    const elem = document.getElementById(key);
-    elem?.scrollIntoView({behavior: 'smooth'});
-  }
+  const [{data: dataHistories, loading: loadingHistories}] = useDataApi<TInformationHistory>(getAffiliateHistories.bind(null));
 
   return (
     <AffiliateAboutWrapper>
-      <Tabs activeKey="purpose" onTabClick={handleTabClick}>
-        <TabPane key="purpose" tab="소개"></TabPane>
-        <TabPane key="history" tab="상담"></TabPane>
-        <TabPane key="activity" tab="교육"></TabPane>
-      </Tabs>
-      <div className="tabs-content" id="purpose">
-        <Title className="content-title">소개</Title>
-        <Row justify="center" gutter={[32, 16]}>
-          <Col xs={24} sm={24} md={14} lg={14} xl={14}>
-            <div style={{margin: 'auto'}}>
+      <Tabs defaultActiveKey="purpose">
+        <TabPane key="purpose" tab="연혁">
+          <div className="tabs-content" id="purpose">
+            <div style={{maxWidth: '700px', marginBottom: '30px'}}>
               {loading === true ? (
                 <Skeleton active title={false} paragraph={{rows: 5}}/>
               ) : (
                 <div dangerouslySetInnerHTML={{ __html: `${get(clinicAbout, 'purpose', '')}`}}/>
               )}
             </div>
-          </Col>
-          <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-            <img src={Image1} style={{width: '100%', height: 'auto'}}/>
-          </Col>
-        </Row>
-        <Title className="block-title" level={3}>&#9673;&nbsp;성폭력 없는 세상</Title>
-        <Row gutter={[16, 16]} align="middle" justify="center" className="list-image">
-          <Col xs={24} sm={24} md={24} lg={6} xl={6}>
-            <img src={Image2_1} style={{width: 'auto', height: '200px'}}/>
-          </Col>
-          <Col xs={24} sm={24} md={24} lg={2} xl={2}>
-            <img src={Image_plus} style={{width: '50px', height: '50px'}}/>
-          </Col>
-          <Col xs={24} sm={24} md={24} lg={6} xl={6}>
-            <img src={Image2_2} style={{width: 'auto', height: '200px'}}/>
-          </Col>
-          <Col xs={24} sm={24} md={24} lg={2} xl={2}>
-            <img src={Image_plus} style={{width: '50px', height: '50px'}}/>
-          </Col>
-          <Col xs={24} sm={24} md={24} lg={6} xl={6}>
-            <img src={Image2_3} style={{width: 'auto', height: '200px'}}/>
-          </Col>
-        </Row>
-        <Title className="block-title" level={3}>&#9673;&nbsp;상담소와 쉼터</Title>
-        <Row>
-          <Col offset={1}>
-            <div className="box-with-border">
-              <p>파주여성민우회</p>
-              <p>성폭력상담소 ∙ 피해자보호시설 하담데이트 성폭력</p>
-            </div>
-            <div style={{marginTop: '20px'}}>
+            <HistoryWrapper>
+              <Spin tip="로딩중..." spinning={loadingHistories}>
+                {map(dataHistories, (yearData, index) =>
+                  <>
+                    <Title className={`year row${index%3}`}>{get(yearData, 'year')}</Title>
+                    <Timeline mode="alternate">
+                      {map(get(yearData, 'children', []), v =>
+                        <Timeline.Item>
+                          <div className='memo-wrapper'>{get(v, 'memo')}</div>
+                        </Timeline.Item>
+                      )}
+                    </Timeline>
+                  </>
+                )}
+              </Spin>
+            </HistoryWrapper>
+          </div>
+        </TabPane>
+        <TabPane key="activity" tab="활동">
+          <div className="tabs-content" id="activity">
+            <Title className="content-title" level={4}> 상담</Title>
+            <div className="content-body">
+              <div className="ant-typography box-paragraph">
+              <div className="box-with-border">
+                <p>파주여성민우회</p>
+                <p>성폭력상담소 ∙ 피해자보호시설 하담데이트 성폭력</p>
+              </div>
               <p style={{marginBottom: '5px'}}><strong>상담전화</strong>&nbsp;&nbsp;{get(information, 'phone_counseling')}</p>
               <p><strong>웹사이트</strong>&nbsp;&nbsp;<a href={get(information, 'webhost_counseling')}>{get(information, 'webhost_counseling')}</a></p>
+                <div dangerouslySetInnerHTML={{ __html: `${get(clinicAbout, 'counseling', '')}`}}/>
+              </div>
             </div>
-          </Col>
-        </Row>
-      </div>
-      <div className="tabs-content" id="history">
-        <Divider/>
-        <Title className="content-title">상담</Title>
-        상담
-      </div>
-      <div className="tabs-content" id="activity">
-        <Divider/>
-        <Title className="content-title">교육</Title>
-        <Row justify="center" style={{marginBottom: '40px'}}>
-          <img src={Image3_title} style={{width: 'auto', height: '80px'}}/>
-        </Row>
-        <Row gutter={[16, 16]} justify="center" className="list-image" style={{marginBottom: '40px'}}>
-          <Col xs={24} sm={24} md={24} lg={5} xl={5}>
-            <img src={Image3_1} style={{width: 'auto', height: '130px'}}/>
-          </Col>
-          <Col xs={24} sm={24} md={24} lg={2} xl={2}>
-            <img src={Image_plus} style={{width: '40px', height: '40px', margin: '20px 0px'}}/>
-          </Col>
-          <Col xs={24} sm={24} md={24} lg={8} xl={8}>
-            <img src={Image3_2} style={{width: 'auto', height: '90px'}}/>
-          </Col>
-          <Col xs={24} sm={24} md={24} lg={2} xl={2}>
-            <img src={Image_plus} style={{width: '40px', height: '40px', margin: '20px 0px'}}/>
-          </Col>
-          <Col xs={24} sm={24} md={24} lg={5} xl={5}>
-            <img src={Image3_3} style={{width: 'auto', height: '90px'}}/>
-          </Col>
-        </Row>
-        <div dangerouslySetInnerHTML={{ __html: `${get(clinicAbout, 'activity', '')}`}}/>
-      </div>
+            <Title className="content-title" level={4}>교육</Title>
+            <div className="content-body">
+              <div className="ant-typography box-paragraph">
+                <div dangerouslySetInnerHTML={{ __html: `${get(clinicAbout, 'education', '')}`}}/>
+              </div>
+            </div>
+            <Title className="content-title" level={4}>폭력예방활동</Title>
+            <div className="content-body">
+              <div className="ant-typography box-paragraph">
+                <div dangerouslySetInnerHTML={{ __html: `${get(clinicAbout, 'activity', '')}`}}/>
+              </div>
+            </div>
+          </div>
+        </TabPane>
+      </Tabs>
       <BackTop></BackTop>
     </AffiliateAboutWrapper>
   );

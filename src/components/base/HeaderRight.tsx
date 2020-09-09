@@ -101,7 +101,6 @@ export const HeaderRight = ({onClick}: TRightMenuProps) => {
                 <Text strong={true}>{currentUser.fullname}</Text>
               </div>
               <div style={{display: 'inline-block'}}>
-                <Text>&nbsp;&nbsp;{currentUser.userid}</Text>
                 <DownOutlined style={{marginLeft: 10}}/>
               </div>
             </div>

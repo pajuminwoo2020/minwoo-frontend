@@ -4,7 +4,7 @@ import {get, isEmpty, map} from 'lodash';
 import {AxiosResponse} from 'axios';
 import {ExclamationCircleOutlined, InboxOutlined, PlusOutlined} from '@ant-design/icons';
 import {UploadChangeParam} from 'antd/lib/upload/interface';
-import {Row, Col, Form, Input, Button, Modal, Upload, Select, Spin} from 'antd';
+import {Row, Col, Form, Input, Button, Modal, Upload, Select, Spin, Checkbox} from 'antd';
 import {FormattedDate} from 'react-intl';
 import {Link} from 'react-router-dom';
 import {BoardDetailWrapper} from 'components/base/styles';
@@ -31,6 +31,7 @@ type TBoardDetailProps = {
   promiseUpdate: any,
   promiseDelete: any,
   hasThumbnail?: boolean,
+  onBoardAction?: boolean,
   categories?: TSelectList;
   record?: TBoardDetail;
   loading?: boolean,
@@ -45,6 +46,7 @@ export const BoardDetail = ({
   promiseUpdate,
   categories,
   hasThumbnail=false,
+  onBoardAction=false,
   record,
   loading=false,
 }: TBoardDetailProps) => {
@@ -187,6 +189,7 @@ export const BoardDetail = ({
           })),
           body: get(record, 'body'),
           category: get(record, 'category.id'),
+          on_board_action: get(record, 'on_board_action') == true ? ["true"] : [""],
         });
         setThumbnailSource(get(record, 'thumbnail_source'));
       }
@@ -209,6 +212,7 @@ export const BoardDetail = ({
             title: get(value, 'title'),
             body: get(value, 'body'),
             category: get(value, 'category'),
+            on_board_action: (form.getFieldValue('on_board_action') == "true" ? true : false),
             file_ids: filteredFileNames(get(value, 'files')),
             thumbnail_source: thumbnailSource,
           });
@@ -226,6 +230,11 @@ export const BoardDetail = ({
     return (
       <>
         <Form form={form} className="body-edit">
+          {onBoardAction && <Form.Item noStyle name="on_board_action">
+            <Checkbox.Group>
+              <Checkbox value="true">민우뉴스 게시판에 연동하기</Checkbox>
+            </Checkbox.Group>
+          </Form.Item>}
           <Form.Item noStyle>
             <Input.Group>
               <Row>
@@ -314,6 +323,7 @@ export const BoardDetail = ({
             title: get(value, 'title'),
             body: get(value, 'body'),
             category: get(value, 'category'),
+            on_board_action: (form.getFieldValue('on_board_action') == "true" ? true : false),
             file_ids: filteredFileNames(get(value, 'files')),
             thumbnail_source: thumbnailSource,
           });
@@ -331,6 +341,11 @@ export const BoardDetail = ({
     return (
       <>
         <Form form={form} className="body-edit">
+          {onBoardAction && <Form.Item noStyle name="on_board_action">
+            <Checkbox.Group>
+              <Checkbox value="true">민우뉴스 게시판에 연동하기</Checkbox>
+            </Checkbox.Group>
+          </Form.Item>}
           <Form.Item noStyle>
             <Input.Group>
               <Row>

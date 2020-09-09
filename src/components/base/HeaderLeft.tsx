@@ -46,7 +46,7 @@ const menuNames = [{
     name: '회원활동',
     path: 'member',
   }, {
-    name: '지역소식',
+    name: '지역젠더이슈',
     path: 'press',
   }, {
     name: '후원하기',
@@ -59,8 +59,11 @@ const menuNames = [{
   name: '파주성폭력상담소',
   path: 'affiliate',
   children: [{
-    name: '파주성폭력상담소 \'함께\'',
+    name: '소개',
     path: 'about',
+  }, {
+    name: '반성폭력활동',
+    path: 'activity',
   }],
 }, {
   name: '소모임',
@@ -94,6 +97,13 @@ const menuNames = [{
   }, {
     name: '자료실',
     path: 'drive',
+  }],
+}, {
+  name: '게시판',
+  path: 'search',
+  children: [{
+    name: '전체 검색',
+    path: 'global',
   }],
 }];
 
@@ -173,6 +183,12 @@ export const HeaderLeft = ({mode, onClick}: TMenuProps) => {
       </SubMenu>
       <span className="vertical-bar"></span>
       <SubMenu title={<Link to={ERoute.AffiliateAbout}><div style={{height: '100%'}}>{getMenuTitle('/affiliate')[0]}</div></Link>}>
+        <Menu.Item key={ERoute.AffiliateAbout}>
+          <Link to={ERoute.AffiliateAbout}>{getMenuTitle(ERoute.AffiliateAbout)[1]}</Link>
+        </Menu.Item>
+        <Menu.Item key={ERoute.AffiliateActivity}>
+          <Link to={ERoute.AffiliateActivity}>{getMenuTitle(ERoute.AffiliateActivity)[1]}</Link>
+        </Menu.Item>
       </SubMenu>
     </Menu>
   );

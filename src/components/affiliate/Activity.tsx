@@ -7,11 +7,11 @@ import React, {useEffect, useState} from 'react';
 import {TableWrapper, TableHeaderWrapper} from 'GlobalStyles';
 import {FormattedDate} from 'react-intl';
 import {
-  getBoardSocietyActivities,
-  getBoardSocietyActivity,
-  createBoardSocietyActivity,
-  deleteBoardSocietyActivity,
-  updateBoardSocietyActivity,
+  getBoardAffiliateActivities,
+  getBoardAffiliateActivity,
+  createBoardAffiliateActivity,
+  deleteBoardAffiliateActivity,
+  updateBoardAffiliateActivity,
 } from 'libs/api/board';
 import {useDataApi, usePagination} from 'libs/hooks';
 import {TBoardDetail, TCategory} from 'modules/board';
@@ -20,12 +20,11 @@ import {ERoute} from 'enums/route.enum';
 import {TListResponse, TPagination, RouteMatch, TSelectList} from 'modules/types';
 import {TUser} from 'modules/user';
 import SearchInput from 'components/base/SearchInput';
-import Category from 'components/base/Category';
 import BoardDetail from 'components/base/BoardDetail';
-import {getCategoriesSelect} from 'libs/api/board';
 import {usePermission} from 'libs/hooks';
+import {getCategoriesSelect} from 'libs/api/board';
 
-const SocietyActivity = () => {
+const AffiliateActivity = () => {
   const [pagination, setPagination] = usePagination();
   const {boardManagementPermission} = usePermission();
   const reloadPage = (page?: Partial<TPagination>) => {
@@ -34,7 +33,7 @@ const SocietyActivity = () => {
       ...page,
     });
   };
-  const getPromise = getBoardSocietyActivities.bind(null, {
+  const getPromise = getBoardAffiliateActivities.bind(null, {
     params: {
       current: pagination.current,
       pageSize: pagination.pageSize,
@@ -70,8 +69,8 @@ const SocietyActivity = () => {
       dataIndex: 'title',
       className: 'column-title',
       render: (_: any, record: TBoardDetail) => (
-        <Link to={`${ERoute.MemberSocietyActivity}/${EBoardOperation.View}/${record.id}`}>
-          {get(record, 'title')}
+        <Link to={`${ERoute.AffiliateActivity}/${EBoardOperation.View}/${record.id}`}>
+          {record.title}
         </Link>
       )
     },
@@ -109,10 +108,9 @@ const SocietyActivity = () => {
   return (
     <>
       <TableHeaderWrapper>
-        <Category pagination={pagination} reloadPage={reloadPage} boardType={EBoardType.SocietyActivity}/>
         <SearchInput pagination={pagination} reloadPage={reloadPage}/>
         {boardManagementPermission &&
-          <Link to={`${ERoute.MemberSocietyActivity}/${EBoardOperation.Create}`}>
+          <Link to={`${ERoute.AffiliateActivity}/${EBoardOperation.Create}`}>
             <Button
               className="add-button"
               type="primary"
@@ -140,26 +138,28 @@ const SocietyActivity = () => {
   );
 };
 
-export const SocietyActivityDetail = () => {
-  const match = useRouteMatch(`${ERoute.MemberSocietyActivity}/:operation/:record_id?`);
+export const AffiliateActivityDetail = () => {
+  const match = useRouteMatch(`${ERoute.AffiliateActivity}/:operation/:record_id?`);
   let {operation=EBoardOperation.View, record_id} = (match?.params as RouteMatch) || {};
-  const [{data, loading}] = useDataApi<TBoardDetail>(getBoardSocietyActivity.bind(null, record_id), {}, operation != EBoardOperation.Create);
-  const [{data: categories, loading: categoriesLoading}] = useDataApi<TSelectList>(getCategoriesSelect.bind(null, EBoardType.SocietyActivity), []);
+  const [{data, loading}] = useDataApi<TBoardDetail>(getBoardAffiliateActivity.bind(null, record_id), {}, operation != EBoardOperation.Create);
+  const [{data: categories, loading: categoriesLoading}] = useDataApi<TSelectList>(getCategoriesSelect.bind(null, EBoardType.AffiliateActivity), []);
 
   return (
 	<BoardDetail
 	  operation={operation}
-	  pathName={ERoute.MemberSocietyActivity}
-	  promiseCreate={createBoardSocietyActivity}
-	  promiseDelete={deleteBoardSocietyActivity}
-	  promiseUpdate={updateBoardSocietyActivity}
+	  pathName={ERoute.AffiliateActivity}
+	  promiseCreate={createBoardAffiliateActivity}
+	  promiseDelete={deleteBoardAffiliateActivity}
+	  promiseUpdate={updateBoardAffiliateActivity}
       categories={categories}
-	  record={data}
+      hasThumbnail={true}
+      onBoardAction={true}
+      record={data}
       loading={loading}
 	/>
   );
 };
 
-SocietyActivity.defaultProps = {};
+AffiliateActivity.defaultProps = {};
 
-export default SocietyActivity;
+export default AffiliateActivity;

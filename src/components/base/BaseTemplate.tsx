@@ -13,6 +13,7 @@ import {HeaderRight} from 'components/base/HeaderRight';
 import Footer from 'components/base/Footer';
 import {PrimaryColor} from 'GlobalStyles';
 import {CWindowWidth} from 'constants/base.const';
+import GlobalSearchInput from 'components/base/GlobalSearchInput';
 
 const {Header, Content} = Layout;
 const {Text} = Typography;
@@ -47,8 +48,9 @@ export const BaseTemplate = ({children}: {children: React.ReactNode;}) => {
               <LogoImage/>
             </Col>
             <Col flex="auto" className="header-large">
-              <Row justify='space-between'>
+              <Row justify='start'>
                 <HeaderLeft mode="horizontal"/>
+                <GlobalSearchInput/>
                 <HeaderRight/>
               </Row>
             </Col>
