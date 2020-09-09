@@ -1,11 +1,12 @@
 import {CheckOutlined, PlusOutlined} from '@ant-design/icons/lib';
 import {Button, Table, Typography} from 'antd';
-import {useRouteMatch, Link} from 'react-router-dom';
+import {useRouteMatch, Link, useLocation} from 'react-router-dom';
 import {ColumnsType} from 'antd/es/table';
 import {get} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {TableWrapper, TableHeaderWrapper} from 'GlobalStyles';
 import {FormattedDate} from 'react-intl';
+import queryString from 'query-string';
 import {
   getBoardAffiliateActivities,
   getBoardAffiliateActivity,
@@ -143,6 +144,7 @@ export const AffiliateActivityDetail = () => {
   let {operation=EBoardOperation.View, record_id} = (match?.params as RouteMatch) || {};
   const [{data, loading}] = useDataApi<TBoardDetail>(getBoardAffiliateActivity.bind(null, record_id), {}, operation != EBoardOperation.Create);
   const [{data: categories, loading: categoriesLoading}] = useDataApi<TSelectList>(getCategoriesSelect.bind(null, EBoardType.AffiliateActivity), []);
+  const back = queryString.parse(useLocation().search)?.back?.toString();
 
   return (
 	<BoardDetail
@@ -156,6 +158,7 @@ export const AffiliateActivityDetail = () => {
       onBoardAction={true}
       record={data}
       loading={loading}
+      back={back}
 	/>
   );
 };

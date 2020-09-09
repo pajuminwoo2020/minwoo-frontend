@@ -264,7 +264,7 @@ export const TableWrapper = styled.div`
 
   .column-category {
     text-align: center;
-    width: 100px;
+    width: 120px;
 
     @media screen and ${device.mobile} {
       display: none;

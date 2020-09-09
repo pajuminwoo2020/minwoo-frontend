@@ -34,6 +34,7 @@ type TBoardDetailProps = {
   onBoardAction?: boolean,
   categories?: TSelectList;
   record?: TBoardDetail;
+  back?: string;
   loading?: boolean,
 };
 
@@ -48,6 +49,7 @@ export const BoardDetail = ({
   hasThumbnail=false,
   onBoardAction=false,
   record,
+  back,
   loading=false,
 }: TBoardDetailProps) => {
   const {boardManagementPermission} = usePermission();
@@ -149,7 +151,7 @@ export const BoardDetail = ({
         </Spin>
         <Row justify="space-between" className="btn-bottom">
           <Col>
-            <Link to={pathName}>
+            <Link to={back ? back : pathName}>
               <Button type="primary" size="large">목록</Button>
             </Link>
           </Col>
@@ -282,7 +284,7 @@ export const BoardDetail = ({
         </Form>
         <Row justify="space-between" className="btn-bottom">
           <Col>
-            <Link to={pathName}>
+            <Link to={back ? back : pathName}>
               <Button type="primary" size="large">목록</Button>
             </Link>
           </Col>
@@ -393,7 +395,7 @@ export const BoardDetail = ({
         </Form>
         <Row justify="space-between" className="btn-bottom">
           <Col>
-            <Link to={pathName}>
+            <Link to={back ? back : pathName}>
               <Button type="primary" size="large">목록</Button>
             </Link>
           </Col>
