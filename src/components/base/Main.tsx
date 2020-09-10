@@ -77,7 +77,7 @@ const Main = () => {
           <Link
             className="area-right-top background-heart"
             to={ERoute.ActivityDonation}
-            style={{marginBottom: '10px', textAlign: 'center'}}
+            style={{marginBottom: '25px', textAlign: 'center'}}
           >
             <p className="title">후원하기</p>
             <p><BankOutlined/>&nbsp;<Text>{get(information, 'bank_account')}</Text></p>
@@ -94,7 +94,7 @@ const Main = () => {
               <li><Text mark>폭력예방활동</Text></li>
             </ul>
           </Link>
-          <div style={{height: '70px', paddingTop: '20px'}}>
+          <div style={{height: '80px', paddingTop: '25px'}}>
             <Row gutter={[16, 16]} align="middle">
               <Col flex="50px">
                 <img src={CalendarSource} style={{height: '40px', width: 'auto'}}/>
@@ -121,7 +121,11 @@ const Main = () => {
             loading={loadingAction}
             renderItem={item => (
               <List.Item>
-                <CardWrapper to={`${get(item, 'board_type') === EBoardClassType.Action ? ERoute.ActivityAction : ERoute.AffiliateActivity}/${EBoardOperation.View}/${get(item, 'id')}`}>
+                <CardWrapper to={
+                  get(item, 'board_type') === EBoardClassType.Action ?
+                  `${ERoute.ActivityAction}/${EBoardOperation.View}/${get(item, 'id')}` :
+                  `${ERoute.AffiliateActivity}/${EBoardOperation.View}/${get(item, 'id')}?back=${ERoute.ActivityAction}`
+                }>
                   <Card
                     bodyStyle={{padding: '10px 20px'}}
                     hoverable

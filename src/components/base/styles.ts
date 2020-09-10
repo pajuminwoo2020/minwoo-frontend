@@ -166,7 +166,7 @@ export const MainWrapper = styled.div`
     background: transparent;
     overflow: hidden;
     margin-bottom: 20px;
-    max-height: 320px;
+    max-height: 345px;
   }
   .ant-carousel .slick-dots-top {
     top: 0px;
@@ -200,7 +200,7 @@ export const MainWrapper = styled.div`
   .ant-carousel img {
     margin: auto;
 	width: 99%;
-	height: 330px;
+	height: 350px;
     @media screen and ${device.mobile} {
       height: 195px;
     }
@@ -235,7 +235,7 @@ export const MainWrapper = styled.div`
   .area-right-top {
     padding: 10px 20px;
     width: 100%;
-	height: 120px;
+	height: 125px;
     margin: auto;
     border-radius: 5px;
     box-shadow: 0 2px 5px #000;

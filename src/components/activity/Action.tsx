@@ -89,7 +89,11 @@ const Action = () => {
         dataSource={get(data, 'contents')}
         renderItem={item => (
           <List.Item>
-            <CardWrapper to={get(item, 'board_type') === EBoardClassType.Action ? `${ERoute.ActivityAction}/${EBoardOperation.View}/${get(item, 'id')}` : `${ERoute.AffiliateActivity}/${EBoardOperation.View}/${get(item, 'id')}?back=${ERoute.ActivityAction}`}>
+            <CardWrapper to={
+              get(item, 'board_type') === EBoardClassType.Action ?
+              `${ERoute.ActivityAction}/${EBoardOperation.View}/${get(item, 'id')}` :
+              `${ERoute.AffiliateActivity}/${EBoardOperation.View}/${get(item, 'id')}?back=${ERoute.ActivityAction}`
+            }>
               <Card className="large" hoverable cover={<img alt={"Action"} src={getImageSource(item)}/>}>
                 <Meta
                   title={
