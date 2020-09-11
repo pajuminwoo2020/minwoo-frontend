@@ -16,6 +16,7 @@ import {
 } from 'libs/api/board';
 import {useDataApi, usePagination} from 'libs/hooks';
 import {TBoardDetail, TCategory} from 'modules/board';
+import Category from 'components/base/Category';
 import {EBoardOperation, EBoardType} from 'enums/board.enum';
 import {ERoute} from 'enums/route.enum';
 import {TListResponse, TPagination, RouteMatch, TSelectList} from 'modules/types';
@@ -109,6 +110,7 @@ const AffiliateActivity = () => {
   return (
     <>
       <TableHeaderWrapper>
+        <Category pagination={pagination} reloadPage={reloadPage} boardType={EBoardType.AffiliateActivity}/>
         <SearchInput pagination={pagination} reloadPage={reloadPage}/>
         {boardManagementPermission &&
           <Link to={`${ERoute.AffiliateActivity}/${EBoardOperation.Create}`}>
