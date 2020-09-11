@@ -6,26 +6,45 @@ import {get} from 'lodash';
 import React, {useEffect, useState} from 'react';
 import {TableWrapper, TableHeaderWrapper} from 'GlobalStyles';
 import {FormattedDate} from 'react-intl';
-import {
-  getBoardSocietyActivities,
-  getBoardSocietyActivity,
-  createBoardSocietyActivity,
-  deleteBoardSocietyActivity,
-  updateBoardSocietyActivity,
-} from 'libs/api/board';
+import {getBoardAll} from 'libs/api/board';
 import {useDataApi, usePagination} from 'libs/hooks';
 import {TBoardDetail, TCategory} from 'modules/board';
-import {EBoardOperation, EBoardType} from 'enums/board.enum';
+import {EBoardOperation, EBoardClassType} from 'enums/board.enum';
 import {ERoute} from 'enums/route.enum';
-import {TListResponse, TPagination, RouteMatch, TSelectList} from 'modules/types';
+import {TListResponse, TPagination, RouteMatch} from 'modules/types';
 import {TUser} from 'modules/user';
 import SearchInput from 'components/base/SearchInput';
-import Category from 'components/base/Category';
 import BoardDetail from 'components/base/BoardDetail';
-import {getCategoriesSelect} from 'libs/api/board';
 import {usePermission} from 'libs/hooks';
 
-const SocietyActivity = () => {
+function get_board_meta(board_type: EBoardClassType | undefined) {
+  switch (board_type) {
+    case EBoardClassType.Action:
+      return ['민우액션', ERoute.ActivityAction];
+    case EBoardClassType.NewsLetter:
+      return ['소식지', ERoute.BulletinNewsletter];
+    case EBoardClassType.ActivityMember:
+      return ['회원활동', ERoute.ActivityMember];
+    case EBoardClassType.Notice:
+      return ['공지사항', ERoute.ActivityNotice];
+    case EBoardClassType.AffiliateActivity:
+      return ['반성폭력활동', ERoute.AffiliateActivity];
+    case EBoardClassType.Press:
+      return ['지역소식', ERoute.ActivityPress];
+    case EBoardClassType.Settlement:
+      return ['결산보고', ERoute.IntroSettlement];
+    case EBoardClassType.Drive:
+      return ['자료실', ERoute.BulletinDrive];
+    case EBoardClassType.SocietyActivity:
+      return ['소모임활동', ERoute.MemberSocietyActivity];
+    case EBoardClassType.Gallery:
+      return ['갤러리', ERoute.BulletinGallery];
+    default:
+      return ['', ''];
+  }
+}
+
+const SearchGlobal = () => {
   const [pagination, setPagination] = usePagination();
   const {boardManagementPermission} = usePermission();
   const reloadPage = (page?: Partial<TPagination>) => {
@@ -34,11 +53,10 @@ const SocietyActivity = () => {
       ...page,
     });
   };
-  const getPromise = getBoardSocietyActivities.bind(null, {
+  const getPromise = getBoardAll.bind(null, {
     params: {
       current: pagination.current,
       pageSize: pagination.pageSize,
-      category: pagination.category,
       q: pagination.q,
     },
   });
@@ -53,16 +71,11 @@ const SocietyActivity = () => {
 
   const columns: ColumnsType<TBoardDetail> = [
     {
-      title: '번호',
-      dataIndex: 'id',
-      className: 'column-id',
-    },
-    {
-      title: '카테고리',
-      dataIndex: 'category',
+      title: '게시판',
+      dataIndex: 'board_type',
       className: 'column-category',
-      render: (category: TCategory) => (
-        <span>{get(category, 'name')}</span>
+      render: (board_type: EBoardClassType) => (
+        <span>{get_board_meta(board_type)[0]}</span>
       )
     },
     {
@@ -70,8 +83,8 @@ const SocietyActivity = () => {
       dataIndex: 'title',
       className: 'column-title',
       render: (_: any, record: TBoardDetail) => (
-        <Link to={`${ERoute.MemberSocietyActivity}/${EBoardOperation.View}/${record.id}`}>
-          {get(record, 'title')}
+        <Link to={`${get_board_meta(get(record, 'board_type'))[1]}/${EBoardOperation.View}/${record.id}`}>
+          {record.title}
         </Link>
       )
     },
@@ -109,20 +122,7 @@ const SocietyActivity = () => {
   return (
     <>
       <TableHeaderWrapper>
-        <Category pagination={pagination} reloadPage={reloadPage} boardType={EBoardType.SocietyActivity}/>
         <SearchInput pagination={pagination} reloadPage={reloadPage}/>
-        {boardManagementPermission &&
-          <Link to={`${ERoute.MemberSocietyActivity}/${EBoardOperation.Create}`}>
-            <Button
-              className="add-button"
-              type="primary"
-              size="large"
-              icon={<PlusOutlined/>}
-            >
-              글쓰기
-            </Button>
-          </Link>
-        }
       </TableHeaderWrapper>
       <TableWrapper>
         <Table
@@ -140,26 +140,6 @@ const SocietyActivity = () => {
   );
 };
 
-export const SocietyActivityDetail = () => {
-  const match = useRouteMatch(`${ERoute.MemberSocietyActivity}/:operation/:record_id?`);
-  let {operation=EBoardOperation.View, record_id} = (match?.params as RouteMatch) || {};
-  const [{data, loading}] = useDataApi<TBoardDetail>(getBoardSocietyActivity.bind(null, record_id), {}, operation != EBoardOperation.Create);
-  const [{data: categories, loading: categoriesLoading}] = useDataApi<TSelectList>(getCategoriesSelect.bind(null, EBoardType.SocietyActivity), []);
+SearchGlobal.defaultProps = {};
 
-  return (
-	<BoardDetail
-	  operation={operation}
-	  pathName={ERoute.MemberSocietyActivity}
-	  promiseCreate={createBoardSocietyActivity}
-	  promiseDelete={deleteBoardSocietyActivity}
-	  promiseUpdate={updateBoardSocietyActivity}
-      categories={categories}
-	  record={data}
-      loading={loading}
-	/>
-  );
-};
-
-SocietyActivity.defaultProps = {};
-
-export default SocietyActivity;
+export default SearchGlobal;

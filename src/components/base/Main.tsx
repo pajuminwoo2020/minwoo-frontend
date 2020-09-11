@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {EyeOutlined, BankOutlined, PhoneOutlined} from '@ant-design/icons/lib';
+import {EyeOutlined, BankOutlined, PhoneOutlined, ArrowRightOutlined} from '@ant-design/icons/lib';
 import {FormattedDate} from 'react-intl';
 import {Link} from 'react-router-dom';
 import {get, map, filter} from 'lodash';
@@ -16,17 +16,19 @@ import {getBoardNotices, getBoardActions, getBoardActivityMembers, getBoardPress
 import {getBanners} from 'libs/api/information';
 import {PrimaryColor, CardWrapper} from 'GlobalStyles'
 import {ERoute} from 'enums/route.enum'
-import {EBoardOperation} from 'enums/board.enum'
+import {EBoardOperation, EBoardClassType} from 'enums/board.enum'
 import {EBannerType} from 'enums/information.enum'
 import Configs from 'config';
 import FacebookSource from 'assets/logo_facebook.png';
 import InstagramSource from 'assets/logo_instagram.png';
 import HumanSource from 'assets/logo_human.png';
 import NTSSource from 'assets/logo_nts.png';
+import CalendarSource from 'assets/calendar.png';
 
 const {Text} = Typography;
 const {Meta} = Card;
 const Main = () => {
+  const [showFacebook, setShowFacebook] = useState(true);
   const information = useSelector((state: RootState) => state.information.info, shallowEqual);
   const [{data:dataBanner, loading:loadingBanner}] = useDataApi<TListResponse<TBanner>>(getBanners.bind(null, {
     params: {
@@ -37,7 +39,7 @@ const Main = () => {
   const [{data:dataNotice, loading:loadingNotice}] = useDataApi<TListResponse<TBoardDetail>>(getBoardNotices.bind(null, {
     params: {
       current: 1,
-      pageSize: 5,
+      pageSize: 6,
     },
   }));
   const [{data:dataAction, loading:loadingAction}] = useDataApi<TListResponse<TBoardDetail>>(getBoardActions.bind(null, {
@@ -55,20 +57,59 @@ const Main = () => {
   const [{data:dataPress, loading:loadingPress}] = useDataApi<TListResponse<TBoardDetail>>(getBoardPresses.bind(null, {
     params: {
       current: 1,
-      pageSize: 5,
+      pageSize: 6,
     },
   }));
 
   return (
     <MainWrapper>
-      HELLO
-      <Carousel autoplay dotPosition="top">
-        {map(filter(get(dataBanner, 'contents', []), v => v.banner_type === EBannerType.Large), v => (
-          <a href={get(v, 'href')}>
-            <img src={`${Configs.API_HOST}${get(v, 'absolute_url')}`}/>
-          </a>
-        ))}
-      </Carousel>
+      <Row gutter={[16, 16]} justify="center">
+        <Col xs={24} sm={24} md={24} lg={18} xl={18}>
+          <Carousel autoplay dotPosition="top">
+            {map(filter(get(dataBanner, 'contents', []), v => v.banner_type === EBannerType.Large), v => (
+              <a href={get(v, 'href')}>
+                <img src={`${Configs.API_HOST}${get(v, 'absolute_url')}`}/>
+              </a>
+            ))}
+          </Carousel>
+        </Col>
+        <Col xs={24} sm={24} md={24} lg={6} xl={6}>
+          <Link
+            className="area-right-top background-heart"
+            to={ERoute.ActivityDonation}
+            style={{marginBottom: '25px', textAlign: 'center'}}
+          >
+            <p className="title">후원하기</p>
+            <p><BankOutlined/>&nbsp;<Text>{get(information, 'bank_account')}</Text></p>
+            <p><PhoneOutlined/>&nbsp;<Text>{get(information, 'phone')}</Text></p>
+          </Link>
+          <Link
+            className="area-right-top background-people"
+            to={ERoute.AffiliateAbout}
+          >
+            <ul>
+              <p className="title">성폭력상담소</p>
+              <li><Text mark className="blue">교육</Text></li>
+              <li><Text mark className="red">상담</Text></li>
+              <li><Text mark>폭력예방활동</Text></li>
+            </ul>
+          </Link>
+          <div style={{height: '80px', paddingTop: '25px'}}>
+            <Row gutter={[16, 16]} align="middle">
+              <Col flex="50px">
+                <img src={CalendarSource} style={{height: '40px', width: 'auto'}}/>
+              </Col>
+              <Col flex="auto">
+                <Link to={ERoute.ActivityCalendar}>
+                  <div className="hover-large">
+                    <Text style={{fontWeight: 'bold', textAlign: 'left'}}>활동일정 보러가기&nbsp;<ArrowRightOutlined/></Text>
+                  </div>
+                </Link>
+              </Col>
+            </Row>
+          </div>
+        </Col>
+      </Row>
       <Row gutter={[16, 16]} justify="center">
         <Col xs={24} sm={24} md={18} lg={18} xl={18}>
           <Link to={ERoute.ActivityAction}><Text className="board-title">민우뉴스</Text></Link>
@@ -80,7 +121,11 @@ const Main = () => {
             loading={loadingAction}
             renderItem={item => (
               <List.Item>
-                <CardWrapper to={`${ERoute.ActivityAction}/${EBoardOperation.View}/${get(item, 'id')}`}>
+                <CardWrapper to={
+                  get(item, 'board_type') === EBoardClassType.Action ?
+                  `${ERoute.ActivityAction}/${EBoardOperation.View}/${get(item, 'id')}` :
+                  `${ERoute.AffiliateActivity}/${EBoardOperation.View}/${get(item, 'id')}?back=${ERoute.ActivityAction}`
+                }>
                   <Card
                     bodyStyle={{padding: '10px 20px'}}
                     hoverable
@@ -153,7 +198,7 @@ const Main = () => {
           />
         </Col>
         <Col xs={24} sm={24} md={9} lg={9} xl={9}>
-          <Link to={ERoute.ActivityPress}><Text className="board-title">지역소식</Text></Link>
+          <Link to={ERoute.ActivityPress}><Text className="board-title">지역젠더이슈</Text></Link>
           <Divider/>
           <List
             size="small"
@@ -173,70 +218,69 @@ const Main = () => {
           />
         </Col>
         <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-          <Row>
-            <Link
-              className="area-right-top background-heart"
-              to={ERoute.ActivityDonation}
-              style={{marginBottom: '10px', textAlign: 'center'}}
-            >
-              <p className="title">후원하기</p>
-              <p><BankOutlined/>&nbsp;<Text>{get(information, 'bank_account')}</Text></p>
-              <p><PhoneOutlined/>&nbsp;<Text>{get(information, 'phone')}</Text></p>
-            </Link>
-          </Row>
-          <Row justify="space-between" style={{marginTop: '10px'}}>
-            <Col>
-              <Popover
-                placement="bottomLeft"
-                content={
-                  <iframe
-                    style={{border: 'none', height: '250px'}}
-                    name="f33be3bc0afec"
-                    width="100%"
-                    height="100%"
-                    data-testid="fb:page Facebook Social Plugin"
-                    title="fb:page Facebook Social Plugin"
-                    src="https://www.facebook.com/v2.0/plugins/page.php?adapt_container_width=true&amp;app_id=&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Df61399cf36e77c%26domain%3Dwww.paju.womenlink.or.kr%26origin%3Dhttps%253A%252F%252Fwww.paju.womenlink.or.kr%252Ff1bc07eebc708a%26relation%3Dparent.parent&amp;container_width=320&amp;height=250&amp;hide_cover=true&amp;href=https%3A%2F%2Fwww.facebook.com%2Fpajuminwoo%2F&amp;locale=ko_KR&amp;sdk=joey&amp;show_facepile=false&amp;small_header=true&amp;tabs=timeline"
-                  >
-                  </iframe>
-                }
-              >
-                <a href="https://www.facebook.com/pajuminwoo/">
-                  <img src={FacebookSource} style={{width: 'auto', height: '50px'}}/>
-                </a>
-              </Popover>
+          <Row justify="space-between" className="box-link" gutter={[16, 16]}>
+            <Col span={12} onMouseOver={e => {setShowFacebook(true);}}>
+              <a target="_blank" href="https://www.facebook.com/pajuminwoo/">
+                <img src={FacebookSource} style={{width: 'auto', height: '24px'}}/>
+              </a>
             </Col>
-            <Col>
-              <Popover
-                placement="bottomLeft"
-                content={
-                  <iframe
-                    src={`${get(information, 'instagram_feed')}/embed`}
-                    width="100%"
-                    height="100%"
-                    style={{border: 'none', height: '250px'}}
-                  >
-                  </iframe>
-                }
-              >
-                <a href="https://www.instagram.com/pajuminwoo/">
-                  <img src={InstagramSource} style={{width: 'auto', height: '50px'}}/>
-                </a>
-              </Popover>
+            <Col span={12} onMouseOver={e => {setShowFacebook(false);}}>
+              <a target="_blank" href="https://www.instagram.com/pajuminwoo/">
+                <img src={InstagramSource} style={{width: 'auto', height: '24px'}}/>
+              </a>
             </Col>
-            <Col>
-              <Tooltip placement="bottom" title="국세청">
-                <a href="https://www.nts.go.kr/">
-                  <img src={NTSSource} style={{width: 'auto', height: '50px'}}/>
-                </a>
-              </Tooltip>
+            <Col span={24} style={{padding: '0px'}}>
+              <div style={{
+                height: '200px',
+                position: 'absolute',
+                width: '100%',
+                left: '50%',
+                top: '0%',
+                transform: 'translate(-50%, 0%)',
+                visibility: showFacebook===true ? 'visible' : 'hidden'
+              }}>
+                <iframe
+                  style={{border: 'none'}}
+                  className="hide-on-mobile"
+                  name="f33be3bc0afec"
+                  width="100%"
+                  height="100%"
+                  data-testid="fb:page Facebook Social Plugin"
+                  title="fb:page Facebook Social Plugin"
+                  src="https://www.facebook.com/v2.0/plugins/page.php?adapt_container_width=true&amp;app_id=&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Df61399cf36e77c%26domain%3Dwww.paju.womenlink.or.kr%26origin%3Dhttps%253A%252F%252Fwww.paju.womenlink.or.kr%252Ff1bc07eebc708a%26relation%3Dparent.parent&amp;container_width=250&amp;height=250&amp;hide_cover=true&amp;href=https%3A%2F%2Fwww.facebook.com%2Fpajuminwoo%2F&amp;locale=ko_KR&amp;sdk=joey&amp;show_facepile=false&amp;small_header=true&amp;tabs=timeline"
+                >
+                </iframe>
+                <iframe
+                  style={{border: 'none', width: '340px', margin: 'auto'}}
+                  className="hide-on-desktop"
+                  name="f33be3bc0afec"
+                  width="100%"
+                  height="100%"
+                  data-testid="fb:page Facebook Social Plugin"
+                  title="fb:page Facebook Social Plugin"
+                  src="https://www.facebook.com/v2.0/plugins/page.php?adapt_container_width=true&amp;app_id=&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Df61399cf36e77c%26domain%3Dwww.paju.womenlink.or.kr%26origin%3Dhttps%253A%252F%252Fwww.paju.womenlink.or.kr%252Ff1bc07eebc708a%26relation%3Dparent.parent&amp;container_width=340&amp;height=250&amp;hide_cover=true&amp;href=https%3A%2F%2Fwww.facebook.com%2Fpajuminwoo%2F&amp;locale=ko_KR&amp;sdk=joey&amp;show_facepile=false&amp;small_header=true&amp;tabs=timeline"
+                >
+                </iframe>
+              </div>
+              <div style={{height: '200px', visibility: showFacebook===true ? 'hidden' : 'visible'}}>
+                <iframe
+                  src={`${get(information, 'instagram_feed')}/embed`}
+                  width="100%"
+                  height="100%"
+                  style={{border: 'none'}}
+                >
+                </iframe>
+              </div>
             </Col>
-            <Col>
-              <Tooltip placement="bottom" title="국가인권위원회">
-                <a href="https://www.humanrights.go.kr/">
-                  <img src={HumanSource} style={{width: 'auto', height: '50px'}}/>
-                </a>
-              </Tooltip>
+            <Col span={12}>
+              <a target="_blank" href="https://www.nts.go.kr/">
+                <img src={NTSSource} style={{width: 'auto', height: '24px'}}/>
+              </a>
+            </Col>
+            <Col span={12}>
+              <a target="_blank" href="https://www.humanrights.go.kr/">
+                <img src={HumanSource} style={{width: 'auto', height: '24px'}}/>
+              </a>
             </Col>
           </Row>
         </Col>

@@ -143,3 +143,12 @@ export const getClinicAbout = (cancel?: CancelTokenSource) => {
     cancelToken: cancel?.token,
   });
 };
+
+/**
+ * 상담소 연혁
+ */
+export const getAffiliateHistories = (cancel?: CancelTokenSource) => {
+  return apiClient.get<TInformationHistory>(`/affiliate/clinic/histories`, {
+    cancelToken: cancel?.token,
+  });
+};

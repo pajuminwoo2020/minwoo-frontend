@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {device, PrimaryColor} from 'GlobalStyles';
 import {CDefaultEditorHeight, CWindowWidth} from 'constants/base.const';
 import HeartSource from 'assets/heart.png';
+import PeopleSource from 'assets/people.png';
 
 export const HeaderWrapper = styled.div`
   height: 70px;
@@ -165,7 +166,7 @@ export const MainWrapper = styled.div`
     background: transparent;
     overflow: hidden;
     margin-bottom: 20px;
-    max-height: 400px;
+    max-height: 345px;
   }
   .ant-carousel .slick-dots-top {
     top: 0px;
@@ -187,10 +188,19 @@ export const MainWrapper = styled.div`
 	  box-shadow: 1px 1px #e3e3e3;
     }
   }
+  .box-link {
+    text-align: center;
+    .ant-col {
+      border: 1px solid #f0f0f0;
+    }
+    .ant-col:hover {
+      border: 1px solid ${PrimaryColor};
+    }
+  }
   .ant-carousel img {
     margin: auto;
 	width: 99%;
-	height: 415px;
+	height: 350px;
     @media screen and ${device.mobile} {
       height: 195px;
     }
@@ -214,20 +224,26 @@ export const MainWrapper = styled.div`
     z-index: -1;
     opacity: 0.4;
   }
+  .background-people {
+    background-image: url(${PeopleSource});
+    background-repeat: no-repeat;
+    background-size: 60px;
+    background-position: 80% 75%;
+    position: relative;
+  }
 
   .area-right-top {
     padding: 10px 20px;
     width: 100%;
-	height: 130px;
+	height: 125px;
     margin: auto;
-    margin-top: 30px;
     border-radius: 5px;
     box-shadow: 0 2px 5px #000;
     display: block;
 
     .title {
       text-align: center;
-      font-size: 20px;
+      font-size: 18px;
       font-weight: bold;
       color: ${PrimaryColor};
       margin: 0px;
@@ -244,6 +260,17 @@ export const MainWrapper = styled.div`
       padding: 0px 20px;
     }
   }
+  .hover-large {
+    display: inline-block;
+    width: 100%;
+    vertical-align: middle;
+  }
+  .hover-large:hover {
+    font-size: 16px;
+    span.ant-typography {
+      color: ${PrimaryColor} !important;
+    }
+  }
 
   .ant-list-sm .ant-list-item {
 	padding: 6px 0px;
@@ -258,6 +285,14 @@ export const MainWrapper = styled.div`
 	margin-right: 5px;
 	color: ${PrimaryColor};
 	font-weight: bold;
+  }
+  .red mark {
+    color: #fff;
+	background-color: ${PrimaryColor} !important;
+  }
+  .blue mark {
+    color: #fff;
+	background-color: #0dbeb5 !important;
   }
 
   .title {
@@ -302,7 +337,7 @@ export const HistoryWrapper = styled.div`
   .year {
     color: ${PrimaryColor};
     text-align: center;
-    font-size: 60px;
+    font-size: 45px;
   }
   .year.row1 {
     color: #ffe58f;
@@ -311,10 +346,10 @@ export const HistoryWrapper = styled.div`
     color: #0dbeb5;
   }
   .memo-wrapper {
-    font-size: 15px;
+    font-size: 14px;
     display: block;
     border-radius: 10px;
     background-color: #f1f1f1;
-    padding: 10px 30px;
+    padding: 8px 30px;
   }
 `;

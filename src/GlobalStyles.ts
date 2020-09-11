@@ -221,9 +221,15 @@ const GlobalStyles = createGlobalStyle`
     }
   }
 
+  .hide-on-desktop {
+    display: none;
+  }
   @media screen and ${device.mobile} {
     .hide-on-mobile {
       display: none;
+    }
+    .hide-on-desktop {
+      display: block;
     }
   }
 
@@ -258,7 +264,7 @@ export const TableWrapper = styled.div`
 
   .column-category {
     text-align: center;
-    width: 100px;
+    width: 120px;
 
     @media screen and ${device.mobile} {
       display: none;

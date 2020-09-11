@@ -11,6 +11,7 @@ import {ERoute} from 'enums/route.enum';
 import Main from 'components/base/Main';
 import Agreement from 'components/base/Agreement';
 import Privacy from 'components/base/Privacy';
+import SearchGlobal from 'components/base/SearchGlobal';
 import Login from 'components/user/Login';
 import Signup from 'components/user/Signup';
 import Edit from 'components/user/Edit';
@@ -29,6 +30,7 @@ import Calendar from 'components/activity/Calendar';
 import CalendarEdit from 'components/activity/CalendarEdit';
 import Press, {PressDetail} from 'components/activity/Press';
 import AffiliateAbout from 'components/affiliate/About';
+import AffiliateActivity, {AffiliateActivityDetail} from 'components/affiliate/Activity';
 import SocietyAbout from 'components/member/SocietyAbout';
 import SocietyActivity, {SocietyActivityDetail} from 'components/member/SocietyActivity';
 import NewsLetter, {NewsLetterDetail} from 'components/bulletin/NewsLetter';
@@ -43,11 +45,11 @@ import {BaseTemplate} from 'components/base/BaseTemplate';
 import ErrorBoundary from 'components/base/error/ErrorBoundary';
 import NoMatch from 'components/base/error/NoMatch';
 import {TUser, setUserInfo} from 'modules/user';
-import {main, wrapPromise} from 'libs/api/user';
+import {main} from 'libs/api/user';
 import {getInformation} from 'libs/api/information';
 import {setInformation} from 'modules/information';
 
-const data = wrapPromise(main());
+const data = main();
 const App = () => {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -161,6 +163,12 @@ const App = () => {
             <Route exact path={ERoute.AffiliateAbout}>
               <BaseTemplate><AffiliateAbout/></BaseTemplate>
             </Route>
+            <Route exact path={ERoute.AffiliateActivity}>
+              <BaseTemplate><AffiliateActivity/></BaseTemplate>
+            </Route>
+            <Route path={`${ERoute.AffiliateActivity}/:operation`}>
+              <BaseTemplate><AffiliateActivityDetail/></BaseTemplate>
+            </Route>
             <Route exact path={ERoute.MemberSocietyAbout}>
               <BaseTemplate><SocietyAbout/></BaseTemplate>
             </Route>
@@ -202,6 +210,9 @@ const App = () => {
             </Route>
             <Route exact path={ERoute.Privacy}>
               <BaseTemplate><Privacy/></BaseTemplate>
+            </Route>
+            <Route exact path={ERoute.SearchGlobal}>
+              <BaseTemplate><SearchGlobal/></BaseTemplate>
             </Route>
             <Route exact path={ERoute.Agreement}>
               <BaseTemplate><Agreement/></BaseTemplate>

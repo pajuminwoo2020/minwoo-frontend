@@ -76,6 +76,8 @@ export type TDonationPage = {
   introduction: string;
   benefits: string;
   payment_method: string;
+  regular: string;
+  temporary: string;
 };
 
 /**
@@ -118,13 +120,6 @@ export type TSocietyAboutDetail = {
  */
 export type TPeople = {
   absolute_url: string;
-  contents: Array<{
-    position: string;
-    children: Array<{
-      name: string;
-      job: string;
-    }>;
-  }>;
 };
 
 /**
