@@ -98,10 +98,6 @@ const About = () => {
               <strong>민우회 회원의 다짐</strong>
               <div style={{marginTop: '20px'}} dangerouslySetInnerHTML={{ __html: `${get(data, 'watchword', '')}`}}/>
             </div>
-            <div className='about-subtitle' style={{marginTop: '50px'}}>
-              창립취지문
-            </div>
-            <div className="about-content" dangerouslySetInnerHTML={{ __html: `${get(data, 'purpose', '')}`}}/>
           </div>
           <div className="tabs-content" id="history">
             <Title className="content-title">연혁</Title>

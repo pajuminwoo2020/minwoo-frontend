@@ -94,7 +94,7 @@ const Main = () => {
               <li><Text mark>폭력예방활동</Text></li>
             </ul>
           </Link>
-          <div style={{height: '80px', paddingTop: '25px'}}>
+          <div style={{height: '80px', paddingTop: '40px'}}>
             <Row gutter={[16, 16]} align="middle">
               <Col flex="50px">
                 <img src={CalendarSource} style={{height: '40px', width: 'auto'}}/>
