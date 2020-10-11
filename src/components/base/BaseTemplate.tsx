@@ -7,6 +7,7 @@ import {RootState} from 'modules';
 import {filter, get, map} from 'lodash';
 import {AlignCenterOutlined, HomeOutlined} from '@ant-design/icons';
 import LogoSource from 'assets/logo.png';
+import HeaderIconSource from 'assets/header_icon.png';
 import {HeaderWrapper, ContentTitle} from 'components/base/styles';
 import {HeaderLeft, getMenuTitle} from 'components/base/HeaderLeft';
 import {HeaderRight} from 'components/base/HeaderRight';
@@ -87,7 +88,15 @@ export const BaseTemplate = ({children}: {children: React.ReactNode;}) => {
       </HeaderWrapper>
       {getMenuTitle(location.pathname).pop() && (
         <ContentTitle>
-          <Text strong={true}>{getMenuTitle(location.pathname).pop()}</Text>
+          <Row justify="space-between">
+            <Col>
+                <Text strong={true}>{getMenuTitle(location.pathname).pop()}</Text>
+            </Col>
+            <Col>
+              <img src={HeaderIconSource} style={{width: '100%', height: 'auto'}}/>
+            </Col>
+          </Row>
+          <Divider style={{color: `${PrimaryColor}`}}/>
         </ContentTitle>
       )}
 	  <Content>

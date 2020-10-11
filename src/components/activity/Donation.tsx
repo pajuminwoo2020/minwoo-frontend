@@ -118,9 +118,16 @@ const Donation = () => {
             ) : (
               <div dangerouslySetInnerHTML={{ __html: `${get(donationPage, 'introduction', '')}`}}/>
             )}
-			<Link to={ERoute.ActivityDonationStep}>
-			  <Button type="primary"  className="large-btn">후원신청하기<RightOutlined/></Button>
-			</Link>
+            <p>
+              <Link to={`${ERoute.ActivityDonationStep}?donationType=regular`}>
+                <Button type="primary" className="large-btn">정기후원하기<RightOutlined/></Button>
+              </Link>
+            </p>
+            <p>
+              <Link to={`${ERoute.ActivityDonationStep}?donationType=temp`}>
+                <Button type="primary" style={{background: '#0dbeb5'}} className="large-btn">일시후원하기<RightOutlined/></Button>
+              </Link>
+            </p>
 		  </div>
 		</Col>
         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
@@ -153,9 +160,6 @@ const Donation = () => {
           </div>
           <div style={{color: '#999999', padding: '20px 10px 0px 10px'}}>
             <div dangerouslySetInnerHTML={{ __html: `${get(donationPage, 'payment_method', '')}`}}/>
-          </div>
-          <div style={{color: '#999999', padding: '0px 10px'}}>
-            <p><strong style={{color: `${PrimaryColor}`}}>{get(information, 'bank_account')}</strong> (예금주: 파주여성민우회)</p>
           </div>
 		</Col>
 	  </Row>

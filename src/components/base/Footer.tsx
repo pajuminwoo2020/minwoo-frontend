@@ -44,7 +44,6 @@ export const FooterArea = () => {
           <Divider/>
           <p>주소 : {get(information, 'address_street')}</p>
           <p>이메일 {get(information, 'email')} / 대표전화 {get(information, 'phone')} / 팩스 {get(information, 'fax')}</p>
-          <p>[후원계좌] {get(information, 'bank_account')}</p>
         </Col>
         <Col xs={12} sm={12} md={12} lg={6} xl={6}>
           <p className="block-title" style={{color: 'transparent'}}>Empty</p>

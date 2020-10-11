@@ -77,11 +77,15 @@ export const HeaderWrapper = styled.div`
 `;
 
 export const ContentTitle = styled.div`
-  margin: 60px auto 20px auto;
-  font-size: 25px;
+  margin: 90px auto 20px auto;
+  font-size: 32px;
   text-align: left;
   max-width: ${CWindowWidth}px;
   padding: 0px 10px;
+  width: 100%;
+  .ant-divider {
+    border-top: 2px solid ${PrimaryColor};
+  }
 `;
 
 export const BoardDetailWrapper = styled.div`
