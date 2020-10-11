@@ -8,7 +8,7 @@ import {Row, Col, Form, Input, Button, Modal, Upload, Select, Spin, Checkbox} fr
 import {FormattedDate} from 'react-intl';
 import {Link} from 'react-router-dom';
 import {BoardDetailWrapper} from 'components/base/styles';
-import {EBoardOperation} from 'enums/board.enum';
+import {EBoardOperation, EBoardType} from 'enums/board.enum';
 import DefaultSource from 'assets/default.png';
 import {ENotificationType} from 'enums/base.enum';
 import {EMessageID} from 'enums/route.enum';
@@ -191,7 +191,7 @@ export const BoardDetail = ({
           })),
           body: get(record, 'body'),
           category: get(record, 'category.id'),
-          on_board_action: get(record, 'on_board_action') == true ? ["true"] : [""],
+          on_board_action: record?.on_board_action ? [record.on_board_action] : [],
         });
         setThumbnailSource(get(record, 'thumbnail_source'));
       }
@@ -214,7 +214,7 @@ export const BoardDetail = ({
             title: get(value, 'title'),
             body: get(value, 'body'),
             category: get(value, 'category'),
-            on_board_action: (form.getFieldValue('on_board_action') == "true" ? true : false),
+            on_board_action: value.on_board_action ? value.on_board_action[0] as EBoardType : undefined,
             file_ids: filteredFileNames(get(value, 'files')),
             thumbnail_source: thumbnailSource,
           });
@@ -229,14 +229,32 @@ export const BoardDetail = ({
       }
     }
 
+    function handleCheckboxSelected(checkedValue: any[]) {
+      if (checkedValue && checkedValue.length > 0) {
+        form.setFields([{name: 'on_board_action', value: [checkedValue.pop()]}]); 
+      } else {
+        form.setFields([{name: 'on_board_action', value: []}]);
+      }
+    }
+
     return (
       <>
         <Form form={form} className="body-edit">
-          {onBoardAction && <Form.Item noStyle name="on_board_action">
-            <Checkbox.Group>
-              <Checkbox value="true">민우뉴스 게시판에 연동하기</Checkbox>
-            </Checkbox.Group>
-          </Form.Item>}
+          {onBoardAction && (
+            <Form.Item noStyle>
+              <Row>
+                <Form.Item>
+                  연동&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                </Form.Item>
+                <Form.Item name="on_board_action">
+                  <Checkbox.Group onChange={handleCheckboxSelected}>
+                    <Checkbox value={EBoardType.Action}>민우뉴스</Checkbox>
+                    <Checkbox value={EBoardType.Notice}>공지사항</Checkbox>
+                  </Checkbox.Group>
+                </Form.Item>
+              </Row>
+            </Form.Item>
+          )}
           <Form.Item noStyle>
             <Input.Group>
               <Row>
@@ -325,7 +343,7 @@ export const BoardDetail = ({
             title: get(value, 'title'),
             body: get(value, 'body'),
             category: get(value, 'category'),
-            on_board_action: (form.getFieldValue('on_board_action') == "true" ? true : false),
+            on_board_action: value.on_board_action ? value.on_board_action[0] as EBoardType : undefined,
             file_ids: filteredFileNames(get(value, 'files')),
             thumbnail_source: thumbnailSource,
           });
@@ -340,14 +358,32 @@ export const BoardDetail = ({
       }
     }
 
+    function handleCheckboxSelected(checkedValue: any[]) {
+      if (checkedValue && checkedValue.length > 0) {
+        form.setFields([{name: 'on_board_action', value: [checkedValue.pop()]}]); 
+      } else {
+        form.setFields([{name: 'on_board_action', value: []}]);
+      }
+    }
+
     return (
       <>
         <Form form={form} className="body-edit">
-          {onBoardAction && <Form.Item noStyle name="on_board_action">
-            <Checkbox.Group>
-              <Checkbox value="true">민우뉴스 게시판에 연동하기</Checkbox>
-            </Checkbox.Group>
-          </Form.Item>}
+          {onBoardAction && (
+            <Form.Item noStyle>
+              <Row>
+                <Form.Item>
+                  연동&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                </Form.Item>
+                <Form.Item name="on_board_action">
+                  <Checkbox.Group onChange={handleCheckboxSelected}>
+                    <Checkbox value={EBoardType.Action}>민우뉴스</Checkbox>
+                    <Checkbox value={EBoardType.Notice}>공지사항</Checkbox>
+                  </Checkbox.Group>
+                </Form.Item>
+              </Row>
+            </Form.Item>
+          )}
           <Form.Item noStyle>
             <Input.Group>
               <Row>

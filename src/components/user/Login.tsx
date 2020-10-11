@@ -1,8 +1,8 @@
 import {LockOutlined, UserOutlined, PhoneOutlined} from '@ant-design/icons';
-import {Button, Checkbox, Form, Input} from 'antd';
+import {Button, Checkbox, Form, Input, Alert} from 'antd';
 import {get} from 'lodash';
 import queryString from 'query-string';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {shallowEqual, useSelector} from 'react-redux';
 import {RootState} from 'modules';
 import {Link, useLocation} from 'react-router-dom';
@@ -11,12 +11,17 @@ import {handleFieldError} from 'libs/api/errorHandle';
 import {userLogin} from 'libs/api/user';
 import {TUserLogin, TUser, setUserInfo} from 'modules/user';
 import {Title, FormWrapper} from 'components/user/styles';
+import {EMessageID} from 'enums/route.enum';
 
 const Login = () => {
+  const location = useLocation();
+  const messageID = queryString.parse(useLocation().search)?.messageID?.toString();
+  const messageParam = queryString.parse(useLocation().search)?.messageParam?.toString();
   const information = useSelector((state: RootState) => state.information.info, shallowEqual);
   const [form] = Form.useForm();
   const next = queryString.parse(useLocation().search)?.next?.toString();
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
   const dispatch = useDispatch();
   const onClickLogin = () => {
     form.validateFields().then(value => {
@@ -40,6 +45,12 @@ const Login = () => {
       setSubmitButtonDisabled(false);
     }
   };
+
+  useEffect(() => {
+    if (messageID === EMessageID.SignupSuccess) {
+      setAlertMessage(`이메일[${messageParam}] 인증 후에 로그인할 수 있습니다.`);
+    }
+  }, [location]);
 
   return (
 	<FormWrapper>
@@ -80,7 +91,8 @@ const Login = () => {
 			type="password"
 			placeholder='패스워드'
 		  />
-		</Form.Item>
+        </Form.Item>
+        {alertMessage && <Alert message={alertMessage} type="warning" showIcon closable/>}
 		<Form.Item shouldUpdate={true} className="form-button">
 		  {() => (
             <Button

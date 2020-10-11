@@ -77,11 +77,15 @@ export const HeaderWrapper = styled.div`
 `;
 
 export const ContentTitle = styled.div`
-  margin: 60px auto 20px auto;
-  font-size: 25px;
+  margin: 90px auto 20px auto;
+  font-size: 32px;
   text-align: left;
   max-width: ${CWindowWidth}px;
   padding: 0px 10px;
+  width: 100%;
+  .ant-divider {
+    border-top: 2px solid ${PrimaryColor};
+  }
 `;
 
 export const BoardDetailWrapper = styled.div`
@@ -166,7 +170,7 @@ export const MainWrapper = styled.div`
     background: transparent;
     overflow: hidden;
     margin-bottom: 20px;
-    max-height: 345px;
+    max-height: 390px;
   }
   .ant-carousel .slick-dots-top {
     top: 0px;
@@ -200,7 +204,7 @@ export const MainWrapper = styled.div`
   .ant-carousel img {
     margin: auto;
 	width: 99%;
-	height: 350px;
+	height: 395px;
     @media screen and ${device.mobile} {
       height: 195px;
     }
@@ -235,7 +239,7 @@ export const MainWrapper = styled.div`
   .area-right-top {
     padding: 10px 20px;
     width: 100%;
-	height: 125px;
+	height: 135px;
     margin: auto;
     border-radius: 5px;
     box-shadow: 0 2px 5px #000;

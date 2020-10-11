@@ -1,8 +1,9 @@
 import React, {useState, useRef} from 'react';
 import {FormattedNumber} from 'react-intl';
-import {Link} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 import {FormInstance} from 'rc-field-form';
 import {PhoneOutlined, EditOutlined, DownloadOutlined} from '@ant-design/icons';
+import queryString from 'query-string';
 import {Divider, Steps, Button, Form, Select, Radio, Typography, Input, Row, Col, Descriptions, Checkbox, InputNumber} from 'antd';
 import {RadioChangeEvent} from 'antd/lib/radio'
 import {shallowEqual, useSelector} from 'react-redux';
@@ -67,6 +68,7 @@ const StepWrapper = styled.div`
   .ant-radio-button-wrapper-checked {
     background: ${PrimaryColor} !important;
     color: #fff !important;
+    cursor: default;
   }
   .ant-form-item-label > label.ant-form-item-required::before {
     display: none;
@@ -94,6 +96,17 @@ const StepWrapper = styled.div`
   }
   label::after {
     display: none;
+  }
+  .text-strong .ant-checkbox-disabled.ant-checkbox-checked .ant-checkbox-inner::after {
+    border-color: #000 !important;
+  }
+  .text-strong .ant-checkbox-disabled,
+  .text-strong .ant-checkbox-disabled .ant-checkbox-input,
+  .text-strong .ant-checkbox-disabled + span,
+  .text-strong.ant-input-disabled {
+    color: #000 !important;
+    font-weight: bold !important;
+    cursor: default !important;
   }
 `;
 const DonationStep = () => {
@@ -152,10 +165,11 @@ const DonationStep = () => {
   }
 
   function SelectType() {
+    const donationTypeParam = queryString.parse(useLocation().search)?.donationType?.toString();
     const [showInput, setShowInput] = useState(false);
     const donationRegular = '정기후원';
     const donationTemp = '일시후원';
-    const [donationType, setDonationType] = useState(donationRegular);
+    const [donationType, setDonationType] = useState(donationTypeParam === 'regular' ? donationRegular : donationTemp);
     const [price, setPrice] = useState('0');
 
     function handleChangePrice(value: number) {
@@ -191,18 +205,19 @@ const DonationStep = () => {
         form={form}
         labelCol={{span: 3}}
         wrapperCol={{span: 12}}
+        initialValues={{donation_type: donationType}}
         layout="horizontal"
       >
         <Form.Item
           name="donation_type"
           label={<Text className="large-label">후원종류</Text>}
-          extra="원하시는 후원 종류를 선택해주세요"
           rules={[{required: true, message: '후원종류를 선택해주세요'}]}
         >
-          <Radio.Group onChange={handleDonationType}>
-            <Radio.Button value={EDonationType.Regular}>정기후원</Radio.Button>
-            <Radio.Button value={EDonationType.Temporary}>일시후원</Radio.Button>
-          </Radio.Group>
+          {donationType == donationRegular ? (
+            <Radio.Button checked>정기후원</Radio.Button>
+          ) : (
+            <Radio.Button checked>일시후원</Radio.Button>
+          )}
         </Form.Item>
         <Form.Item
           label={<Text className="large-label item-required">후원금액</Text>}
@@ -265,6 +280,29 @@ const DonationStep = () => {
             <Button htmlType="submit"type="primary">다음</Button>
           </div>
         </Form.Item>
+        <DonationStepWrapper style={{maxWidth: '500px', margin: 'auto'}}>
+          {donationType == donationRegular ? (
+            <Row gutter={[16, 16]} align="top" style={{marginTop: '40px'}} justify="space-between">
+              <div className="box-with-border color-blue">
+                <p>정기후원</p>
+              </div>
+              <div style={{color: '#999999', padding: '20px 10px 0px 10px'}}>
+                <div dangerouslySetInnerHTML={{ __html: `${get(donationPage, 'regular', '')}`}}/>
+              </div>
+            </Row>
+          ) : (
+            <Row gutter={[16, 16]} align="top" style={{marginTop: '40px'}} justify="space-between">
+              <div className="box-with-border color-yellow">
+                <p>일시후원</p>
+              </div>
+              <div style={{color: '#999999', padding: '20px 10px 0px 10px'}}>
+                <div dangerouslySetInnerHTML={{ __html: `${get(donationPage, 'temporary', '')}`}}/>
+              </div>
+              <div style={{color: '#999999', padding: '0px 10px'}}>
+              </div>
+            </Row>
+          )}
+        </DonationStepWrapper>
       </Form>
     );
   }
@@ -529,11 +567,11 @@ const DonationStep = () => {
             label={<Text>납부방법</Text>}
             extra="CMS(Cash Management Service)는 금융결제원을 통해 후원금 자동이체를 의뢰하는 방법으로, 약정하신 금액을 송금 수수료 없이 편리하게 후원하실 수 있습니다."
           >
-            <Checkbox defaultChecked disabled>자동이체(CMS)</Checkbox>
+            <Checkbox className="text-strong" defaultChecked disabled>자동이체(CMS)</Checkbox>
           </Form.Item>
         )}
         <Form.Item label={<Text>금액</Text>}>
-          <Input style={{maxWidth:'200px'}} value={commifyFormatter(String(get(data, 'price', 0)))} disabled/>
+          <Input style={{maxWidth:'200px'}} className="text-strong" value={commifyFormatter(String(get(data, 'price', 0)))} disabled/>
           <Text>&nbsp;원</Text>
         </Form.Item>
         <Form.Item
@@ -620,7 +658,7 @@ const DonationStep = () => {
             label={<Text>출금일</Text>}
             extra="미 출금 시 28일에 2차 출금 됩니다"
           >
-            <Checkbox defaultChecked disabled>21일</Checkbox>
+            <Checkbox defaultChecked className="text-strong" disabled>21일</Checkbox>
           </Form.Item>
         )}
         {get(data, 'donation_type') == EDonationType.Regular && (
@@ -860,30 +898,6 @@ const DonationStep = () => {
       <Form.Provider onFormFinish={onFormFinish}>
         <div className="steps-content">{steps[current].content}</div>
       </Form.Provider>
-      {current === 0 && (
-	  <DonationStepWrapper>
-        <Row gutter={[16, 16]} align="top" style={{marginTop: '40px'}} justify="space-between">
-          <Col xs={24} sm={24} md={11} lg={11} xl={11}>
-            <div className="box-with-border color-blue">
-              <p>정기후원</p>
-            </div>
-            <div style={{color: '#999999', padding: '20px 10px 0px 10px'}}>
-              <div dangerouslySetInnerHTML={{ __html: `${get(donationPage, 'regular', '')}`}}/>
-            </div>
-          </Col>
-          <Col xs={24} sm={24} md={11} lg={11} xl={11}>
-            <div className="box-with-border color-yellow">
-              <p>일시후원</p>
-            </div>
-            <div style={{color: '#999999', padding: '20px 10px 0px 10px'}}>
-              <div dangerouslySetInnerHTML={{ __html: `${get(donationPage, 'temporary', '')}`}}/>
-            </div>
-            <div style={{color: '#999999', padding: '0px 10px'}}>
-            </div>
-          </Col>
-        </Row>
-	  </DonationStepWrapper>
-      )}
     </StepWrapper>
   );
 }
