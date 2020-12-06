@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Tabs, Timeline, Row, Col, Typography, Divider, BackTop, Skeleton, Spin} from 'antd';
+import {Avatar, Tabs, Timeline, Row, Col, Typography, Divider, BackTop, Skeleton, Spin} from 'antd';
 import {shallowEqual, useSelector} from 'react-redux';
 import {RootState} from 'modules';
 import styled from 'styled-components';
@@ -14,11 +14,12 @@ import Image3_2 from 'assets/affiliate_about3_2.png';
 import Image3_3 from 'assets/affiliate_about3_3.jpg';
 import ArrowSource from 'assets/arrow.png';
 import DotImage from 'assets/dot.png';
+import AffiliateImage from 'assets/affiliate_about.png';
 import {get, map} from 'lodash';
 import {getClinicAbout, getAffiliateHistories} from 'libs/api/information';
 import {useDataApi} from 'libs/hooks';
 import {TInformationHistory, TClinicAbout} from 'modules/information/types'
-import {PrimaryColor} from 'GlobalStyles';
+import {PrimaryColor, device} from 'GlobalStyles';
 import {HistoryWrapper} from 'components/base/styles';
 import scrollIntoView from 'scroll-into-view';
 import Configs from 'config';
@@ -55,6 +56,9 @@ const AffiliateAboutWrapper = styled.div`
 
   .tabs-content {
     padding: 40px;
+	@media screen and ${device.mobile} {
+	  padding: 5px;
+	}
   }
   .list-image {
     text-align: center;
@@ -103,6 +107,12 @@ const AffiliateAboutWrapper = styled.div`
   .ant-tabs-tab {
     font-size: 14px;
   }
+  .box-link {
+	position: absolute;
+	cursor: pointer;
+	width: 30%;
+	height: 15%;
+  }
 `;
 const About = () => {
   const [{data: clinicAbout, loading}] = useDataApi<TClinicAbout>(getClinicAbout.bind(null));
@@ -116,78 +126,32 @@ const About = () => {
       <Tabs defaultActiveKey="activity">
         <TabPane key="activity" tab="활동">
           <div className="tabs-content" id="activity">
-            <div className="content-body">
-              <div className="ant-typography box-paragraph">
-                <Row gutter={[16, 60]} justify="center">
-                  <Col xs={0} sm={0} md={8} lg={8} xl={8}></Col>
-                  <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <div className="circle-box with-border" onClick={() => {
-                      scrollIntoView(document?.getElementById('counseling') as HTMLElement, {
-                        align: {
-                          top: 0.4,
-                        },
-                      });
-                    }}>
-                      <p style={{color: '#000'}}>가정폭력피해</p>
-                      <p style={{color: '#000'}}>경험자</p>
-                      <p><strong>상담 및 지원</strong></p>
-                    </div>
-                  </Col>
-                  <Col xs={0} sm={0} md={8} lg={8} xl={8}></Col>
-                </Row>
-                <Row gutter={[16, 60]} justify="center">
-                  <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <div className="circle-box with-border line1" onClick={() => {
-                      scrollIntoView(document?.getElementById('page-activity') as HTMLElement, {
-                        align: {
-                          top: 0.4,
-                        },
-                      });
-                    }}>
-                      <p><strong>반성폭력활동</strong></p>
-                    </div>
-                  </Col>
-                  <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <img src={ArrowSource} className="arrow right hide-on-mobile"/>
-                    <img src={ArrowSource} className="arrow down hide-on-mobile"/>
-                    <img src={ArrowSource} className="arrow left hide-on-mobile"/>
-                    <img src={ArrowSource} className="arrow up hide-on-mobile"/>
-                    <div className="circle-box">
-                      <p><strong>파주성폭력</strong></p>
-                      <p><strong>상담소</strong></p>
-                      <p style={{color: `${PrimaryColor}`}}><strong>'함께'</strong></p>
-                    </div>
-                  </Col>
-                  <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <div className="circle-box with-border" onClick={() => {
-                      scrollIntoView(document?.getElementById('counseling') as HTMLElement, {
-                        align: {
-                          top: 0.4,
-                        },
-                      });
-                    }}>
-                      <p style={{color: '#000'}}>성폭력피해</p>
-                      <p style={{color: '#000'}}>경험자</p>
-                      <p><strong>상담 및 지원</strong></p>
-                    </div>
-                  </Col>
-                </Row>
-                <Row gutter={[16, 16]} justify="center">
-                  <Col xs={0} sm={0} md={8} lg={8} xl={8}></Col>
-                  <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <div className="circle-box with-border line1" onClick={() => {
-                      scrollIntoView(document?.getElementById('education') as HTMLElement, {
-                        align: {
-                          top: 0.4,
-                        },
-                      });
-                    }}>
-                      <p><strong>교육활동</strong></p>
-                    </div>
-                  </Col>
-                  <Col xs={0} sm={0} md={8} lg={8} xl={8}></Col>
-                </Row>
-              </div>
+			<div className="content-body" style={{textAlign: 'center', position: 'relative', marginBottom: '40px'}}>
+			  <Avatar src={AffiliateImage} shape="square" style={{maxWidth: '650px', width: '100%', height:'auto'}}/>
+			  <div className="box-link" style={{top: 0, left: '50%', transform: 'translateX(-50%)'}} onClick={() => {
+				scrollIntoView(document?.getElementById('counseling') as HTMLElement, {
+				  align: {top: 0.4},
+				  });
+				}}
+			  ></div>
+			  <div className="box-link" style={{bottom: 0, left: '50%', transform: 'translateX(-50%)'}} onClick={() => {
+				scrollIntoView(document?.getElementById('counseling') as HTMLElement, {
+				  align: {top: 0.4},
+				  });
+				}}
+			  ></div>
+			  <div className="box-link" style={{top: '50%', left: 0, transform: 'translateY(-50%)'}} onClick={() => {
+				scrollIntoView(document?.getElementById('page-activity') as HTMLElement, {
+				  align: {top: 0.4},
+				  });
+				}}
+			  ></div>
+			  <div className="box-link" style={{top: '50%', right: 0, transform: 'translateY(-50%)'}} onClick={() => {
+				scrollIntoView(document?.getElementById('education') as HTMLElement, {
+				  align: {top: 0.4},
+				  });
+				}}
+			  ></div>
             </div>
             <Row gutter={[16, 16]} style={{marginTop: '30px'}}>
               <Col flex="220px" style={{textAlign: 'center'}}>

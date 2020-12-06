@@ -18,12 +18,20 @@ export const device = {
 };
 export const PrimaryColor = '#f86e6b';
 const GlobalStyles = createGlobalStyle`
-  body {
-    font-family: "Apple SD Gothic Neo";
-  }
-
   #root {
     height: 100vh;
+  }
+
+  @font-face {
+    font-family:'NotoSansKR';
+    src: url(${require('assets/fonts/NotoSansKR-Regular.otf')});
+  }
+  @font-face {
+    font-family:'DMSans';
+    src: url(${require('assets/fonts/DMSans-Regular.ttf')});
+  }
+  body {
+    font-family: 'DMSans', 'NotoSansKR', sans-serif;
   }
 
   .ant-btn-primary {
