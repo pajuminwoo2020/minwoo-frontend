@@ -1,6 +1,6 @@
 {
-  "short_name": "Bigstep Edu",
-  "name": "Bigstep Edu",
+  "short_name": "파주민우회",
+  "name": "파주여성민우회",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,12 +8,12 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "logo.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "logo.png",
       "type": "image/png",
       "sizes": "512x512"
     }
