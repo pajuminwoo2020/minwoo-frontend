@@ -245,6 +245,5 @@
     "*.ts?(x)": [
       "eslint --rule \"no-console: 1\" --rule \"no-debugger: 1\" --fix"
     ]
-  },
-  "proxy": "http://api.paju.womenlink.or.kr"
+  }
 }
