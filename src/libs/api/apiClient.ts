@@ -7,7 +7,7 @@ export const CCSRFToken = 'womenlink_csrftoken';
 export const cookies = new Cookies();
 export const host = Configs.API_HOST;
 const apiClient = axios.create({
-  baseURL: host,
+  //baseURL: host, package.json에서 proxy로 처리함
   headers: {
     accept: 'application/json',
     'Content-Type': 'application/json',
