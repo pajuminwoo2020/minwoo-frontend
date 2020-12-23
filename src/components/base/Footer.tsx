@@ -52,10 +52,10 @@ export const FooterArea = () => {
 		  <p>이메일 {get(information, 'email')} / 대표전화 {get(information, 'phone')} / 팩스 {get(information, 'fax')}</p>
 		  <div className="small-logo">
 			<a href="https://www.facebook.com/pajuminwoo" target="_blank">
-			  <FacebookOutlined style={{marginRight: '10px'}}/>
+			  <FacebookOutlined style={{marginRight: '5px'}}/><div style={{fontSize: '12px', display: 'inline-block', transform: 'translateY(-2px)'}}>@pajuminwoo</div>
 			</a>
 			<a href="https://www.instagram.com/pajuminwoo" target="_blank">
-			  <InstagramOutlined/>
+			  <InstagramOutlined style={{marginLeft: '10px', marginRight: '5px'}}/><div style={{fontSize: '12px', display: 'inline-block', transform: 'translateY(-2px)'}}>@pajuminwoo</div>
 			</a>
           </div>
         </Col>
