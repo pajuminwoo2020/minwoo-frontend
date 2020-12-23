@@ -13,6 +13,7 @@ import {TBoardDetail} from 'modules/board';
 import {TBanner} from 'modules/information';
 import {useDataApi} from 'libs/hooks';
 import {getBoardNotices, getBoardActions, getBoardActivityMembers, getBoardPresses} from 'libs/api/board';
+import {FaGenderless} from "react-icons/fa";
 import {getBanners} from 'libs/api/information';
 import {PrimaryColor, CardWrapper} from 'GlobalStyles'
 import {ERoute} from 'enums/route.enum'
@@ -75,24 +76,30 @@ const Main = () => {
         </Col>
         <Col xs={24} sm={24} md={24} lg={6} xl={6}>
           <Link
-            className="area-right-top background-heart"
             to={ERoute.ActivityDonation}
             style={{marginBottom: '25px', textAlign: 'center'}}
           >
-            <p className="title">후원하기</p>
-            <p style={{marginTop: '5px'}}><Text strong>"차이를 넘어 연대의 힘으로"</Text></p>
-            <p><PhoneOutlined/>&nbsp;<Text>{get(information, 'phone')}</Text></p>
+			<img src={`${Configs.API_HOST}${get(information, 'donation_url')}`} className="area-right-top"/>
+			{/*
+			  <p className="title">후원하기</p>
+			  <p style={{marginTop: '5px'}}><Text strong>"차이를 넘어 연대의 힘으로"</Text></p>
+			  <p><PhoneOutlined/>&nbsp;<Text>{get(information, 'phone')}</Text></p>
+			*/}
           </Link>
           <Link
-            className="area-right-top background-people"
+			className="area-right-top"
+			style={{marginTop: '30px'}}
             to={ERoute.AffiliateAbout}
           >
+			<img src={`${Configs.API_HOST}${get(information, 'affiliate_url')}`} className="area-right-top"/>
+			{/*
             <ul>
               <p className="title">성폭력상담소</p>
               <li><Text mark className="blue">교육</Text></li>
               <li><Text mark className="red">상담</Text></li>
               <li><Text mark>폭력예방활동</Text></li>
             </ul>
+			*/}
           </Link>
           <div style={{height: '80px', paddingTop: '40px'}}>
             <Row gutter={[16, 16]} align="middle">
@@ -127,7 +134,7 @@ const Main = () => {
                   `${ERoute.AffiliateActivity}/${EBoardOperation.View}/${get(item, 'id')}?back=${ERoute.ActivityAction}`
                 }>
                   <Card
-                    bodyStyle={{padding: '10px 20px'}}
+                    bodyStyle={{padding: '15px 20px'}}
                     hoverable
                     cover={<img src={getImageSource(item)} alt='image'/>}
                   >
@@ -157,7 +164,7 @@ const Main = () => {
               <List.Item>
                 <CardWrapper to={`${ERoute.ActivityMember}/${EBoardOperation.View}/${get(item, 'id')}`}>
                   <Card
-                    bodyStyle={{padding: '10px 20px'}}
+                    bodyStyle={{padding: '15px 20px'}}
                     hoverable
                     cover={<img src={getImageSource(item)} alt='image'/>}
                   >
@@ -194,7 +201,7 @@ const Main = () => {
                   `${ERoute.AffiliateActivity}/${EBoardOperation.View}/${get(item, 'id')}?back=${ERoute.ActivityAction}`
                 }>
                   <span className="title">
-                    {get(item, 'title')}
+					<FaGenderless className="list-icon"/>{get(item, 'title')}
                   </span>
                 </Link>
               </List.Item>
@@ -214,7 +221,7 @@ const Main = () => {
               <List.Item>
                 <Link to={`${ERoute.ActivityPress}/${EBoardOperation.View}/${get(item, 'id')}`}>
                   <span className="title">
-                    {get(item, 'title')}
+                    <FaGenderless className="list-icon"/>{get(item, 'title')}
                   </span>
                 </Link>
               </List.Item>

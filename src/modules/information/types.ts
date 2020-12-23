@@ -25,6 +25,8 @@ export type TInformation = {
   instagram_feed: string;
   location_latitude: number;
   location_longitude: number;
+  donation_url: string;
+  affiliate_url: string;
 };
 
 export type InformationAction = ActionType<typeof actions>;

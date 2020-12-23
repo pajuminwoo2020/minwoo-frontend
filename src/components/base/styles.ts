@@ -164,6 +164,12 @@ export const BoardDetailWrapper = styled.div`
 
 export const MainWrapper = styled.div`
   padding: 20px 0px;
+  .list-icon {
+    height: 18px;
+    transform: translateY(4px);
+    margin-right: 5px;
+	color: ${PrimaryColor};
+  }
 
   .ant-carousel .slick-slide {
     text-align: center;
@@ -237,12 +243,10 @@ export const MainWrapper = styled.div`
   }
 
   .area-right-top {
-    padding: 10px 20px;
+	max-width: 230px;
     width: 100%;
 	height: 135px;
     margin: auto;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px #000;
     display: block;
 
     .title {

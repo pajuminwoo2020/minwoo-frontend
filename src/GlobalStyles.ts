@@ -275,7 +275,7 @@ export const TableWrapper = styled.div`
     width: 120px;
 
     @media screen and ${device.mobile} {
-      display: none;
+	  width: 80px;
     }
   }
   .column-title {
@@ -297,6 +297,9 @@ export const TableWrapper = styled.div`
   }
   .column-id {
     width: 80px;
+    @media screen and ${device.mobile} {
+	  width: 50px;
+    }
   }
   .column-hit-count {
     width: 80px;
@@ -369,10 +372,6 @@ export const CardWrapper = styled(Link)`
   .ant-card-cover > * {
     position: absolute;
     width: 100%;
-  }
-
-  .ant-card-cover img {
-    height: 190px;
   }
 
   .ant-card {
