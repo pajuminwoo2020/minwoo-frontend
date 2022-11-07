@@ -3,10 +3,7 @@
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <url>
-        <loc>https://paju.womenlink.or.kr/</loc>
-    </url>
-    <url>
-        <loc>https://paju.womenlink.or.kr/</loc>
-        <xhtml:link rel="alternate" hreflang="en" href="https://paju.womenlink.or.kr/"/>
+	  <loc>http://paju.womenlink.or.kr/index.html</loc>
+	  <lastmod>2020-12-21T03:00:57+09:00</lastmod>
     </url>
 </urlset>

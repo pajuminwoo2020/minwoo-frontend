@@ -18,12 +18,20 @@ export const device = {
 };
 export const PrimaryColor = '#f86e6b';
 const GlobalStyles = createGlobalStyle`
-  body {
-    font-family: "Apple SD Gothic Neo";
-  }
-
   #root {
     height: 100vh;
+  }
+
+  @font-face {
+    font-family:'NotoSansKR';
+    src: url(${require('assets/fonts/NotoSansKR-Regular.otf')});
+  }
+  @font-face {
+    font-family:'DMSans';
+    src: url(${require('assets/fonts/DMSans-Regular.ttf')});
+  }
+  body {
+    font-family: 'DMSans', 'NotoSansKR', sans-serif;
   }
 
   .ant-btn-primary {
@@ -267,7 +275,7 @@ export const TableWrapper = styled.div`
     width: 120px;
 
     @media screen and ${device.mobile} {
-      display: none;
+	  width: 80px;
     }
   }
   .column-title {
@@ -289,6 +297,9 @@ export const TableWrapper = styled.div`
   }
   .column-id {
     width: 80px;
+    @media screen and ${device.mobile} {
+	  width: 50px;
+    }
   }
   .column-hit-count {
     width: 80px;
@@ -361,10 +372,6 @@ export const CardWrapper = styled(Link)`
   .ant-card-cover > * {
     position: absolute;
     width: 100%;
-  }
-
-  .ant-card-cover img {
-    height: 190px;
   }
 
   .ant-card {

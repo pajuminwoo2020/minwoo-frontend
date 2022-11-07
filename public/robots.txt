@@ -1,4 +1,4 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
 
-Sitemap: https://quotabook.com/sitemap.xml
+Sitemap: http://paju.womenlink.or.kr/sitemap.xml

@@ -78,7 +78,7 @@ const SocietyAbout = () => {
                         </>
                       )}
                       {get(item, 'schedule', []).length > 0 && (
-                        <>
+                        <div style={{marginTop: '15px'}}>
                           <Title level={4}><Text>정기모임</Text></Title>
                           <ul>
                             {map(
@@ -86,7 +86,7 @@ const SocietyAbout = () => {
                               schedule => <li>{schedule}</li>
                             )}
                           </ul>
-                        </>
+                        </div>
                       )}
                       {get(item, 'website') &&
                         <div style={{marginTop: '10px'}}>

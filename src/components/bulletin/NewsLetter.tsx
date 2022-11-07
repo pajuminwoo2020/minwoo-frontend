@@ -126,7 +126,7 @@ const NewsLetter = () => {
           onChange: (page) => {
             reloadPage({
               current: page,
-              pageSize: get(data, 'pageSize'),
+              pageSize: pagination.pageSize,
             });
           }
         }}

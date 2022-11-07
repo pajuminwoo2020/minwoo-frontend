@@ -67,10 +67,6 @@ const Login = () => {
 		  name={'userid'}
 		  className="form-item"
 		  rules={[
-			{
-			  type: 'email',
-			  message: '이메일 형식이 올바르지 않습니다',
-			},
 			{required: true, message: '이메일을 입력해주세요'},
 		  ]}
 		>

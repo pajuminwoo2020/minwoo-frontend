@@ -1,4 +1,4 @@
-import {Col, Row, Divider} from 'antd';
+import {Avatar, Col, Row, Divider} from 'antd';
 import {get} from 'lodash';
 import React from 'react';
 import {Link} from 'react-router-dom';
@@ -8,6 +8,9 @@ import {shallowEqual, useSelector} from 'react-redux';
 import {RootState} from 'modules';
 import {ERoute} from 'enums/route.enum';
 import {CWindowWidth} from 'constants/base.const';
+import FacebookSource from 'assets/facebook.svg';
+import InstagramSource from 'assets/instagram.svg';
+import {FacebookOutlined, InstagramOutlined} from '@ant-design/icons';
 
 const FooterWrapper = styled.div`
   background-color: #424242;
@@ -30,6 +33,9 @@ const FooterWrapper = styled.div`
     font-weight: bold;
     font-size: 14px;
   }
+  .small-logo {
+	font-size: 14px;
+  }
 `;
 
 export const FooterArea = () => {
@@ -43,7 +49,15 @@ export const FooterArea = () => {
           <p className="block-title">파주여성민우회</p>
           <Divider/>
           <p>주소 : {get(information, 'address_street')}</p>
-          <p>이메일 {get(information, 'email')} / 대표전화 {get(information, 'phone')} / 팩스 {get(information, 'fax')}</p>
+		  <p>이메일 {get(information, 'email')} / 대표전화 {get(information, 'phone')} / 팩스 {get(information, 'fax')}</p>
+		  <div className="small-logo">
+			<a href="https://www.facebook.com/pajuminwoo" target="_blank">
+			  <FacebookOutlined style={{marginRight: '5px'}}/><div style={{fontSize: '12px', display: 'inline-block', transform: 'translateY(-2px)'}}>@pajuminwoo</div>
+			</a>
+			<a href="https://www.instagram.com/pajuminwoo" target="_blank">
+			  <InstagramOutlined style={{marginLeft: '10px', marginRight: '5px'}}/><div style={{fontSize: '12px', display: 'inline-block', transform: 'translateY(-2px)'}}>@pajuminwoo</div>
+			</a>
+          </div>
         </Col>
         <Col xs={12} sm={12} md={12} lg={6} xl={6}>
           <p className="block-title" style={{color: 'transparent'}}>Empty</p>
